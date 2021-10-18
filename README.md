@@ -1,6 +1,26 @@
 # Maze
 
-## Fonctionnalités 
+## Installation
+
+Dans un terminal :
+```bash
+# On clone le dépôt...
+git clone https://github.com/cerb1999/maze -b main
+# ...et on se déplace dans sa racine
+cd maze
+
+# `mvn package` exécute les actions suivantes :
+# - `validate` : validation du `pom.xml` et du projet
+# - `compile` : compile les sources Java
+# - `test` : exécute les tests
+# - `package` : crée un fichier JAR dans `target/`
+mvn package
+
+# Le .jar se trouve maintenant dans `target/` si aucune erreur n'est survenue
+# dans l'étape précédente
+```
+
+## Fonctionnalités envisagées
 
 - Héros
   - Le héros est placé aléatoirement sur une case du niveau
