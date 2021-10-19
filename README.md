@@ -30,15 +30,16 @@ mvn package
   - [ ] Les niveaux sont générés aléatoirement.
   - [ ] Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
   - [ ] Le héros ne peut pas traverser les murs.
-  - [ ] les monstres ne peuvent pas traverser les mur
+  - [ ] les monstres ne peuvent pas traverser les murs
   - [ ] Une partie commence au niveau 1.
   - [ ] Certaines cases du labyrinthe sont spéciales :
     - [ ] clé : requise pour accéder au prochain niveau
     - [ ] échelle : aller au prochain niveau
     - [ ] pièges : piège classique sur une case, fait perdre une vie
-    - [ ] magiques : si un personnage arrive sur la case un effet est déclenché 
-        - [ ] ralentissement
-        - [ ] perte d'attaque
+    - [ ] magiques : si un personnage arrive sur la case un effet est déclenché
+      - [ ] ralentissement
+      - [ ] perte d'attaque
+      - [ ] +1 vie
 
 - Monstres
   - [ ] Des monstres sont placés de manière aléatoire dans le labyrinthe.
@@ -55,7 +56,8 @@ mvn package
   
  - Autre
    - [ ] Pause
-   - [ ] Timer
+   - [ ] Menu de départ
+   - [ ] ((Timer))
    - [ ] ((Musique))
 
 ## Sprint 1
@@ -65,7 +67,10 @@ mvn package
   - Le héros dispose de trois vies
 - Labyrinthe
   - Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
+  - Les niveaux sont générés aléatoirement.
   - Le héros ne peut pas traverser les murs.
+  - Une partie commence au niveau 1.
+  - Certaines cases du labyrinthe sont spéciales :
+    - échelle : aller au prochain niveau
  - Autre
    - Pause
-   - Timer
