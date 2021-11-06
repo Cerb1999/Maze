@@ -1,5 +1,6 @@
 package fr.ul.maze.model;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -73,5 +74,23 @@ public class Position implements Comparable<Position> {
         if (this._y > o._y)
             return 1;
         return Integer.compare(this._x, o._x);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return _x == position._x && _y == position._y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_x, _y);
+    }
+
+    @Override
+    public String toString() {
+        return "@(" + this._x + ", " + this._y + ")";
     }
 }

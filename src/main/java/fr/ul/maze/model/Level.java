@@ -43,7 +43,7 @@ public class Level implements Iterable<Cell> {
     /**
      * Where is the hero in the maze?
      */
-    private final Position heroPosition;
+    private Position heroPosition;
 
     /**
      * Creates a new maze from an array of cells.
@@ -92,5 +92,36 @@ public class Level implements Iterable<Cell> {
                 .sorted(Map.Entry.comparingByKey())
                 .map(Map.Entry::getValue)
                 .iterator();
+    }
+
+    /**
+     * Returns whether moving to the given position is actually possible or not.
+     *
+     * @param pos the position to move to
+     * @return {@code true} if the cell at the position is not a wall, else {@code false}
+     */
+    public boolean canMoveTo(Position pos) {
+        return !this.cells.getOrDefault(pos, new WallCell()).isWall();
+    }
+
+    /**
+     * Retrieves the current position of the hero in the maze.
+     *
+     * @return the position of the hero
+     */
+    public Position getHeroPosition() {
+        return this.heroPosition;
+    }
+
+    /**
+     * Updates the position of the hero to the new given position.
+     *
+     * It is not checked whether the position is valid or not, therefore great care must be taken
+     * when calling this function.
+     *
+     * @param newPos the new position of the hero
+     */
+    public void updateHeroPosition(Position newPos) {
+        this.heroPosition = newPos;
     }
 }
