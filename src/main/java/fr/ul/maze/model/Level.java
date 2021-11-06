@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,6 +16,11 @@ import java.util.stream.IntStream;
  * @implSpec The storage of {@link Cell}s may be represented using a better data structure than s simple 2D array.
  */
 public class Level implements Iterable<Cell> {
+    /**
+     * Generates a sequence of integers starting at 1.
+     */
+    private static final AtomicReference<Integer> levelNumberGenerator = new AtomicReference<>(1);
+
     /**
      * Fixed width for the maze, in a number of cells.
      */
@@ -51,7 +57,8 @@ public class Level implements Iterable<Cell> {
         assert (grid.length == HEIGHT) : "the array of cells must be of height 'HEIGHT'";
         assert (Arrays.stream(grid).allMatch(line -> line.length == WIDTH)) : "all lines in the grid must be of length 'WIDTH'";
 
-        this.number = 0;
+        // atomically get then set the number generator
+        this.number = levelNumberGenerator.getAndUpdate(x -> x + 1);
 
         // NOTE: beware, the position (1, 1) is most likely to never be a path
         //       we need to randomize the starting position
