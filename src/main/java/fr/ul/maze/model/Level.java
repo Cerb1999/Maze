@@ -3,6 +3,7 @@ package fr.ul.maze.model;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,17 +35,27 @@ public class Level implements Iterable<Cell> {
     private final Map<Position, Cell> cells;
 
     /**
+     * Where is the hero in the maze?
+     */
+    private final Position heroPosition;
+
+    /**
      * Creates a new maze from an array of cells.
      * <p>
      * Invariant: {@code cells} must be an array of size {@link #WIDTH}×{@link #HEIGHT}.
      *
      * @param grid the cells contained in the maze
+     * @param whereIsTheHero  position where the hero is in the maze
      */
-    public Level(Cell[][] grid) {
+    public Level(Cell[][] grid, Position whereIsTheHero) {
         assert (grid.length == HEIGHT) : "the array of cells must be of height 'HEIGHT'";
         assert (Arrays.stream(grid).allMatch(line -> line.length == WIDTH)) : "all lines in the grid must be of length 'WIDTH'";
 
         this.number = 0;
+
+        // NOTE: beware, the position (1, 1) is most likely to never be a path
+        //       we need to randomize the starting position
+        this.heroPosition = Objects.requireNonNull(whereIsTheHero);
 
         this.cells = IntStream.range(0, HEIGHT)
                 .boxed()

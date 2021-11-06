@@ -44,8 +44,20 @@ public class RandomMazeGenerator extends AbstractMazeGenerator {
             }
         }
 
+        // generate random starting and ending positions
+        Position heroPosition = Position.random(rnd);
+        Position ladderPosition = Position.random(rnd);
+
+        while (grid[heroPosition.y()][heroPosition.x()].isWall()) {
+            heroPosition = Position.random(rnd);
+        }
+        while (grid[ladderPosition.y()][ladderPosition.x()].isWall()) {
+            ladderPosition = Position.random(rnd);
+        }
+        grid[ladderPosition.y()][ladderPosition.x()] = new LadderCell();
+
         // our grid should be the correct size :)
-        return new Level(grid);
+        return new Level(grid, heroPosition);
     }
 
     /**

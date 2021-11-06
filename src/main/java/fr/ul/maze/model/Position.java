@@ -1,5 +1,7 @@
 package fr.ul.maze.model;
 
+import java.util.Random;
+
 /**
  * A simple record holding information about a 2D position (X and Y positions).
  * No unit is specified in this class, meaning that it may be pixels as well as centimeters or other units, as
@@ -24,6 +26,18 @@ public class Position implements Comparable<Position> {
     public Position(int x, int y) {
         this._x = x;
         this._y = y;
+    }
+
+    /**
+     * Generates a random position inside the maze.
+     * <p>
+     * It does not check whether this position is valid or not.
+     *
+     * @param rnd a random number generator
+     * @return a random position
+     */
+    public static Position random(Random rnd) {
+        return new Position(rnd.nextInt(Level.WIDTH), rnd.nextInt(Level.HEIGHT));
     }
 
     /**
