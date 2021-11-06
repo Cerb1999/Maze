@@ -40,6 +40,8 @@ mvn package
       - [ ] ralentissement
       - [ ] perte d'attaque
       - [ ] +1 vie
+  - [ ] Afficher le labyrinthe dans la console
+  - [ ] Afficher le labyrinthe graphiquement
 
 - Monstres
   - [ ] Des monstres sont placés de manière aléatoire dans le labyrinthe.
@@ -72,6 +74,7 @@ mvn package
   - Une partie commence au niveau 1.
   - Certaines cases du labyrinthe sont spéciales :
     - échelle : aller au prochain niveau
+  - Afficher le labyrinthe dans la console
  - Autre
    - Pause
 
