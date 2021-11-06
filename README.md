@@ -75,6 +75,7 @@ mvn package
   - Certaines cases du labyrinthe sont spéciales :
     - échelle : aller au prochain niveau
   - Afficher le labyrinthe dans la console
+  - Afficher le labyrinthe graphiquement
  - Autre
    - Pause
 
