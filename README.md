@@ -23,15 +23,15 @@ mvn package
 ## Fonctionnalités envisagées
 
 - Héros
-  - [ ] Le héros est placé aléatoirement sur une case du niveau
+  - [x] Le héros est placé aléatoirement sur une case du niveau
   - [ ] Le héros dispose de trois vies
 
 - Labyrinthe
-  - [ ] Les niveaux sont générés aléatoirement.
-  - [ ] Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
+  - [x] Les niveaux sont générés aléatoirement.
+  - [x] Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
   - [ ] Le héros ne peut pas traverser les murs.
   - [ ] les monstres ne peuvent pas traverser les murs
-  - [ ] Une partie commence au niveau 1.
+  - [x] Une partie commence au niveau 1.
   - [ ] Certaines cases du labyrinthe sont spéciales :
     - [ ] clé : requise pour accéder au prochain niveau
     - [ ] échelle : aller au prochain niveau
