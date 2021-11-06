@@ -95,7 +95,8 @@
           <version>3.3.1</version>
           <configuration>
             <show>private</show>
-            <nohelp>true</nohelp>
+            <nohelp>false</nohelp>
+            <failOnError>false</failOnError>
           </configuration>
         </plugin>
       </plugins>
