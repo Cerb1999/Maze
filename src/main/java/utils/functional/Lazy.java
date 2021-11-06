@@ -1,4 +1,4 @@
-package java.util.functional;
+package utils.functional;
 
 import java.util.IdentityHashMap;
 import java.util.Objects;

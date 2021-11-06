@@ -2,7 +2,7 @@ package fr.ul.maze.model;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.util.functional.Lazy;
+import utils.functional.Lazy;
 
 /**
  * An abstract representation for a maze cell.
