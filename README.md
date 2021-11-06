@@ -24,7 +24,7 @@ mvn package
 
 - Héros
   - [x] Le héros est placé aléatoirement sur une case du niveau
-  - [ ] Le héros dispose de trois vies
+  - [X] Le héros dispose de trois vies, une puissance d'attaque et une vitesse de déplacement
 
 - Labyrinthe
   - [x] Les niveaux sont générés aléatoirement.
