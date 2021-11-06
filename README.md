@@ -74,3 +74,5 @@ mvn package
     - échelle : aller au prochain niveau
  - Autre
    - Pause
+
+![diagramme de classe sprint 1](./readme_assets/class_diagram_sprint1.png)
