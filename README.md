@@ -75,4 +75,6 @@ mvn package
  - Autre
    - Pause
 
+#### Diagramme de classe au début du sprint
+
 ![diagramme de classe sprint 1](./readme_assets/class_diagram_sprint1.png)
