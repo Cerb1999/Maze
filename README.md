@@ -29,7 +29,7 @@ mvn package
 - Labyrinthe
   - [x] Les niveaux sont générés aléatoirement.
   - [x] Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
-  - [ ] Le héros ne peut pas traverser les murs.
+  - [x] Le héros ne peut pas traverser les murs.
   - [ ] les monstres ne peuvent pas traverser les murs
   - [x] Une partie commence au niveau 1.
   - [ ] Certaines cases du labyrinthe sont spéciales :
@@ -40,7 +40,7 @@ mvn package
       - [ ] ralentissement
       - [ ] perte d'attaque
       - [ ] +1 vie
-  - [ ] Afficher le labyrinthe dans la console
+  - [x] Afficher le labyrinthe dans la console
   - [ ] Afficher le labyrinthe graphiquement
 
 - Monstres
