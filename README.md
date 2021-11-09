@@ -57,7 +57,7 @@ mvn package
   - [ ] ((Attaque des monstres))
   
  - Autre
-   - [ ] Pause
+   - [X] Pause
    - [ ] Menu de départ
    - [ ] ((Timer))
    - [ ] ((Musique))
