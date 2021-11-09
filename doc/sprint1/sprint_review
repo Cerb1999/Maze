@@ -1,15 +1,15 @@
 Liste des fonctionnalitées prévues au sprint 1
 
 [X] Héros - Caractéristiques
-    
+
 [X] Héros + Labyrinthe - Le héros ne peut pas traverser les murs
-    
-		Validé.	
+
+		Validé.
 
 [X] Labyrinthe - afficher dans la console
 
 		Validé.
-		Les couleurs sont à revoir (noir non visible sur des terminaux avec la couleur par défaut...).				
+		Les couleurs sont à revoir (noir non visible sur des terminaux avec la couleur par défaut...).
 
 [X] Jeu - Une partie commence au niveau 1
 
@@ -30,8 +30,8 @@ Liste des fonctionnalitées prévues au sprint 1
 		Validé.
 
 [X] Misc - Pause
+    Validé mais à compléter lors de l'implémentation
 
 [X] Labyrinthe - case échelle : aller au prochain niveau
 
-[] Labyrinthe - afficher graphiquement
-
+[X] Labyrinthe - afficher graphiquement
