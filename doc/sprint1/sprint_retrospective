@@ -1,0 +1,12 @@
+Points faibles :
+- Début du travail très en retard par rapport au début du sprint
+- Manque d'organisation & de communication : 
+  - La répartition du travail a été mal définie, ralentissant le travail
+  - Plusieurs problèmes ont été soulevés pendant le sprint quant aux outils utilisés (Gradle ou Maven ?)
+  - Problème d'utilisation de git (création de branches orphelines)
+- Objectifs mal définis au début du sprint : le jeu n'est pas un jeu (il n'y a pas de but et il est sans fin)
+
+
+Points forts :
+- Toutes les fonctionnalitées planifiées ont été implémentées et validées
+- Facilité de certaines personnes niveau programmation
