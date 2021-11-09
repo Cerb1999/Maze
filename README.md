@@ -34,7 +34,7 @@ mvn package
   - [x] Une partie commence au niveau 1.
   - [ ] Certaines cases du labyrinthe sont spéciales :
     - [ ] clé : requise pour accéder au prochain niveau
-    - [ ] échelle : aller au prochain niveau
+    - [x] échelle : aller au prochain niveau
     - [ ] pièges : piège classique sur une case, fait perdre une vie
     - [ ] magiques : si un personnage arrive sur la case un effet est déclenché
       - [ ] ralentissement
