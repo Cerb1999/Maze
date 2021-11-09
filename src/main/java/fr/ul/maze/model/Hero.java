@@ -1,104 +1,269 @@
 package fr.ul.maze.model;
 
-import java.util.concurrent.atomic.AtomicReference;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import fr.ul.maze.MazeGame;
 
-/**
- * Simple class representing characteristics of the Hero
- */
-public class Hero {
-    /**
-     * Fixed base hero hit points pool
-     */
-    private static final int BASE_HP = 3;
+public class Hero extends Actor {
+    private int hp;
+    private float attackSpeed;
+    private float attackRange;
+    private float walkSpeed;
 
-    /**
-     * fixed base hero base movement speed;
-     */
-    private static final int BASE_MS = 100;
+    private final MazeGame mazeGame;
 
-    /**
-     * fixed hero attack power
-     */
-    private static final int BASE_ATK = 10;
+    private final Body body;
+    private final Sprite sprite;
 
-    /**
-     * fixed hero life and movement speed count threshold values
-     */
-    private static final int THRESHOLD = 0;
+    private HeroMoveState moveState;
+    private HeroMoveState lastMoveState;
+    private HeroActionState actionState;
 
-    /**
-     * hero life value
-     */
-    private AtomicReference<Integer> hp = new AtomicReference<>(BASE_HP);
+    //Animations
+    private final Animation walkRightAnimation;
+    private final Animation walkUpAnimation;
+    private final Animation walkLeftAnimation;
+    private final Animation walkDownAnimation;
+    private final Animation attackRightAnimation;
+    private final Animation attackUpAnimation;
+    private final Animation attackLeftAnimation;
+    private final Animation attackDownAnimation;
+    private final Animation dieAnimation;
 
-    /**
-     * hero movement speed value
-     */
-    private AtomicReference<Integer> ms = new AtomicReference<>(BASE_MS);
+    public Hero(MazeGame mazeGame, World world, float xPosition, float yPosition){
+        this.hp = 3;
+        this.attackSpeed = 0.5f;
+        this.attackRange = 64f;
+        this.walkSpeed = 100;
+        this.mazeGame = mazeGame;
+        this.moveState = HeroMoveState.IDLE;
+        this.lastMoveState = HeroMoveState.DOWN;
+        this.actionState = HeroActionState.IDLE;
 
-    /**
-     * hero attack power value
-     */
-    private AtomicReference<Integer> atk = new AtomicReference<>(BASE_ATK);
+        sprite = new Sprite((mazeGame.getManagedTexture("walkS1")).getRegion());
+        sprite.setPosition(xPosition,yPosition);
 
+        //Create body (hitbox)
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.fixedRotation = true; // stop body fom spinning on itself
+        bodyDef.position.set(xPosition, yPosition);
+        body = world.createBody(bodyDef);
 
-    /**
-     * Lose life value up to death threshold
-     * @param hp hero life value lost
-     */
-    public void loseLife(int hp) {
-        int val = this.hp.updateAndGet(value -> Math.max(value - hp, THRESHOLD));
-        assert (val >= THRESHOLD) : "inconsistent life loss";
+        PolygonShape shape = new PolygonShape();//shape of the body
+        shape.setAsBox(sprite.getWidth()/4, sprite.getHeight()/4);
+
+        FixtureDef fixtureDef = new FixtureDef();//properties of the body
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1f;
+
+        Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
+        fixture.setUserData("Hero");
+
+        shape.dispose();//shape not needed after
+
+        //Parameter for the actor linked with the body
+        this.setWidth(sprite.getWidth());
+        this.setHeight(sprite.getHeight());
+        this.setOrigin(this.getWidth()/2,this.getHeight()/2);
+
+        //Init walk animations
+        walkRightAnimation = new Animation(mazeGame, "walkR", 9, 0.5f);
+        walkUpAnimation = new Animation(mazeGame, "walkN", 9, 0.5f);
+        walkLeftAnimation = new Animation(mazeGame, "walkL", 9, 0.5f);
+        walkDownAnimation = new Animation(mazeGame, "walkS", 9, 0.5f);
+
+        //Init attack animations
+        attackRightAnimation = new Animation(mazeGame, "slashR", 6, this.attackSpeed, false);
+        attackUpAnimation = new Animation(mazeGame, "slashN", 6, this.attackSpeed, false);
+        attackLeftAnimation = new Animation(mazeGame, "slashL", 6, this.attackSpeed, false);
+        attackDownAnimation = new Animation(mazeGame, "slashS", 6, this.attackSpeed, false);
+
+        //Init dying animation
+        dieAnimation = new Animation(mazeGame, "die", 6, 2, false);
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public float getAttackSpeed() {
+        return attackSpeed;
+    }
+
+    public float getAttackRange() {
+        return attackRange;
+    }
+
+    public float getWalkSpeed() {
+        return walkSpeed;
     }
 
     /**
-     * Regenerate life value up to base hit points
-     * @param hp hero life value regained
+     * Method used to move the body of the Hero.
+     * Apply force to the body depending of the direction.
+     * @param dir direction where which the hero move.
      */
-    public void gainLife(int hp) {
-        int val = this.hp.updateAndGet(value -> Math.min(value + hp, BASE_HP));
-        assert (val >= BASE_HP) : "inconsistent life gain";
+    public void moveHero(HeroMoveState dir){
+        if(this.actionState==HeroActionState.IDLE){
+            this.moveState = dir;
+            switch(moveState) {
+                case RIGHT:
+                    this.body.setLinearVelocity(this.walkSpeed,0);
+                    break;
+                case LEFT:
+                    this.body.setLinearVelocity(-this.walkSpeed,0);
+                    break;
+                case UP:
+                    this.body.setLinearVelocity(0,this.walkSpeed);
+                    break;
+                case DOWN:
+                    this.body.setLinearVelocity(0,-this.walkSpeed);
+                    break;
+                case IDLE:
+                    this.body.setLinearVelocity(0,0);
+                    break;
+            }
+        }
     }
 
     /**
-     * Hero slow down
-     * @param ms movement speed gain
+     * Method used to make the hero attack
+     * Start animation attack
      */
-    public void accelerate(int ms) {
-        this.ms.set(this.ms.get() + ms);
+    public void attack() {
+        if(this.actionState==HeroActionState.IDLE) {
+            this.actionState = HeroActionState.ATTACK;
+            this.attackDownAnimation.setFinishedState(false);
+            this.attackUpAnimation.setFinishedState(false);
+            this.attackRightAnimation.setFinishedState(false);
+            this.attackLeftAnimation.setFinishedState(false);
+            //Add here function to interact with another entity (a monster for exemple)
+        }
     }
 
     /**
-     * Hero speed up
-     * @param ms movement speed loss
+     * Set hp of the hero
      */
-    public void decelerate(int ms) {
-        int val = this.ms.updateAndGet(value -> Math.max(value - ms, THRESHOLD));
-        assert (val >= THRESHOLD) : "inconsistent movement speed slow value";
+    public void setHp(int newHp){
+        this.hp = newHp;
     }
 
     /**
-     * Hero power up
-     * @param atk attack power gain
+     * The hero loses one hp
      */
-    public void powerUp(int atk) {
-        this.atk.set(this.atk.get() + atk);
+    public void hurt(){
+        this.hp--;
     }
 
     /**
-     * Hero power down
-     * @param atk attack power gain
+     * The hero die. Start dying animation
      */
-    public void powerDown(int atk) {
-        int val = this.atk.updateAndGet(value -> Math.max(value - atk, THRESHOLD + 1));
-        assert (val > THRESHOLD) : "inconsistent attack power value";
+    public void die(){
+        this.actionState = HeroActionState.DYING;
+        this.dieAnimation.setFinishedState(false);
     }
 
-    /**
-     * check death
-     * @return hero death state
-     */
-    public boolean isDead() {
-        return hp.get() == 0;
+    @Override
+    protected void positionChanged() {
+        sprite.setPosition(getX(), getY());
+        super.positionChanged();
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        sprite.draw(batch);
+    }
+
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        switch (actionState){
+            case IDLE:
+                switch(moveState) {
+                    case RIGHT :
+                        walkRightAnimation.update(delta);
+                        sprite.set(new Sprite(walkRightAnimation.getFrame()));
+                        lastMoveState = HeroMoveState.RIGHT;
+                        break;
+                    case LEFT :
+                        walkLeftAnimation.update(delta);
+                        sprite.set(new Sprite(walkLeftAnimation.getFrame()));
+                        lastMoveState = HeroMoveState.LEFT;
+                        break;
+                    case UP :
+                        walkUpAnimation.update(delta);
+                        sprite.set(new Sprite(walkUpAnimation.getFrame()));
+                        lastMoveState = HeroMoveState.UP;
+                        break;
+                    case DOWN :
+                        walkDownAnimation.update(delta);
+                        sprite.set(new Sprite(walkDownAnimation.getFrame()));
+                        lastMoveState = HeroMoveState.DOWN;
+                        break;
+                    case IDLE :
+                        switch(lastMoveState) {
+                            case RIGHT:
+                                sprite.set(new Sprite((mazeGame.getManagedTexture("walkR1")).getRegion()));
+                                break;
+                            case LEFT:
+                                sprite.set(new Sprite((mazeGame.getManagedTexture("walkL1")).getRegion()));
+                                break;
+                            case UP:
+                                sprite.set(new Sprite((mazeGame.getManagedTexture("walkN1")).getRegion()));
+                                break;
+                            case DOWN:
+                                sprite.set(new Sprite((mazeGame.getManagedTexture("walkS1")).getRegion()));
+                                break;
+                        }
+                        break;
+                    default :
+
+                        break;
+                }
+                break;
+            case ATTACK:
+                switch(lastMoveState) {
+                    case RIGHT:
+                        attackRightAnimation.update(delta);
+                        if(!attackRightAnimation.isFinished())sprite.set(new Sprite(attackRightAnimation.getFrame()));
+                        else actionState = HeroActionState.IDLE;
+                        break;
+                    case LEFT:
+                        attackLeftAnimation.update(delta);
+                        if(!attackLeftAnimation.isFinished())sprite.set(new Sprite(attackLeftAnimation.getFrame()));
+                        else actionState = HeroActionState.IDLE;
+                        break;
+                    case UP:
+                        attackUpAnimation.update(delta);
+                        if(!attackUpAnimation.isFinished())sprite.set(new Sprite(attackUpAnimation.getFrame()));
+                        else actionState = HeroActionState.IDLE;
+                        break;
+                    case DOWN:
+                        attackDownAnimation.update(delta);
+                        if(!attackDownAnimation.isFinished())sprite.set(new Sprite(attackDownAnimation.getFrame()));
+                        else actionState = HeroActionState.IDLE;
+                        break;
+                }
+                break;
+            case DYING:
+                dieAnimation.update(delta);
+                if(!dieAnimation.isFinished())sprite.set(new Sprite(dieAnimation.getFrame()));
+                //else add respawn or game over
+                break;
+        }
+
+        //Update actor from body position and angle
+        this.setRotation(body.getAngle()*  MathUtils.radiansToDegrees);
+        this.setPosition(body.getPosition().x-this.getWidth()/2,body.getPosition().y-this.getHeight()/2);
+
+        //Update actor from actor position
+        sprite.setPosition(this.getX(),this.getY());
+
     }
 }

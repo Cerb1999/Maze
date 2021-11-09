@@ -105,6 +105,16 @@ public class Level implements Iterable<Cell> {
     }
 
     /**
+     * Returns whether moving to the given position is actually winning the level or not.
+     *
+     * @param pos the position to move to
+     * @return {@code true} if the cell at the position is a ladder, else {@code false}
+     */
+    public boolean canWinTo(Position pos) {
+        return this.cells.getOrDefault(pos, new WallCell()).isLadder();
+    }
+
+    /**
      * Retrieves the current position of the hero in the maze.
      *
      * @return the position of the hero
@@ -123,5 +133,12 @@ public class Level implements Iterable<Cell> {
      */
     public void updateHeroPosition(Position newPos) {
         this.heroPosition = newPos;
+    }
+
+    /**
+     * Get current level number
+     */
+    public int getNumber() {
+        return number;
     }
 }
