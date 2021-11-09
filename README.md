@@ -1,6 +1,13 @@
 # Maze
 
-## Installation
+## Dépendances
+
+- Java 1.8+
+- Maven 3
+- (Linux) [libXxf86vm](https://github.com/freedesktop/libXxf86vm) pour l'affichage
+- (Optionnel) [OpenAL](https://www.openal.org/) pour l'audio
+
+## Lancement
 
 Dans un terminal :
 ```bash
@@ -18,6 +25,7 @@ mvn package
 
 # Le .jar se trouve maintenant dans `target/` si aucune erreur n'est survenue
 # dans l'étape précédente
+java -jar target/maze-1.0-SNAPSHOT.jar
 ```
 
 ## Fonctionnalités envisagées
@@ -66,7 +74,7 @@ mvn package
 
 - Héros
   - Le héros est placé aléatoirement sur une case du niveau
-  - Le héros dispose de trois vies
+  - Le héros dispose de trois vies, une puissance d'attaque et une vitesse de déplacement
 - Labyrinthe
   - Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
   - Les niveaux sont générés aléatoirement.
