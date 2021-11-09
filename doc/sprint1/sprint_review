@@ -1,0 +1,41 @@
+Liste des fonctionnalitées prévues au sprint 1
+
+[X] Héros - Caractéristiques
+
+[X] Héros + Labyrinthe - Le héros ne peut pas traverser les murs
+
+		Validé.
+
+[X] Labyrinthe - afficher dans la console
+
+		Validé.
+		Les couleurs sont à revoir (noir non visible sur des terminaux avec la couleur par défaut...).
+
+[X] Jeu - Une partie commence au niveau 1
+
+		Validé.
+
+[X] Héros - placé aléatoirement sur une case du niveau
+
+		Validé.
+		Le héros ne peut être placé que sur une case « chemin » (pseudo-aléatoire).
+
+[X] Labyrinthe - généré à partir d’un fichier
+
+		Validé.
+
+[X] Labyrinthe - Les niveaux sont générés aléatoirement
+
+		Aucun problème de bloquage (l'échelle est toujours à portée du joueur).
+		Validé.
+
+[X] Misc - Pause
+    Validé mais à compléter lors de l'implémentation
+
+[X] Labyrinthe - case échelle : aller au prochain niveau
+
+        Validé.
+
+[X] Labyrinthe - afficher graphiquement
+
+        Validé.

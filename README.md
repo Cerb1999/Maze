@@ -23,36 +23,66 @@ mvn package
 ## Fonctionnalités envisagées
 
 - Héros
-  - Le héros est placé aléatoirement sur une case du niveau
-  - Le héros dispose de trois vies
+  - [x] Le héros est placé aléatoirement sur une case du niveau
+  - [X] Le héros dispose de trois vies, une puissance d'attaque et une vitesse de déplacement
 
 - Labyrinthe
-  - Les niveaux sont générés aléatoirement.
-  - Le labyrinthe est généré à partir d’un fichier.
-  - Le héros et les monstres ne peuvent pas traverser les murs.
-  - Une partie commence au niveau 1.
-  - Certaines cases du labyrinthe sont spéciales :
-    - clé : requise pour accéder au prochain niveau
-    - échelle : aller au prochain niveau
-    - pièges : piège classique sur une case, fait perdre une vie
-    - magiques : si un personnage arrive sur la case un effet est déclenché 
-        - ralentissement
-        - perte d'attaque
+  - [x] Les niveaux sont générés aléatoirement.
+  - [x] Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
+  - [x] Le héros ne peut pas traverser les murs.
+  - [ ] les monstres ne peuvent pas traverser les murs
+  - [x] Une partie commence au niveau 1.
+  - [ ] Certaines cases du labyrinthe sont spéciales :
+    - [ ] clé : requise pour accéder au prochain niveau
+    - [x] échelle : aller au prochain niveau
+    - [ ] pièges : piège classique sur une case, fait perdre une vie
+    - [ ] magiques : si un personnage arrive sur la case un effet est déclenché
+      - [ ] ralentissement
+      - [ ] perte d'attaque
+      - [ ] +1 vie
+  - [x] Afficher le labyrinthe dans la console
+  - [x] Afficher le labyrinthe graphiquement
 
 - Monstres
-  - Des monstres sont placés de manière aléatoire dans le labyrinthe.
-  - Les monstres se déplacent
-        - aléatoirement dans un petit rayon quand le joueur est au délà de la portée de détection
-        - intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
+  - [ ] Des monstres sont placés de manière aléatoire dans le labyrinthe.
+  - [ ] Les monstres se déplacent
+    - [ ] aléatoirement dans un petit rayon quand le joueur est au délà de la portée de détection
+    - [ ] intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
  
 - Attaques
-  - Le héros perd une vie au contact d’un monstre
-        - replacé au début du niveau (sans réapparation des objets).
-  - Le héros peut attaquer les monstres (corps à corps - case adjacente)
-  - Perte de vie par collision entre le héros et les monstres.
-  - ((Attaque des monstres))
+  - [ ] Le héros perd une vie au contact d’un monstre
+    - [ ] replacé au début du niveau (sans réapparation des objets).
+  - [ ] Le héros peut attaquer les monstres (corps à corps - case adjacente)
+  - [ ] Perte de vie par collision entre le héros et les monstres.
+  - [ ] ((Attaque des monstres))
   
  - Autre
+   - [X] Pause
+   - [ ] Menu de départ
+   - [ ] ((Timer))
+   - [ ] ((Musique))
+
+## Sprint 1
+
+- Héros
+  - Le héros est placé aléatoirement sur une case du niveau
+  - Le héros dispose de trois vies
+- Labyrinthe
+  - Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
+  - Les niveaux sont générés aléatoirement.
+  - Le héros ne peut pas traverser les murs.
+  - Une partie commence au niveau 1.
+  - Certaines cases du labyrinthe sont spéciales :
+    - échelle : aller au prochain niveau
+  - Afficher le labyrinthe dans la console
+  - Afficher le labyrinthe graphiquement
+ - Autre
    - Pause
-   - Timer
-   - ((Musique))
+
+#### Diagramme de classe au début du sprint
+
+![diagramme de classe début sprint 1](./readme_assets/class_diagram_sprint1_start.png)
+
+#### Diagramme de classe à la fin du sprint
+
+![diagramme de classe fin sprint 1](./readme_assets/class_diagram_sprint1_end.png)
