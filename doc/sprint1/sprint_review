@@ -1,0 +1,22 @@
+Liste des fonctionnalitées prévues au sprint 1
+
+[X] Héros - Caractéristiques
+
+[X] Héros + Labyrinthe - Le héros ne peut pas traverser les murs
+
+[X] Labyrinthe - afficher dans la console
+
+[X] Jeu - Une partie commence au niveau 1
+
+[X] Héros - placé aléatoirement sur une case du niveau
+
+[X] Labyrinthe - généré à partir d’un fichier
+
+[X] Labyrinthe - Les niveaux sont générés aléatoirement
+
+[X] Misc - Pause
+
+
+[] Labyrinthe - case échelle : aller au prochain niveau
+
+[] Labyrinthe - afficher graphiquement
