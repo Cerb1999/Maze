@@ -81,4 +81,8 @@ mvn package
 
 #### Diagramme de classe au début du sprint
 
-![diagramme de classe sprint 1](./readme_assets/class_diagram_sprint1.png)
+![diagramme de classe début sprint 1](./readme_assets/class_diagram_sprint1_start.png)
+
+#### Diagramme de classe à la fin du sprint
+
+![diagramme de classe fin sprint 1](./readme_assets/class_diagram_sprint1_end.png)
