@@ -25,6 +25,13 @@ public abstract class Cell {
     public abstract boolean isWall();
 
     /**
+     * Allows statically determining whether a cell represents a ladder or something else.
+     *
+     * @return {@code true} if the cell is a ladder, else {@code false}
+     */
+    public abstract boolean isLadder();
+
+    /**
      * Retrieves the texture of a cell from one of {@link #WALL_TEXTURE}, {@link #PATH_TEXTURE} or {@link #LADDER_TEXTURE}.
      *
      * @return a texture which can be used in a sprite

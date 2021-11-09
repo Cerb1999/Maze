@@ -2,6 +2,7 @@ package fr.ul.maze.controller;
 
 import fr.ul.maze.model.Level;
 import fr.ul.maze.model.Position;
+import fr.ul.maze.model.generator.RandomMazeGenerator;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -28,6 +29,9 @@ public class HeroMoveController {
 
             if (level.canMoveTo(newPosition)) {
                 level.updateHeroPosition(newPosition);
+            }
+            if (level.canWinTo(newPosition)) {
+                modelReference.set(new RandomMazeGenerator().generateMaze());
             }
 
             return level;

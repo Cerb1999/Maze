@@ -9,6 +9,11 @@ public class PathCell extends Cell {
     }
 
     @Override
+    public boolean isLadder() {
+        return false;
+    }
+
+    @Override
     public Texture texture() {
         return PATH_TEXTURE.get();
     }

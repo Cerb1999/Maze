@@ -9,6 +9,11 @@ public class WallCell extends Cell {
     }
 
     @Override
+    public boolean isLadder() {
+        return false;
+    }
+
+    @Override
     public Texture texture() {
         return WALL_TEXTURE.get();
     }

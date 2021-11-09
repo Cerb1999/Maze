@@ -9,6 +9,11 @@ public class LadderCell extends Cell {
     }
 
     @Override
+    public boolean isLadder() {
+        return true;
+    }
+
+    @Override
     public Texture texture() {
         return LADDER_TEXTURE.get();
     }
