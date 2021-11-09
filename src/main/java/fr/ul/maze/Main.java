@@ -34,7 +34,7 @@ public class Main {
 
     private boolean menu() {
         System.out.println(
-                "Main menu:\n" +
+                "Main menu (Level " + level.get().getNumber() + "):\n" +
                 "1. Move up\n" +
                 "2. Move down\n" +
                 "3. Move left\n" +
