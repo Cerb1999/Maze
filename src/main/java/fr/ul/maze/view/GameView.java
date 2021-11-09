@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import fr.ul.maze.MazeGame;
 import fr.ul.maze.controller.HeroController;
+import fr.ul.maze.controller.PauseController;
 import fr.ul.maze.model.GameState;
 
 public class GameView extends View {
@@ -16,6 +17,7 @@ public class GameView extends View {
 
         //Add new input controller
         inputMultiplexer.addProcessor(new HeroController(mazeGame, gameState));
+        inputMultiplexer.addProcessor(new PauseController(mazeGame, gameState));
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         model.setStage(this.stage);

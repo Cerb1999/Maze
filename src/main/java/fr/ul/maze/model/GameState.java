@@ -10,21 +10,25 @@ import fr.ul.maze.model.generator.RandomMazeGenerator;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GameState{
+    private State state;
     private AtomicReference<Level> level;
     private World world;
     private Hero hero;
     private MazeGame mazeGame;
     private Stage stage;
+    private Pause pause;
 
     /**
      * Start a new game.
      */
     public void newGame(MazeGame mazeGame) {
         //To do: maze creation here
+        changeState(State.GAME_RUNNING);
         this.mazeGame = mazeGame;
         this.level = new AtomicReference<>(new RandomMazeGenerator().generateMaze());
         world = new World(new Vector2(0, 0), true); //world for physics (box2d)
         world.setContactListener(new WorldContactListener(this));
+        pause = new Pause(mazeGame);
     }
 
     public void dispose() {
@@ -74,6 +78,18 @@ public class GameState{
         return level.get().getNumber();
     }
 
+    public void changeState(State state) {
+        this.state = state;
+    }
+
+    public void switchState() {
+        state = (state == State.GAME_RUNNING) ? State.GAME_PAUSED : State.GAME_RUNNING;
+    }
+
+    public State getState() {
+        return state;
+    }
+
     public World getWorld() {
         return world;
     }
@@ -84,5 +100,9 @@ public class GameState{
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public Pause getPause() {
+        return pause;
     }
 }

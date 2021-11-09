@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
 import fr.ul.maze.model.GameState;
 import fr.ul.maze.view.GameView;
+import fr.ul.maze.view.PauseScreenView;
 import fr.ul.maze.view.View;
 
 public class MazeGame extends Game {
@@ -52,7 +53,18 @@ public class MazeGame extends Game {
 	 */
 	public void newGame() {
 		gameState.newGame(this);
-		this.changeScreen(GameView.class);
+		this.switchScreen();
+	}
+
+	public void switchScreen() {
+		switch (gameState.getState()) {
+			case GAME_RUNNING:
+				this.changeScreen(GameView.class);
+				break;
+			case GAME_PAUSED:
+				this.changeScreen(PauseScreenView.class);
+				break;
+		}
 	}
 
 	/**

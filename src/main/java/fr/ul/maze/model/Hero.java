@@ -7,8 +7,16 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import fr.ul.maze.MazeGame;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Hero extends Actor {
-    private int hp;
+    private static final int BASE_HP = 3;
+    private static final float BASE_MS = 50f;
+    private static final float BASE_ATKRANGE = 64f;
+    private static final float BASE_ATKSPEED = 0.5f;
+    private static final int THRESHOLD = 0;
+
+    private AtomicReference<Integer> hp = new AtomicReference<>(BASE_HP);
     private float attackSpeed;
     private float attackRange;
     private float walkSpeed;
@@ -34,7 +42,6 @@ public class Hero extends Actor {
     private final Animation dieAnimation;
 
     public Hero(MazeGame mazeGame, World world, float xPosition, float yPosition){
-        this.hp = 3;
         this.attackSpeed = 0.5f;
         this.attackRange = 64f;
         this.walkSpeed = 100;
@@ -149,14 +156,20 @@ public class Hero extends Actor {
      * Set hp of the hero
      */
     public void setHp(int newHp){
-        this.hp = newHp;
+        this.hp.set(newHp);
     }
 
     /**
      * The hero loses one hp
      */
-    public void hurt(){
-        this.hp--;
+    public void hurt(int hp){
+        int val = this.hp.updateAndGet(value -> Math.max(value - hp, THRESHOLD));
+        assert (val >= THRESHOLD) : "inconsistent life loss";
+    }
+
+    public void heal(int hp) {
+        int val = this.hp.updateAndGet(value -> Math.min(value + hp, BASE_HP));
+        assert (val >= BASE_HP) : "inconsistent life gain";
     }
 
     /**
