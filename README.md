@@ -41,7 +41,7 @@ mvn package
       - [ ] perte d'attaque
       - [ ] +1 vie
   - [x] Afficher le labyrinthe dans la console
-  - [ ] Afficher le labyrinthe graphiquement
+  - [x] Afficher le labyrinthe graphiquement
 
 - Monstres
   - [ ] Des monstres sont placés de manière aléatoire dans le labyrinthe.
