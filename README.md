@@ -67,6 +67,8 @@ java -jar target/maze-1.0-SNAPSHOT.jar
  - Autre
    - [X] Pause
    - [ ] Menu de départ
+   - [ ] Game over
+   - [ ] Statistiques (vie, score, ...)
    - [ ] ((Timer))
    - [ ] ((Musique))
 
@@ -94,3 +96,30 @@ java -jar target/maze-1.0-SNAPSHOT.jar
 #### Diagramme de classe à la fin du sprint
 
 ![diagramme de classe fin sprint 1](./readme_assets/class_diagram_sprint1_end.png)
+
+## Sprint 2
+
+- Labyrinthe
+  - les monstres ne peuvent pas traverser les murs
+  - Certaines cases du labyrinthe sont spéciales :
+    - clé : requise pour accéder au prochain niveau
+- Monstres
+  - Des monstres sont placés de manière aléatoire dans le labyrinthe.
+  - Les monstres se déplacent
+    - aléatoirement dans un petit rayon quand le joueur est au délà de la portée de détection
+    - intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
+- Attaques
+  - Le héros perd une vie au contact d’un monstre
+    - replacé au début du niveau (sans réapparation des objets).
+  - Le héros peut attaquer les monstres (corps à corps - case adjacente)
+  - Perte de vie par collision entre le héros et les monstres.
+ - Autre
+   - Game over
+   - Statistiques (vie, score, ...)
+
+#### Diagramme de classe au début du sprint
+
+
+
+#### Diagramme de classe à la fin du sprint
+
