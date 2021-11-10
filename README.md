@@ -122,7 +122,7 @@ java -jar target/maze-1.0-SNAPSHOT.jar
 
 #### Diagramme de classe au début du sprint
 
-
+![diagramme de classe début sprint 2](./readme_assets/class_diagram_begin_sprint2.png)
 
 #### Diagramme de classe à la fin du sprint
 
