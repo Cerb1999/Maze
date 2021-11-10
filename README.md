@@ -106,15 +106,18 @@ java -jar target/maze-1.0-SNAPSHOT.jar
 - Monstres
   - Des monstres sont placés de manière aléatoire dans le labyrinthe.
   - Les monstres se déplacent
+  - Les monstres ne peuvent pas traverser les murs
     - aléatoirement dans un petit rayon quand le joueur est au délà de la portée de détection
     - intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
 - Attaques
   - Le héros perd une vie au contact d’un monstre
     - replacé au début du niveau (sans réapparation des objets).
-  - Le héros peut attaquer les monstres (corps à corps - case adjacente)
   - Perte de vie par collision entre le héros et les monstres.
  - Autre
+   - Musique
+   - Timer
    - Game over
+   - Menu de départ
    - Statistiques (vie, score, ...)
 
 #### Diagramme de classe au début du sprint
