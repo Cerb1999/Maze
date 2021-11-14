@@ -12,7 +12,7 @@ public class RandomMazeGeneratorTest {
 
     private static void checkMazeValidity() {
         AbstractMazeGenerator gen = new RandomMazeGenerator();
-        Level lvl = gen.generateMaze();
+        Level lvl = gen.generateMaze(1);
 
         int lineLength = 0;
 

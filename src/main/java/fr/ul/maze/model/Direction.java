@@ -1,6 +1,6 @@
 package fr.ul.maze.model;
 
-public enum HeroMoveState {
+public enum Direction {
     RIGHT,
     LEFT,
     UP,

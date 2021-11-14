@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import fr.ul.maze.MazeGame;
 import fr.ul.maze.model.GameState;
-import fr.ul.maze.model.HeroMoveState;
+import fr.ul.maze.model.Direction;
 
 public class HeroController implements InputProcessor {
     MazeGame mazeGame;
@@ -18,19 +18,18 @@ public class HeroController implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.LEFT: gameState.getHero().moveHero(HeroMoveState.LEFT); break;
-            case Input.Keys.RIGHT: gameState.getHero().moveHero(HeroMoveState.RIGHT); break;
-            case Input.Keys.UP: gameState.getHero().moveHero(HeroMoveState.UP); break;
-            case Input.Keys.DOWN: gameState.getHero().moveHero(HeroMoveState.DOWN); break;
+            case Input.Keys.LEFT: gameState.getHero().moveHero(Direction.LEFT); break;
+            case Input.Keys.RIGHT: gameState.getHero().moveHero(Direction.RIGHT); break;
+            case Input.Keys.UP: gameState.getHero().moveHero(Direction.UP); break;
+            case Input.Keys.DOWN: gameState.getHero().moveHero(Direction.DOWN); break;
             case Input.Keys.SPACE: gameState.getHero().attack(); break;
-            case Input.Keys.R: gameState.getHero().die(); break;
         }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        gameState.getHero().moveHero(HeroMoveState.IDLE);
+        gameState.getHero().moveHero(Direction.IDLE);
         return false;
     }
 

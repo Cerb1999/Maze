@@ -26,7 +26,7 @@ public class SpecialRoomGenerator extends AbstractMazeGenerator {
     }
 
     @Override
-    public Level generateMaze() {
+    public Level generateMaze(int numberLevel) {
         try (
                 final FileInputStream fis = new FileInputStream(this.mazeFile);
                 final BufferedReader reader = new BufferedReader(new InputStreamReader(fis))

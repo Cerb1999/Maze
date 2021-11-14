@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import fr.ul.maze.MazeGame;
@@ -51,8 +52,8 @@ public abstract class View implements Screen {
 
 
 
-        //Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
-        //debugRenderer.render(gameState.getWorld(), stage.getCamera().combined);
+        Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
+        debugRenderer.render(gameState.getWorld(), stage.getCamera().combined);
 
         //Apply physics to our world
         gameState.getWorld().step(1/60f, 6, 2);

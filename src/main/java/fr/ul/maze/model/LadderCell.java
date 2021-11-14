@@ -19,12 +19,18 @@ public class LadderCell extends Cell {
     public boolean isLadder() {
         return true;
     }
-/*
+
     @Override
-    public Texture texture() {
-        return LADDER_TEXTURE.get();
+    public boolean isMob() {
+        return false;
     }
-*/
+
+    /*
+        @Override
+        public Texture texture() {
+            return LADDER_TEXTURE.get();
+        }
+    */
 @Override
 public void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition){
     sprite = new Sprite((mazeGame.getManagedTexture("ladder1")).getRegion());

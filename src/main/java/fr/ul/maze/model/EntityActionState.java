@@ -1,6 +1,6 @@
 package fr.ul.maze.model;
 
-public enum HeroActionState {
+public enum EntityActionState {
     ATTACK,
     DYING,
     IDLE

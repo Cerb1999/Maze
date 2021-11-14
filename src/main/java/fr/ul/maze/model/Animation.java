@@ -8,6 +8,7 @@ import fr.ul.maze.MazeGame;
  * Custom class for texture animation
  */
 public class Animation {
+    private final String nomAnimation;
     private Array<TextureRegion> frames;
     private float maxFrameTime;
     private float currentFrameTime;
@@ -17,6 +18,7 @@ public class Animation {
     private boolean isFinished;
 
     public Animation(MazeGame mazeGame, String nomAnimation, int frameCount, float cycleTime){
+        this.nomAnimation = nomAnimation;
         frames = new Array<TextureRegion>();
         for(int i = 1; i <= frameCount; i++){
             frames.add((mazeGame.getManagedTexture(nomAnimation+i)).getRegion());
@@ -28,6 +30,7 @@ public class Animation {
     }
 
     public Animation(MazeGame mazeGame, String nomAnimation, int frameCount, float cycleTime, boolean loop){
+        this.nomAnimation = nomAnimation;
         frames = new Array<TextureRegion>();
         for(int i = 1; i <= frameCount; i++){
             frames.add((mazeGame.getManagedTexture(nomAnimation+i)).getRegion());
@@ -76,5 +79,9 @@ public class Animation {
      */
     public boolean isFinished(){
         return isFinished;
+    }
+
+    public String getNomAnimation() {
+        return nomAnimation;
     }
 }

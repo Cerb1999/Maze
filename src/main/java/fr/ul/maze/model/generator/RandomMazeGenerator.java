@@ -16,7 +16,7 @@ public class RandomMazeGenerator extends AbstractMazeGenerator {
      * @see <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Prim's_algorithm">Prim's algorithm</a>
      */
     @Override
-    public Level generateMaze() {
+    public Level generateMaze(int numberLevel) {
         Cell[][] grid = IntStream.range(0, Level.HEIGHT)
                 .mapToObj(_y -> Stream.generate(WallCell::new)
                         .limit(Level.WIDTH)
@@ -55,6 +55,15 @@ public class RandomMazeGenerator extends AbstractMazeGenerator {
             ladderPosition = Position.random(rnd);
         }
         grid[ladderPosition.y()][ladderPosition.x()] = new LadderCell();
+
+        // generate mobs postions
+        int nbMobs = numberLevel*2;
+        for (int i=1; i<=nbMobs; i++){
+            Position mobPosition = Position.random(rnd);
+            while (grid[mobPosition.y()][mobPosition.x()].isWall())
+                mobPosition = Position.random(rnd);
+            grid[mobPosition.y()][mobPosition.x()] = new MobCell();
+        }
 
         // our grid should be the correct size :)
         return new Level(grid, heroPosition);

@@ -31,6 +31,13 @@ public abstract class Cell extends Actor {
      * @return {@code true} if the cell is a ladder, else {@code false}
      */
     public abstract boolean isLadder();
+
+    /**
+     * Allows statically determining whether a cell represents a mob or something else.
+     *
+     * @return {@code true} if the cell is a mob, else {@code false}
+     */
+    public abstract boolean isMob();
     /*
     /**
      * Retrieves the texture of a cell from one of {@link #WALL_TEXTURE}, {@link #PATH_TEXTURE} or {@link #LADDER_TEXTURE}.

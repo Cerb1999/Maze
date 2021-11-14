@@ -14,5 +14,5 @@ public abstract class AbstractMazeGenerator {
      *
      * @return A generated Level
      */
-    public abstract Level generateMaze();
+    public abstract Level generateMaze(int numberLevel);
 }
