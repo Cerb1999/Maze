@@ -77,6 +77,7 @@ public class GameState{
                     System.out.println();
                 }
             }
+            hero.toFront();
             return level;
         });
     }
