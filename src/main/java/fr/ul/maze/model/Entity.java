@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import fr.ul.maze.MazeGame;
 
@@ -16,9 +17,11 @@ public abstract class Entity extends Actor {
     protected float walkSpeed;
 
     protected MazeGame mazeGame;
+    protected World world;
 
     protected Body body;
     protected Sprite sprite;
+    protected Body attackBody;
 
     protected Direction moveState;
     protected Direction lastMoveState;
@@ -114,29 +117,42 @@ public abstract class Entity extends Actor {
                 switch(lastMoveState) {
                     case RIGHT:
                         attackRightAnimation.update(delta);
-                        if(!attackRightAnimation.isFinished())sprite.set(new Sprite(attackRightAnimation.getFrame()));
-                        else actionState = EntityActionState.IDLE;
+                        if(!attackRightAnimation.isFinished()) sprite.set(new Sprite(attackRightAnimation.getFrame()));
+                        else {
+                            actionState = EntityActionState.IDLE;
+                            world.destroyBody(attackBody);
+                        }
                         break;
                     case LEFT:
                         attackLeftAnimation.update(delta);
-                        if(!attackLeftAnimation.isFinished())sprite.set(new Sprite(attackLeftAnimation.getFrame()));
-                        else actionState = EntityActionState.IDLE;
+                        if(!attackLeftAnimation.isFinished()) sprite.set(new Sprite(attackLeftAnimation.getFrame()));
+                        else {
+                            actionState = EntityActionState.IDLE;
+                            world.destroyBody(attackBody);
+                        }
                         break;
                     case UP:
                         attackUpAnimation.update(delta);
-                        if(!attackUpAnimation.isFinished())sprite.set(new Sprite(attackUpAnimation.getFrame()));
-                        else actionState = EntityActionState.IDLE;
+                        if(!attackUpAnimation.isFinished()) sprite.set(new Sprite(attackUpAnimation.getFrame()));
+                        else {
+                            actionState = EntityActionState.IDLE;
+                            world.destroyBody(attackBody);
+                        }
                         break;
                     case DOWN:
                         attackDownAnimation.update(delta);
-                        if(!attackDownAnimation.isFinished())sprite.set(new Sprite(attackDownAnimation.getFrame()));
-                        else actionState = EntityActionState.IDLE;
+                        if(!attackDownAnimation.isFinished()) sprite.set(new Sprite(attackDownAnimation.getFrame()));
+                        else {
+                            actionState = EntityActionState.IDLE;
+                            world.destroyBody(attackBody);
+                        }
                         break;
                 }
                 break;
             case DYING:
                 dieAnimation.update(delta);
-                if(!dieAnimation.isFinished())sprite.set(new Sprite(dieAnimation.getFrame()));
+                if(!dieAnimation.isFinished()) sprite.set(new Sprite(dieAnimation.getFrame()));
+                else world.destroyBody(body);
                 break;
         }
 

@@ -19,9 +19,10 @@ public class Hero extends Entity {
     public Hero(MazeGame mazeGame, World world, float xPosition, float yPosition){
         this.hp = new AtomicReference<>(BASE_HP);
         this.attackSpeed = 0.5f;
-        this.attackRange = 64f;
+        this.attackRange = 25f;
         this.walkSpeed = 100;
         this.mazeGame = mazeGame;
+        this.world = world;
         this.moveState = Direction.IDLE;
         this.lastMoveState = Direction.DOWN;
         this.actionState = EntityActionState.IDLE;
@@ -109,7 +110,61 @@ public class Hero extends Entity {
             this.attackRightAnimation.setFinishedState(false);
             this.attackLeftAnimation.setFinishedState(false);
             //Add here function to interact with another entity (a monster for exemple)
+            this.createSwordBody();
         }
+    }
+
+    private void createSwordBody(){
+        float attackBodyPosX = 0;
+        float attackBodyPosY = 0;
+        float attackShapeHX = 0;
+        float attackShapeHY = 0;
+        switch(lastMoveState) {
+            case RIGHT:
+                attackBodyPosX = body.getPosition().x + this.attackRange;
+                attackBodyPosY = body.getPosition().y;
+                attackShapeHX = this.attackRange;
+                attackShapeHY = this.attackRange/2;
+                break;
+            case LEFT:
+                attackBodyPosX = body.getPosition().x - this.attackRange;
+                attackBodyPosY = body.getPosition().y;
+                attackShapeHX = this.attackRange;
+                attackShapeHY = this.attackRange/2;
+                break;
+            case UP:
+                attackBodyPosX = body.getPosition().x;
+                attackBodyPosY = body.getPosition().y + this.attackRange;
+                attackShapeHX = this.attackRange/2;
+                attackShapeHY = this.attackRange;
+                break;
+            case DOWN:
+                attackBodyPosX = body.getPosition().x;
+                attackBodyPosY = body.getPosition().y - this.attackRange;
+                attackShapeHX = this.attackRange/2;
+                attackShapeHY = this.attackRange;
+                break;
+        }
+
+        //Create body (hitbox)
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.fixedRotation = true; // stop body fom spinning on itself
+        bodyDef.position.set(attackBodyPosX, attackBodyPosY);
+        attackBody = world.createBody(bodyDef);
+
+        PolygonShape shape = new PolygonShape();//shape of the body
+        shape.setAsBox(attackShapeHX, attackShapeHY);
+
+        FixtureDef fixtureDef = new FixtureDef();//properties of the body
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1f;
+        fixtureDef.isSensor = true;
+
+        Fixture fixture = attackBody.createFixture(fixtureDef);//Information shared with the body
+        fixture.setUserData("HeroSword");
+
+        shape.dispose();//shape not needed after
     }
 
     /**

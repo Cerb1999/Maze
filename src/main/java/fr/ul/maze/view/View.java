@@ -52,8 +52,8 @@ public abstract class View implements Screen {
 
 
 
-        //Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
-        //debugRenderer.render(gameState.getWorld(), stage.getCamera().combined);
+        Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
+        debugRenderer.render(gameState.getWorld(), stage.getCamera().combined);
 
         //Apply physics to our world
         gameState.getWorld().step(1/60f, 6, 2);

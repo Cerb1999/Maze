@@ -20,6 +20,7 @@ public class Mob extends Entity{
         this.attackRange = 64f;
         this.walkSpeed = 50;
         this.mazeGame = mazeGame;
+        this.world = world;
         this.moveState = Direction.IDLE;
         this.lastMoveState = Direction.DOWN;
         this.actionState = EntityActionState.IDLE;
@@ -42,7 +43,7 @@ public class Mob extends Entity{
         fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
-        fixture.setUserData("Zombie");
+        fixture.setUserData(this);
 
         shape.dispose();//shape not needed after
 
@@ -103,6 +104,7 @@ public class Mob extends Entity{
     public void hurt(int hp){
         int val = this.hp.updateAndGet(value -> Math.max(value - hp, THRESHOLD));
         assert (val >= THRESHOLD) : "inconsistent life loss";
+        if(this.hp.get()==0) die();
     }
 
     public void heal(int hp) {
