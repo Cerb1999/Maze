@@ -38,14 +38,9 @@ public abstract class Cell extends Actor {
      * @return {@code true} if the cell is a mob, else {@code false}
      */
     public abstract boolean isMob();
-    /*
+
     /**
-     * Retrieves the texture of a cell from one of {@link #WALL_TEXTURE}, {@link #PATH_TEXTURE} or {@link #LADDER_TEXTURE}.
-     *
-     * @return a texture which can be used in a sprite
+     * Create body and sprite for the cell
      */
-    //public abstract Texture texture();
-
-
     public abstract void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition);
 }

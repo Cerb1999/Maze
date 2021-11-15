@@ -25,12 +25,6 @@ public class PathCell extends Cell {
         return false;
     }
 
-    /*
-        @Override
-        public Texture texture() {
-            return PATH_TEXTURE.get();
-        }
-    */
     @Override
     public void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition){
         sprite = new Sprite((mazeGame.getManagedTexture("floor1")).getRegion());

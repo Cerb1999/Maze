@@ -25,12 +25,6 @@ public class WallCell extends Cell {
         return false;
     }
 
-    /*
-        @Override
-        public Texture texture() {
-            return WALL_TEXTURE.get();
-        }
-    */
     @Override
     public void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition){
         sprite = new Sprite((mazeGame.getManagedTexture("wall1")).getRegion());

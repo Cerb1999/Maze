@@ -26,13 +26,8 @@ public class MobCell extends Cell {
 
     @Override
     public void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition) {
+        //Create special cell for monster's spawn ?
 
     }
 
-/*
-    @Override
-    public Texture texture() {
-        return PATH_TEXTURE.get();
-    }
-*/
 }

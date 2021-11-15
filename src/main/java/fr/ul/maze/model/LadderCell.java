@@ -25,41 +25,35 @@ public class LadderCell extends Cell {
         return false;
     }
 
-    /*
-        @Override
-        public Texture texture() {
-            return LADDER_TEXTURE.get();
-        }
-    */
-@Override
-public void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition){
-    sprite = new Sprite((mazeGame.getManagedTexture("ladder1")).getRegion());
-    sprite.setPosition(xPosition,yPosition);
+    @Override
+    public void createCell(MazeGame mazeGame, World world, float xPosition, float yPosition){
+        sprite = new Sprite((mazeGame.getManagedTexture("ladder1")).getRegion());
+        sprite.setPosition(xPosition,yPosition);
 
-    //Create body (hitbox)
-    BodyDef bodyDef = new BodyDef();
-    bodyDef.type = BodyDef.BodyType.StaticBody;
-    bodyDef.position.set(xPosition, yPosition);
-    body = world.createBody(bodyDef);
+        //Create body (hitbox)
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(xPosition, yPosition);
+        body = world.createBody(bodyDef);
 
-    PolygonShape shape = new PolygonShape();//shape of the body
-    shape.setAsBox(sprite.getWidth()/3, sprite.getHeight()/3);
+        PolygonShape shape = new PolygonShape();//shape of the body
+        shape.setAsBox(sprite.getWidth()/3, sprite.getHeight()/3);
 
-    FixtureDef fixtureDef = new FixtureDef();//properties of the body
-    fixtureDef.shape = shape;
-    fixtureDef.density = 1f;
-    fixtureDef.isSensor = true;
+        FixtureDef fixtureDef = new FixtureDef();//properties of the body
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1f;
+        fixtureDef.isSensor = true;
 
-    Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
-    fixture.setUserData("Ladder");
+        Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
+        fixture.setUserData("Ladder");
 
-    shape.dispose();//shape not needed after
+        shape.dispose();//shape not needed after
 
-    //Parameter for the actor linked with the body
-    this.setWidth(sprite.getWidth());
-    this.setHeight(sprite.getHeight());
-    this.setOrigin(this.getWidth()/2,this.getHeight()/2);
-}
+        //Parameter for the actor linked with the body
+        this.setWidth(sprite.getWidth());
+        this.setHeight(sprite.getHeight());
+        this.setOrigin(this.getWidth()/2,this.getHeight()/2);
+    }
 
     @Override
     protected void positionChanged() {
