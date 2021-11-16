@@ -1,9 +1,7 @@
 package fr.ul.maze.controller;
 
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.*;
+import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.GameState;
 import fr.ul.maze.model.Mob;
 
@@ -21,7 +19,20 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold manifold) {
-
+        //Redirect mob if he persist to walk against a wall or another mob
+        if(((contact.getFixtureA().getUserData().equals("Wall") || contact.getFixtureA().getUserData() instanceof Mob)&& contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("Wall") && contact.getFixtureA().getUserData() instanceof Mob)){
+            Mob mob;
+            if(contact.getFixtureB().getUserData() instanceof Mob)
+                mob = (Mob) contact.getFixtureB().getUserData();
+            else
+                mob = (Mob) contact.getFixtureA().getUserData();
+            Direction nextMove = Direction.getRandomDirection();
+            while(mob.getMoveState()==nextMove)
+                nextMove = Direction.getRandomDirection();
+            mob.addNbWallMoveRandom();
+            if(mob.getNbWallMoveRandom()>=2) nextMove = Direction.get90DegreDirection(nextMove);
+            mob.move(nextMove);
+        }//instanceof needed
     }
 
     @Override
@@ -33,7 +44,7 @@ public class WorldContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         if((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData().equals("Ladder")) || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData().equals("Ladder")))
             gameState.nextLevel();
-        if((contact.getFixtureA().getUserData().equals("HeroSword") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("HeroSword") && contact.getFixtureA().getUserData() instanceof Mob)){
+        else if((contact.getFixtureA().getUserData().equals("HeroSword") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("HeroSword") && contact.getFixtureA().getUserData() instanceof Mob)){
             Mob mob;
             if(contact.getFixtureB().getUserData() instanceof Mob)
                 mob = (Mob) contact.getFixtureB().getUserData();
@@ -41,6 +52,8 @@ public class WorldContactListener implements ContactListener {
                 mob = (Mob) contact.getFixtureA().getUserData();
             mob.hurt(1);
         }//instanceof needed
+
+
 
     }
 }

@@ -14,6 +14,9 @@ public class Mob extends Entity{
     private static final float BASE_ATKSPEED = 0.5f;
     private static final int THRESHOLD = 0;
 
+    private long lastTurn = System.currentTimeMillis();
+    private int nbWallMoveRandom = 0;
+
     public Mob(MazeGame mazeGame, World world, float xPosition, float yPosition){
         this.hp = new AtomicReference<>(BASE_HP);
         this.attackSpeed = 0.5f;
@@ -72,8 +75,29 @@ public class Mob extends Entity{
      * Method used to move the body of the Mob.
      * Apply force to the body depending of the direction
      */
-    public void move(){
-
+    public void move(Direction dir){
+        if(this.actionState == EntityActionState.IDLE){
+            this.moveState = dir;
+            switch(moveState) {
+                case RIGHT:
+                    this.body.setLinearVelocity(this.walkSpeed,0);
+                    break;
+                case LEFT:
+                    this.body.setLinearVelocity(-this.walkSpeed,0);
+                    break;
+                case UP:
+                    this.body.setLinearVelocity(0,this.walkSpeed);
+                    break;
+                case DOWN:
+                    this.body.setLinearVelocity(0,-this.walkSpeed);
+                    break;
+                case IDLE:
+                    this.body.setLinearVelocity(0,0);
+                    break;
+            }
+        }
+        else
+            this.body.setLinearVelocity(0,0);
     }
 
     /**
@@ -118,5 +142,35 @@ public class Mob extends Entity{
     public void die(){
         this.actionState = EntityActionState.DYING;
         this.dieAnimation.setFinishedState(false);
+    }
+
+
+    public int getNbWallMoveRandom() {
+        return nbWallMoveRandom;
+    }
+
+    public void addNbWallMoveRandom() {
+        this.nbWallMoveRandom++;
+    }
+
+    /**
+     * Make the mob randomly move
+     * The mob tends to keep the same direction than choose another (3x)
+     */
+    private void moveRandom(){
+        if (System.currentTimeMillis() - lastTurn >= 1000) {
+            Direction nextMove = Direction.getRandomDirection();
+            if(nextMove!=moveState) nextMove = Direction.getRandomDirection();
+            if(nextMove!=moveState) nextMove = Direction.getRandomDirection();
+            move(nextMove);
+            lastTurn = System.currentTimeMillis();
+            nbWallMoveRandom = 0;
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        this.moveRandom();
+        super.act(delta);
     }
 }

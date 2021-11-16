@@ -54,6 +54,10 @@ public abstract class Entity extends Actor {
         return walkSpeed;
     }
 
+    public Direction getMoveState() {
+        return moveState;
+    }
+
     @Override
     protected void positionChanged() {
         sprite.setPosition(getX(), getY());

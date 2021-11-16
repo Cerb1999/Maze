@@ -44,7 +44,7 @@ public class WallCell extends Cell {
         fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
-        fixture.setUserData(sprite);
+        fixture.setUserData("Wall");
 
         shape.dispose();//shape not needed after
 

@@ -7,6 +7,8 @@ import fr.ul.maze.MazeGame;
 import fr.ul.maze.controller.WorldContactListener;
 import fr.ul.maze.model.generator.RandomMazeGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GameState{
@@ -48,6 +50,9 @@ public class GameState{
             int currentLine = 0;
             int currentLineLength = 0;
 
+            List<Entity> entities = new ArrayList<>();
+            List<Cell> walls = new ArrayList<>();
+
             for (Cell c : level) {
                 if(level.getHeroPosition().equals(new Position(currentLineLength, currentLine))){
                     PathCell pathCellStart = new PathCell();
@@ -55,7 +60,6 @@ public class GameState{
                     stage.addActor(pathCellStart);
                     hero = new Hero(mazeGame, world, currentLineLength*64, currentLine*64); // random position
                     stage.addActor(getHero());
-                    hero.setZIndex(Integer.MAX_VALUE-1);
                 }
                 else if(c.isMob()){
                     PathCell pathCellMobStart = new PathCell();
@@ -63,12 +67,12 @@ public class GameState{
                     stage.addActor(pathCellMobStart);
                     Mob mob = new Mob(mazeGame, world, currentLineLength*64, currentLine*64);
                     stage.addActor(mob);
-                    mob.setZIndex(Integer.MAX_VALUE-1);
+                    entities.add(mob);
                 }
                 else{
                     c.createCell(mazeGame, world, currentLineLength*64, currentLine*64);
                     stage.addActor(c);
-                    if (c.isWall()) c.setZIndex(Integer.MAX_VALUE);
+                    if (c.isWall()) walls.add(c);
                 }
 
                 if (++currentLineLength >= Level.WIDTH) {
@@ -78,6 +82,14 @@ public class GameState{
                 }
             }
             hero.toFront();
+            //Update other entities' z in order for them to always stay visible
+            for(Entity enti : entities){
+                enti.toFront();
+            }
+            //Same for walls
+            for(Cell wall : walls){
+                wall.toFront();
+            }
             return level;
         });
     }
