@@ -8,6 +8,7 @@ import fr.ul.maze.MazeGame;
 import fr.ul.maze.controller.HeroController;
 import fr.ul.maze.controller.PauseController;
 import fr.ul.maze.model.GameState;
+import fr.ul.maze.model.Level;
 
 public class GameView extends View {
 
@@ -22,7 +23,7 @@ public class GameView extends View {
 
         model.setStage(this.stage);
 
-        stage.getViewport().setCamera(new OrthographicCamera(3264,1984));
+        stage.getViewport().setCamera(new OrthographicCamera(64 * Level.WIDTH + 64,64 * Level.HEIGHT + 64));
         stage.getCamera().position.set((stage.getCamera().viewportWidth / 2) - 64, (stage.getCamera().viewportHeight / 2) - 64, 0);
         stage.setViewport(new StretchViewport(stage.getCamera().viewportWidth, stage.getCamera().viewportHeight, stage.getCamera()));
     }

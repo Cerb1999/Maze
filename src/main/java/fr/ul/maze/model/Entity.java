@@ -69,6 +69,7 @@ public abstract class Entity extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
+        boolean toBeRemoved = false;
         switch (actionState){
             case IDLE:
                 switch(moveState) {
@@ -152,7 +153,7 @@ public abstract class Entity extends Actor {
             case DYING:
                 dieAnimation.update(delta);
                 if(!dieAnimation.isFinished()) sprite.set(new Sprite(dieAnimation.getFrame()));
-                else world.destroyBody(body);
+                else toBeRemoved=true;
                 break;
         }
 
@@ -162,6 +163,12 @@ public abstract class Entity extends Actor {
 
         //Update actor from actor position
         sprite.setPosition(this.getX(),this.getY());
+
+        //Remove body and actor if the actor is to be removed
+        if(toBeRemoved){
+            world.destroyBody(body);
+            this.remove();
+        }
 
     }
 }

@@ -40,8 +40,7 @@ public class WorldContactListener implements ContactListener {
             else
                 mob = (Mob) contact.getFixtureA().getUserData();
             mob.hurt(1);
-        }//instance à changer !!!
-
+        }//instanceof needed
 
     }
 }
