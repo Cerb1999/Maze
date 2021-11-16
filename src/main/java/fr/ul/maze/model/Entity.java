@@ -121,6 +121,7 @@ public abstract class Entity extends Actor {
                         if(!attackRightAnimation.isFinished()) sprite.set(new Sprite(attackRightAnimation.getFrame()));
                         else {
                             actionState = EntityActionState.IDLE;
+                            moveState = Direction.IDLE;
                             world.destroyBody(attackBody);
                         }
                         break;
@@ -129,6 +130,7 @@ public abstract class Entity extends Actor {
                         if(!attackLeftAnimation.isFinished()) sprite.set(new Sprite(attackLeftAnimation.getFrame()));
                         else {
                             actionState = EntityActionState.IDLE;
+                            moveState = Direction.IDLE;
                             world.destroyBody(attackBody);
                         }
                         break;
@@ -137,6 +139,7 @@ public abstract class Entity extends Actor {
                         if(!attackUpAnimation.isFinished()) sprite.set(new Sprite(attackUpAnimation.getFrame()));
                         else {
                             actionState = EntityActionState.IDLE;
+                            moveState = Direction.IDLE;
                             world.destroyBody(attackBody);
                         }
                         break;
@@ -145,6 +148,7 @@ public abstract class Entity extends Actor {
                         if(!attackDownAnimation.isFinished()) sprite.set(new Sprite(attackDownAnimation.getFrame()));
                         else {
                             actionState = EntityActionState.IDLE;
+                            moveState = Direction.IDLE;
                             world.destroyBody(attackBody);
                         }
                         break;

@@ -76,7 +76,7 @@ public class Hero extends Entity {
      * @param dir direction where which the hero move.
      */
     public void moveHero(Direction dir){
-        if(this.actionState== EntityActionState.IDLE){
+        if(this.actionState == EntityActionState.IDLE){
             this.moveState = dir;
             switch(moveState) {
                 case RIGHT:
@@ -96,6 +96,8 @@ public class Hero extends Entity {
                     break;
             }
         }
+        else
+            this.body.setLinearVelocity(0,0);
     }
 
     /**
@@ -103,7 +105,7 @@ public class Hero extends Entity {
      * Start animation attack
      */
     public void attack() {
-        if(this.actionState== EntityActionState.IDLE) {
+        if(this.actionState == EntityActionState.IDLE) {
             this.actionState = EntityActionState.ATTACK;
             this.attackDownAnimation.setFinishedState(false);
             this.attackUpAnimation.setFinishedState(false);
