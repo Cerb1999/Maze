@@ -53,6 +53,11 @@ public class PathCell extends Cell {
         this.setWidth(sprite.getWidth());
         this.setHeight(sprite.getHeight());
         this.setOrigin(this.getWidth()/2,this.getHeight()/2);
+        this.setRotation(body.getAngle()*  MathUtils.radiansToDegrees);
+        this.setPosition(body.getPosition().x-this.getWidth()/2,body.getPosition().y-this.getHeight()/2);
+
+        //floor don't need body
+        world.destroyBody(body);
     }
 
     @Override
@@ -73,8 +78,8 @@ public class PathCell extends Cell {
         super.act(delta);
 
         //Update actor from body position and angle
-        this.setRotation(body.getAngle()*  MathUtils.radiansToDegrees);
-        this.setPosition(body.getPosition().x-this.getWidth()/2,body.getPosition().y-this.getHeight()/2);
+        //this.setRotation(body.getAngle()*  MathUtils.radiansToDegrees);
+        //this.setPosition(body.getPosition().x-this.getWidth()/2,body.getPosition().y-this.getHeight()/2);
 
         //Update actor from actor position
         sprite.setPosition(this.getX(),this.getY());
