@@ -20,7 +20,7 @@ public class Hero extends Entity {
         this.hp = new AtomicReference<>(BASE_HP);
         this.attackSpeed = 0.5f;
         this.attackRange = 25f;
-        this.walkSpeed = 100;
+        this.walkSpeed = 3000;
         this.mazeGame = mazeGame;
         this.world = world;
         this.moveState = Direction.IDLE;
@@ -181,6 +181,7 @@ public class Hero extends Entity {
      */
     public void hurt(int hp){
         int val = this.hp.updateAndGet(value -> Math.max(value - hp, THRESHOLD));
+        if(val == THRESHOLD) die();
         assert (val >= THRESHOLD) : "inconsistent life loss";
     }
 
@@ -196,5 +197,4 @@ public class Hero extends Entity {
         this.actionState = EntityActionState.DYING;
         this.dieAnimation.setFinishedState(false);
     }
-
 }

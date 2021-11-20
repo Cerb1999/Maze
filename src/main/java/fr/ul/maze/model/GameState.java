@@ -12,24 +12,24 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GameState{
+    private static final int BASE_TIMER = 100;
     private State state;
     private AtomicReference<Level> level;
     private World world;
     private Hero hero;
     private MazeGame mazeGame;
     private Stage stage;
-    private Pause pause;
-
+    private TimerTask timerTask;
     /**
      * Start a new game.
      */
     public void newGame(MazeGame mazeGame) {
-        changeState(State.GAME_RUNNING);
+        changeState(State.GAME_LAUNCHING);
+        this.timerTask = new TimerTask(this);
         this.mazeGame = mazeGame;
         this.level = new AtomicReference<>(new RandomMazeGenerator().generateMaze(1));
         world = new World(new Vector2(0, 0), true); //world for physics (box2d)
         world.setContactListener(new WorldContactListener(this));
-        pause = new Pause(mazeGame);
     }
 
     public void dispose() {
@@ -37,8 +37,10 @@ public class GameState{
     }
 
     public void nextLevel(){
+        changeState(State.GAME_LEVEL_END);
         this.level.set(new RandomMazeGenerator().generateMaze(this.level.get().getNumber()+1));
         System.out.println("Level: " + this.level.get().getNumber());
+        timerTask.refreshCountdown();
         this.stage.clear();
         world = new World(new Vector2(0, 0), true); //world for physics (box2d)
         world.setContactListener(new WorldContactListener(this));
@@ -93,11 +95,6 @@ public class GameState{
             return level;
         });
     }
-
-    public int getLevelNumber() {
-        return level.get().getNumber();
-    }
-
     public void changeState(State state) {
         this.state = state;
     }
@@ -106,23 +103,51 @@ public class GameState{
         state = (state == State.GAME_RUNNING) ? State.GAME_PAUSED : State.GAME_RUNNING;
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public World getWorld() {
-        return world;
-    }
-
-    public Hero getHero() {
-        return hero;
+    public void checkHeroState() {
+        switch (hero.actionState) {
+            case DYING:
+                changeState(State.GAME_OVER);
+        }
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+    public State getState() {
+        return state;
+    }
+    public World getWorld() {
+        return world;
+    }
+    public Hero getHero() {
+        return hero;
+    }
+    public AtomicReference<Level> getLevel() { return level; }
+    public String getTime() {
+        return timerTask.getTime()+"";
+    }
 
-    public Pause getPause() {
-        return pause;
+    public MazeGame getMazeGame() {
+        return mazeGame;
+    }
+    public int getLevelNumber() {
+        return level.get().getNumber();
+    }
+
+    public void refreshTimer() {
+        timerTask.refreshCountdown();
+        timerTask.start();
+    }
+    public void launchTimer() {
+        timerTask.launch();
+    }
+    public void restartTimer() {
+        timerTask.start();
+    }
+    public void stopTimer() {
+        timerTask.stop();
+    }
+    public boolean dyingHeroState() {
+        return hero.actionState == EntityActionState.DYING;
     }
 }

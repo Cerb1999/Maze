@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import fr.ul.maze.MazeGame;
 import fr.ul.maze.model.GameState;
+import fr.ul.maze.model.State;
 
 public class PauseController implements InputProcessor {
     MazeGame mazeGame;
@@ -17,7 +18,14 @@ public class PauseController implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.ESCAPE: gameState.switchState(); mazeGame.switchScreen();break;
+            case Input.Keys.ESCAPE: {
+                gameState.switchState();
+                State state = gameState.getState();
+                if(state == State.GAME_RUNNING) gameState.restartTimer();
+                else if(state == State.GAME_PAUSED) gameState.stopTimer();
+                mazeGame.switchScreen();
+                break;
+            }
         }
         return false;
     }

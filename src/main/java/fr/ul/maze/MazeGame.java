@@ -10,9 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
 import fr.ul.maze.model.GameState;
-import fr.ul.maze.view.GameView;
-import fr.ul.maze.view.PauseScreenView;
-import fr.ul.maze.view.View;
+import fr.ul.maze.model.State;
+import fr.ul.maze.view.*;
 
 public class MazeGame extends Game {
 	private static final String ATLAS_NAME = "MazeAtlas.atlas"; //one atlas or multiple in the future ?
@@ -30,7 +29,7 @@ public class MazeGame extends Game {
 		this.newGame();
 
 		loadScreens();
-		this.changeScreen(GameView.class);
+		this.changeScreen(MenuView.class);
 
 		gameState.constructLevel();
 	}
@@ -62,9 +61,25 @@ public class MazeGame extends Game {
 				this.changeScreen(GameView.class);
 				break;
 			case GAME_PAUSED:
-				this.changeScreen(PauseScreenView.class);
+				this.changeScreen(PauseView.class);
+				break;
+			case GAME_LAUNCHING:
+				this.changeScreen(MenuView.class);
+				break;
+			case GAME_LEVEL_END:
+				this.changeScreen(LevelTransitionView.class);
+				gameState.stopTimer();
+				break;
+			case GAME_OVER:
+				this.changeScreen(GameOverView.class);
+				gameState.stopTimer();
 				break;
 		}
+	}
+
+	public void switchState(State state) {
+		gameState.changeState(state);
+		switchScreen();
 	}
 
 	/**
@@ -79,6 +94,10 @@ public class MazeGame extends Game {
 	 * Method used to pre-load all screens which may be used in the game in a array.
 	 */
 	public void loadScreens() {
+		screens.put(MenuView.class, new MenuView(this, gameState));
+		screens.put(PauseView.class, new PauseView(this, gameState));
+		screens.put(LevelTransitionView.class, new LevelTransitionView(this, gameState));
+		screens.put(GameOverView.class, new GameOverView(this, gameState));
 		screens.put(GameView.class, new GameView(this, gameState));
 	}
 
