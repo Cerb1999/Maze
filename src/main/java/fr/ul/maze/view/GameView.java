@@ -1,26 +1,18 @@
 package fr.ul.maze.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import fr.ul.maze.MazeGame;
 import fr.ul.maze.controller.HeroController;
 import fr.ul.maze.controller.PauseController;
 import fr.ul.maze.model.GameState;
-import fr.ul.maze.model.Level;
-import fr.ul.maze.model.State;
-import fr.ul.maze.model.TimerTask;
-import javafx.scene.text.Font;
 
 public class GameView extends View {
     private BitmapFont font;

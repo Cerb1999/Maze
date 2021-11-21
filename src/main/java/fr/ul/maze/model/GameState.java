@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GameState{
-    private static final int BASE_TIMER = 100;
     private State state;
     private AtomicReference<Level> level;
     private World world;
@@ -20,6 +19,7 @@ public class GameState{
     private MazeGame mazeGame;
     private Stage stage;
     private TimerTask timerTask;
+
     /**
      * Start a new game.
      */
@@ -98,11 +98,9 @@ public class GameState{
     public void changeState(State state) {
         this.state = state;
     }
-
     public void switchState() {
         state = (state == State.GAME_RUNNING) ? State.GAME_PAUSED : State.GAME_RUNNING;
     }
-
     public void checkHeroState() {
         switch (hero.actionState) {
             case DYING:

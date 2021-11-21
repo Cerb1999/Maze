@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Align;
 import fr.ul.maze.DesktopLauncher;
 import fr.ul.maze.MazeGame;
 import fr.ul.maze.model.GameState;
-import fr.ul.maze.model.State;
 
 public class GameOverView extends View {
     Table btnGroup;
