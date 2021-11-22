@@ -1,104 +1,67 @@
 package fr.ul.maze;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.ObjectMap;
-import fr.ul.maze.model.GameState;
-import fr.ul.maze.view.GameView;
-import fr.ul.maze.view.PauseScreenView;
-import fr.ul.maze.view.View;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import fr.ul.maze.model.entities.Ladder;
+import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.MazeAssetManager;
+import fr.ul.maze.model.entities.Hero;
+import fr.ul.maze.model.entities.Mob;
+import fr.ul.maze.model.generator.RandomMazeGenerator;
+import fr.ul.maze.model.maze.Maze;
+import fr.ul.maze.view.MasterScreen;
+import utils.functional.Tuple3;
 
-public class MazeGame extends Game {
-	private static final String ATLAS_NAME = "MazeAtlas.atlas"; //one atlas or multiple in the future ?
-	private ObjectMap<Class<? extends View>, View> screens = new ObjectMap<>();
-	private AssetManager assetManager;
-	private GameState gameState;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
-	@Override
-	public void create () {
-		assetManager = new AssetManager();
-		assetManager.load(ATLAS_NAME, TextureAtlas.class);
-		assetManager.finishLoading();
+public final class MazeGame extends Game {
+    private MasterScreen screen;
+    private final AtomicReference<MasterState> state;
+    private final AtomicReference<Maze> level;
+    private final AtomicReference<Hero> hero;
+    private final AtomicReference<Ladder> ladder;
+    private final List<AtomicReference<Mob>> mobs;
 
-		gameState = new GameState();
-		this.newGame();
+    private Stage stage;
 
-		loadScreens();
-		this.changeScreen(GameView.class);
+    public MazeGame() {
+        World world = new World(new Vector2(0, 0), true);
 
-		gameState.constructLevel();
-	}
+        Tuple3<Maze, Vector2, Vector2> randomMaze = new RandomMazeGenerator().generateMaze(world);
+        this.level = new AtomicReference<>(randomMaze.fst);
+        this.hero = new AtomicReference<>(new Hero(world, randomMaze.snd));
+        this.ladder = new AtomicReference<>(new Ladder(world, randomMaze.thd));
+        this.mobs = new LinkedList<>();
 
-	@Override
-	public void dispose () {
-		// Dispose of views
-		setScreen(null);
-		screens.forEach((e) -> e.value.dispose());
+        this.state = new AtomicReference<>(new MasterState(world, this.level, this.hero, this.ladder, this.mobs));
 
-		// Dispose of the model
-		gameState.dispose();
+        final int levelNumber = this.state.get().getCurrentLevelNumber();
+        for (int i = 0; i < levelNumber * 1.5; ++i) {
+            this.mobs.add(new AtomicReference<>(new Mob(world, level.get().randomPosition())));
+        }
+    }
 
-		// Dispose of any other resources
-		assetManager.dispose();
-	}
+    @Override
+    public void create() {
+        Box2D.init();
+        MazeAssetManager.getInstance();
 
-	/**
-	 * Create a new game
-	 */
-	public void newGame() {
-		gameState.newGame(this);
-		this.switchScreen();
-	}
+        this.stage = new Stage(new ScreenViewport());
+        this.screen = new MasterScreen(this.stage, this.state);
 
-	public void switchScreen() {
-		switch (gameState.getState()) {
-			case GAME_RUNNING:
-				this.changeScreen(GameView.class);
-				break;
-			case GAME_PAUSED:
-				this.changeScreen(PauseScreenView.class);
-				break;
-		}
-	}
+        this.screen.switchScreen(this.screen.MAIN_SCREEN.get());
+        this.setScreen(this.screen);
+    }
 
-	/**
-	 * Method used to change the current Screen
-	 * @param key The name of the view that is being looked up.
-	 */
-	public void changeScreen(Class<? extends View> key) {
-		this.setScreen(screens.get(key));
-	}
-
-	/**
-	 * Method used to pre-load all screens which may be used in the game in a array.
-	 */
-	public void loadScreens() {
-		screens.put(GameView.class, new GameView(this, gameState));
-	}
-
-	/**
-	 * Convenience method to safely load textures.
-	 * If the texture isn't found, a blank one is created and the error is logged.
-	 * @param imageName The name of the image that is being looked up.
-	 * @return TextureRegionDrawable
-	 */
-	public TextureRegionDrawable getManagedTexture(String imageName){
-		try {
-			TextureRegionDrawable textureRegionDrawable= new TextureRegionDrawable(assetManager.get(ATLAS_NAME, TextureAtlas.class).findRegion(imageName));
-			if(textureRegionDrawable.getRegion()==null)throw new Exception("getRegion() for " + imageName);
-			return textureRegionDrawable;
-		} catch(Exception e) {
-			Gdx.app.error(getClass().getCanonicalName(), "Couldn't get managed texture.", e);
-			return getEmptyTexture();
-		}
-	}
-	public TextureRegionDrawable getEmptyTexture() {
-		return new TextureRegionDrawable(new TextureRegion(new Texture(new Pixmap(64,64, Pixmap.Format.RGBA8888))));
-	}
+    @Override
+    public void dispose() {
+        this.screen.dispose();
+        MazeAssetManager.getInstance().dispose();
+    }
 }
