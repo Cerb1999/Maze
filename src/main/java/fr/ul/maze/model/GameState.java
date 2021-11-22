@@ -41,7 +41,6 @@ public class GameState{
     public void nextLevel(){
         changeState(State.GAME_LEVEL_END);
         this.level.set(new RandomMazeGenerator().generateMaze(this.level.get().getNumber()+1));
-        System.out.println("Level: " + this.level.get().getNumber());
         timerTask.refreshCountdown();
         this.stage.clear();
         world = new World(new Vector2(0, 0), true); //world for physics (box2d)

@@ -28,7 +28,6 @@ public class GameView extends View {
         inputMultiplexer.addProcessor(new PauseController(mazeGame, gameState));
 
         Gdx.input.setInputProcessor(inputMultiplexer);
-        System.out.println("called");
         stage.setViewport(new StretchViewport(stage.getCamera().viewportWidth + 128, stage.getCamera().viewportHeight + 160, stage.getCamera()));
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Ancient.ttf"));
