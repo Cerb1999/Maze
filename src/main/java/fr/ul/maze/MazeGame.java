@@ -55,6 +55,9 @@ public class MazeGame extends Game {
 		this.switchScreen();
 	}
 
+	/**
+	 * change view based on game state
+	 */
 	public void switchScreen() {
 		switch (gameState.getState()) {
 			case GAME_RUNNING:
@@ -77,6 +80,9 @@ public class MazeGame extends Game {
 		}
 	}
 
+	/** switch game state and its screen
+	 * @param state game state (running, game over ...)
+	 */
 	public void switchState(State state) {
 		gameState.changeState(state);
 		switchScreen();

@@ -19,6 +19,8 @@ public class GameState{
     private MazeGame mazeGame;
     private Stage stage;
     private TimerTask timerTask;
+    private static final int decalageX = 128;
+    private static final int decalageY = 160;
 
     /**
      * Start a new game.
@@ -58,21 +60,21 @@ public class GameState{
             for (Cell c : level) {
                 if(level.getHeroPosition().equals(new Position(currentLineLength, currentLine))){
                     PathCell pathCellStart = new PathCell();
-                    pathCellStart.createCell(mazeGame, world, currentLineLength*64, currentLine*64);
+                    pathCellStart.createCell(mazeGame, world, currentLineLength*64 + decalageX, currentLine*64 + decalageY);
                     stage.addActor(pathCellStart);
-                    hero = new Hero(mazeGame, world, currentLineLength*64, currentLine*64); // random position
+                    hero = new Hero(mazeGame, world, currentLineLength*64+ decalageX, currentLine*64 + decalageY); // random position
                     stage.addActor(getHero());
                 }
                 else if(c.isMob()){
                     PathCell pathCellMobStart = new PathCell();
-                    pathCellMobStart.createCell(mazeGame, world, currentLineLength*64, currentLine*64);
+                    pathCellMobStart.createCell(mazeGame, world, currentLineLength*64+ decalageX, currentLine*64 + decalageY);
                     stage.addActor(pathCellMobStart);
-                    Mob mob = new Mob(mazeGame, world, currentLineLength*64, currentLine*64);
+                    Mob mob = new Mob(mazeGame, world, currentLineLength*64+ decalageX, currentLine*64 + decalageY);
                     stage.addActor(mob);
                     entities.add(mob);
                 }
                 else{
-                    c.createCell(mazeGame, world, currentLineLength*64, currentLine*64);
+                    c.createCell(mazeGame, world, currentLineLength*64+ decalageX, currentLine*64 + decalageY);
                     stage.addActor(c);
                     if (c.isWall()) walls.add(c);
                 }
@@ -95,12 +97,25 @@ public class GameState{
             return level;
         });
     }
+
+    /**
+     * change state of the game
+     * @param state i.e GAME_OVER ...
+     */
     public void changeState(State state) {
         this.state = state;
     }
+
+    /**
+     * switch state for pause purposes
+     */
     public void switchState() {
         state = (state == State.GAME_RUNNING) ? State.GAME_PAUSED : State.GAME_RUNNING;
     }
+
+    /**
+     * check state of the hero i.e dying ... in order to change the state of the game
+     */
     public void checkHeroState() {
         switch (hero.actionState) {
             case DYING:

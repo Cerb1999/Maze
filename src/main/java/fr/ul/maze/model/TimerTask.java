@@ -1,6 +1,8 @@
 package fr.ul.maze.model;
 
 import com.badlogic.gdx.utils.Timer;
+import fr.ul.maze.model.GameState;
+import fr.ul.maze.model.State;
 
 public class TimerTask extends Timer.Task {
     private static final int BASE_TIMER = 100;
@@ -22,6 +24,9 @@ public class TimerTask extends Timer.Task {
         }
     }
 
+    /**
+     * decrease timer per second
+     */
     public void decrTime() {
         if(time > 0) time--;
     }
@@ -43,6 +48,9 @@ public class TimerTask extends Timer.Task {
         Timer.instance().stop();
     }
 
+    /**
+     * launch timer every 1 second
+     */
     public void launch() {
         Timer.schedule(this, 1f, 1f);
     }

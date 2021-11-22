@@ -17,10 +17,11 @@ import fr.ul.maze.model.GameState;
 import fr.ul.maze.model.State;
 
 public class PauseView extends View {
-    private Table btnGroup;
-    private TextButton pauseButton;
-    private Label l;
-    private BitmapFont font;
+    private final Table table;
+    private final TextButton pauseButton;
+    private final Label l;
+    private final Label.LabelStyle lStyle;
+    private final BitmapFont font;
 
     public PauseView(MazeGame parent, GameState model) {
         super(parent, model);
@@ -34,25 +35,23 @@ public class PauseView extends View {
         font = generator.generateFont(parameter);
         generator.dispose();
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = font;
-        labelStyle.fontColor = Color.RED;
-
-        l = new Label("Pause", labelStyle);
+        lStyle = new Label.LabelStyle();
+        lStyle.font = font;
+        lStyle.fontColor = Color.RED;
+        l = new Label("Pause", lStyle);
 
         TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
         btnStyle.font = font;
 
         pauseButton = new TextButton("Continuer", btnStyle);
 
-        btnGroup = new Table();
-        btnGroup.setFillParent(true);
-        btnGroup.align(Align.center);
-
-        btnGroup.top();
-        btnGroup.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
-        btnGroup.row();
-        btnGroup.add(pauseButton);
+        table = new Table();
+        table.setFillParent(true);
+        table.align(Align.center);
+        table.top();
+        table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
+        table.row();
+        table.add(pauseButton);
 
         pauseButton.addListener(new ClickListener() {
             @Override
@@ -65,9 +64,14 @@ public class PauseView extends View {
             }
         });
 
-        stage.addActor(btnGroup);
         model.setStage(this.stage);
         Gdx.input.setInputProcessor(stage);
+    }
+
+    @Override
+    public void init() {
+        stage.addActor(table);
+        super.init();
     }
 
     @Override

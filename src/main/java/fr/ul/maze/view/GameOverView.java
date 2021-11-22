@@ -11,16 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import fr.ul.maze.DesktopLauncher;
 import fr.ul.maze.MazeGame;
 import fr.ul.maze.model.GameState;
 
 public class GameOverView extends View {
-    Table btnGroup;
-    TextButton restartButton, exitButton;
-    TextButton.TextButtonStyle btnStyle;
-    Label l;
-    BitmapFont font;
+    private final Table table;
+    private final TextButton restartButton;
+    private final TextButton exitButton;
+    private final TextButton.TextButtonStyle bStyle;
+    private final Label l;
+    private final Label.LabelStyle lStyle;
+    private final BitmapFont font;
 
     public GameOverView(MazeGame parent, GameState model) {
         super(parent, model);
@@ -33,29 +34,27 @@ public class GameOverView extends View {
         generator.dispose();
 
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = font;
-        labelStyle.fontColor = Color.RED;
+        lStyle = new Label.LabelStyle();
+        lStyle.font = font;
+        lStyle.fontColor = Color.RED;
+        l = new Label("Game Over ...", lStyle);
 
-        l = new Label("Game Over ...", labelStyle);
-
-        btnStyle = new TextButton.TextButtonStyle();
-        btnStyle.font = font;
+        bStyle = new TextButton.TextButtonStyle();
+        bStyle.font = font;
 
         //TODO new game
-        restartButton = new TextButton("Recommencer", btnStyle);
-        exitButton = new TextButton("Quitter", btnStyle);
+        restartButton = new TextButton("Recommencer", bStyle);
+        exitButton = new TextButton("Quitter", bStyle);
 
-        btnGroup = new Table();
-        btnGroup.setFillParent(true);
-        btnGroup.align(Align.center);
-
-        btnGroup.top();
-        btnGroup.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
-        btnGroup.row();
+        table = new Table();
+        table.setFillParent(true);
+        table.align(Align.center);
+        table.top();
+        table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
+        table.row();
         //btnGroup.add(restartButton);
-        btnGroup.row();
-        btnGroup.add(exitButton);
+        table.row();
+        table.add(exitButton);
 
         restartButton.addListener(new ClickListener() {
             @Override
@@ -72,14 +71,14 @@ public class GameOverView extends View {
             }
         });
 
-        stage.addActor(btnGroup);
         model.setStage(this.stage);
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void init() {
-
+        stage.addActor(table);
+        super.init();
     }
 
     @Override

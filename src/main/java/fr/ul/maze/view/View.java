@@ -23,10 +23,10 @@ public abstract class View implements Screen {
     public View(MazeGame mazeGame, GameState gameState) {
         this.mazeGame = mazeGame;
         this.gameState = gameState;
+
         inputMultiplexer = new InputMultiplexer();
         stage = new Stage(new ScreenViewport());
-
-        bg = new Texture(Gdx.files.internal("Background.jpg"));
+        bg = new Texture(Gdx.files.internal("Bg.jpg"));
 
         stage.getViewport().setCamera(new OrthographicCamera(64 * Level.WIDTH + 64,64 * Level.HEIGHT + 64));
         stage.getCamera().position.set((stage.getCamera().viewportWidth / 2), (stage.getCamera().viewportHeight / 2), 0);
