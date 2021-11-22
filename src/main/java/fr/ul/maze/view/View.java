@@ -14,11 +14,13 @@ import fr.ul.maze.model.GameState;
 import fr.ul.maze.model.Level;
 
 public abstract class View implements Screen {
+    private static final String background = "Background.jpg";
     protected MazeGame mazeGame;
     protected GameState gameState;
     protected Stage stage;
     protected InputMultiplexer inputMultiplexer;
     private final Texture bg;
+
 
     public View(MazeGame mazeGame, GameState gameState) {
         this.mazeGame = mazeGame;
@@ -26,7 +28,7 @@ public abstract class View implements Screen {
 
         inputMultiplexer = new InputMultiplexer();
         stage = new Stage(new ScreenViewport());
-        bg = new Texture(Gdx.files.internal("Bg.jpg"));
+        bg = new Texture(Gdx.files.internal(background));
 
         stage.getViewport().setCamera(new OrthographicCamera(64 * Level.WIDTH + 64,64 * Level.HEIGHT + 64));
         stage.getCamera().position.set((stage.getCamera().viewportWidth / 2), (stage.getCamera().viewportHeight / 2), 0);
