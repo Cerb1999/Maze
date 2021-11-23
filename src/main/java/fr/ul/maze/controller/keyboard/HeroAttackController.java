@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import exceptions.Exn;
 import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.model.entities.EntityActionState;
 import fr.ul.maze.model.entities.Hero;
 
@@ -26,6 +27,7 @@ public final class HeroAttackController implements InputProcessor {
         if(hero.get().getActionState() == EntityActionState.IDLE) {
             hero.get().setActionState(EntityActionState.ATTACK);
             hero.get().createSwordBody();
+            SoundAssetManager.getInstance().playDrawSwordSound();
         }
     }
 

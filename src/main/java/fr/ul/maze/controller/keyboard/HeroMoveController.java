@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.model.entities.EntityActionState;
 import fr.ul.maze.model.entities.Hero;
 
@@ -62,6 +63,7 @@ public final class HeroMoveController implements InputProcessor {
                             body.setLinearVelocity(0,0);
                             break;
                     }
+                    SoundAssetManager.getInstance().playFootstep();
                 }
                 else
                     body.setLinearVelocity(0,0);
@@ -86,8 +88,10 @@ public final class HeroMoveController implements InputProcessor {
 
     @Override
     public boolean keyUp(int i) {
-        if(!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        if(!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             this.moveHero(Direction.IDLE);
+            SoundAssetManager.getInstance().stopFootstep();
+        }
         return false;
     }
 
