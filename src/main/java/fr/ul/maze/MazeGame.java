@@ -51,6 +51,7 @@ public final class MazeGame extends Game {
 
     @Override
     public void create() {
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
         Gdx.app.setApplicationLogger(new ColoredStderrLogger());
 
         Box2D.init();
@@ -58,6 +59,8 @@ public final class MazeGame extends Game {
 
         this.stage = new Stage(new ScreenViewport());
         this.screen = new MasterScreen(this.stage, this.state);
+
+        this.stage.setDebugAll(true);
 
         this.screen.switchScreen(this.screen.MAIN_SCREEN.get());
         this.setScreen(this.screen);

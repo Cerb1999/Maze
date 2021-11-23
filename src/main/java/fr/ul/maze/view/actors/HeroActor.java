@@ -1,7 +1,9 @@
 package fr.ul.maze.view.actors;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -178,5 +180,14 @@ public final class HeroActor extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         sprite.draw(batch);
+    }
+
+    @Override
+    public void drawDebug(ShapeRenderer shapes) {
+        super.drawDebug(shapes);
+
+        shapes.setColor(Color.TEAL);
+        shapes.set(ShapeRenderer.ShapeType.Filled);
+        shapes.circle(this.model.get().getPosition().x, this.model.get().getPosition().y, 10);
     }
 }

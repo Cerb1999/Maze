@@ -180,4 +180,13 @@ public final class MobActor extends Actor {
         super.draw(batch, parentAlpha);
         sprite.draw(batch);
     }
+
+    @Override
+    public void drawDebug(ShapeRenderer shapes) {
+        super.drawDebug(shapes);
+
+        shapes.setColor(Color.TEAL);
+        shapes.set(ShapeRenderer.ShapeType.Filled);
+        shapes.circle(this.model.get().getPosition().x, this.model.get().getPosition().y, 10);
+    }
 }

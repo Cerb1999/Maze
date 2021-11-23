@@ -21,6 +21,7 @@ import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.actors.HeroActor;
 import fr.ul.maze.view.actors.LadderActor;
 import fr.ul.maze.view.actors.MobActor;
+import fr.ul.maze.view.actors.debug.MazePathsDebug;
 import fr.ul.maze.view.map.RigidSquare;
 import utils.RefCell;
 
@@ -70,6 +71,8 @@ public final class MapScreen implements Screen {
         this.state.updateAndGet(st -> {
             st.getLevel().get().forEachCell( sq -> this.squares.push(new RigidSquare(st.getWorld(), sq)));
             this.squares.forEach(this.stage::addActor);
+
+            this.stage.addActor(new MazePathsDebug(st.getLevel()));
 
             this.hero.inner = new HeroActor(st.getWorld(), st.getHero());
             this.stage.addActor(this.hero.inner);

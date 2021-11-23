@@ -1,5 +1,6 @@
 package fr.ul.maze.model.maze;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
@@ -66,9 +67,7 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
                 squares.put(pos, square);
 
                 switch (type) {
-                    case WALL: {
-                        break;
-                    }
+                    case WALL: continue;
                     case PATH: {
                         GraphNode myself;
                         Integer memorized = memoryLeft.get(new GraphNode(pos, -1));
@@ -152,11 +151,14 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
         Optional<GraphNode> fromNodeOpt = this.getPosition(from);
         Optional<GraphNode> toNodeOpt = this.getPosition(to);
 
+        Gdx.app.debug(getClass().getCanonicalName(), "Is " + from + " found in the graph? " + fromNodeOpt.isPresent());
+        Gdx.app.debug(getClass().getCanonicalName(), "Is " + to + " found in the graph? " + toNodeOpt.isPresent());
+
         if (fromNodeOpt.isPresent() && toNodeOpt.isPresent()) {
             GraphNode fromNode = fromNodeOpt.get(), toNode = toNodeOpt.get();
 
             boolean found = new IndexedAStarPathFinder<>(this).searchNodePath(fromNode, toNode, this.heuristic, path);
-            //System.err.println("Path found? " + found);
+            Gdx.app.log(getClass().getCanonicalName(), "Any path found? " + found);
         }
 
         return path;
@@ -177,5 +179,9 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
                 f.accept(squares.get(new Vector2(j,i)));
             }
         }
+    }
+
+    public Iterable<? extends ObjectMap.Entry<GraphNode, Array<Connection<GraphNode>>>> getAllPaths() {
+        return this.paths;
     }
 }
