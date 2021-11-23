@@ -1,16 +1,8 @@
 package fr.ul.maze.model.assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import fr.ul.maze.view.map.RigidSquare;
 
-import java.util.Objects;
 
 public class MusicAssetManager {
     private final AssetManager assetManager;
