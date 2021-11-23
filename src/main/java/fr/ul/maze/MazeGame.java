@@ -1,6 +1,8 @@
 package fr.ul.maze;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
@@ -49,6 +51,8 @@ public final class MazeGame extends Game {
 
     @Override
     public void create() {
+        Gdx.app.setApplicationLogger(new ColoredStderrLogger());
+
         Box2D.init();
         MazeAssetManager.getInstance();
 
