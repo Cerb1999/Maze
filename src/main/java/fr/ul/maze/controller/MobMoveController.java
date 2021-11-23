@@ -1,5 +1,6 @@
 package fr.ul.maze.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
@@ -11,6 +12,7 @@ import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.map.Square;
 import fr.ul.maze.model.maze.GraphNode;
+import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.Objects;
@@ -18,7 +20,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MobMoveController {
-    private final Timer.Task action;
     private final AtomicReference<Mob> mob;
     private final AtomicReference<MasterState> state;
     private Vector2 nextPosition;
@@ -26,25 +27,33 @@ public final class MobMoveController {
     public MobMoveController(final AtomicReference<MasterState> state, final AtomicReference<Mob> mob) {
         this.mob = mob;
         this.state = state;
-
-        this.action = Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                moveMob();
-            }
-        }, 0, 0.1f);
     }
 
-    private void moveMob() {
-        float mobPosX = mob.get().getPosition().x;
-        float mobPosY = mob.get().getPosition().y;
+    public void moveMob() {
+        Vector2 realPosition = mob.get().getPosition();
+
+        float mobPosX = realPosition.x;
+        float mobPosY = realPosition.y;
+
+        Vector2 relativePosition = new Vector2(
+                (float) Math.ceil(realPosition.x / RigidSquare.WIDTH) - 1,
+                (float) Math.ceil(realPosition.y / RigidSquare.HEIGHT) - 1
+        );
 
         Hero hero = this.state.get().getHero().get();
-        Vector2 heroPosition = new Vector2(Math.round(hero.getPosition().x/ RigidSquare.WIDTH), Math.round(hero.getPosition().y/ RigidSquare.HEIGHT));
-        Vector2 myPosition = new Vector2(Math.round(mobPosX / RigidSquare.WIDTH), Math.round(mobPosY / RigidSquare.HEIGHT));
+        Vector2 heroPosition = new Vector2(
+                (float) Math.ceil(hero.getPosition().x / RigidSquare.WIDTH) - 1,
+                (float) Math.ceil(hero.getPosition().y / RigidSquare.HEIGHT) - 1
+        );
+        Vector2 myPosition = relativePosition;
 
         if (nextPosition != null) {
-            Vector2 next = new Vector2(nextPosition.x * RigidSquare.WIDTH, nextPosition.y * RigidSquare.HEIGHT);
+            Vector2 next = new Vector2(
+                    nextPosition.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2f,
+                    nextPosition.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2f
+            );
+
+            //Gdx.app.debug(getClass().getCanonicalName(), "Trying to move to position " + next + " from " + realPosition);
 
             Direction d = Direction.IDLE;
             if (mobPosX - next.x > 0.5)
@@ -65,10 +74,17 @@ public final class MobMoveController {
 
         GraphPath<GraphNode> path = this.state.get().getLevel().get().findPath(myPosition, heroPosition);
 
+        Gdx.app.debug(getClass().getCanonicalName(), "X: " + mobPosX + " Y: " + mobPosY);
+        Gdx.app.debug(getClass().getCanonicalName(), "Finding path from " + myPosition + " to " + heroPosition);
+
         if (path.getCount() < 2)
             return;
 
+        Gdx.app.debug(getClass().getCanonicalName(), "Path found! Moving towards it");
+
         nextPosition = path.get(1).fst; // only consider the first next cell to move to
+
+        Gdx.app.debug(getClass().getCanonicalName(), "Next position to chase: " + this.nextPosition);
     }
 
     /**

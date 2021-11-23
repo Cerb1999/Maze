@@ -121,6 +121,7 @@ public final class MapScreen implements Screen {
         this.stage.getBatch().setProjectionMatrix(this.camera.combined);
 
 
+        this.mobMoveControllers.inner.forEach(MobMoveController::moveMob);
         this.stage.act(v);
         this.stage.draw();
 
