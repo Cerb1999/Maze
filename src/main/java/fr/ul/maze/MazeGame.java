@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import compiler.Options;
+import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.entities.Ladder;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.MazeAssetManager;
@@ -58,6 +59,7 @@ public final class MazeGame extends Game {
 
         Box2D.init();
         MazeAssetManager.getInstance();
+        MusicAssetManager.getInstance();
 
         this.stage = new Stage(new ScreenViewport());
         this.screen = new MasterScreen(this.stage, this.state);
@@ -72,5 +74,6 @@ public final class MazeGame extends Game {
     public void dispose() {
         this.screen.dispose();
         MazeAssetManager.getInstance().dispose();
+        MusicAssetManager.getInstance().dispose();
     }
 }
