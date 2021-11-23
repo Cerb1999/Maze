@@ -45,15 +45,12 @@ public final class MobMoveController {
                 (float) Math.ceil(hero.getPosition().x / RigidSquare.WIDTH) - 1,
                 (float) Math.ceil(hero.getPosition().y / RigidSquare.HEIGHT) - 1
         );
-        Vector2 myPosition = relativePosition;
 
         if (nextPosition != null) {
             Vector2 next = new Vector2(
                     nextPosition.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2f,
                     nextPosition.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2f
             );
-
-            //Gdx.app.debug(getClass().getCanonicalName(), "Trying to move to position " + next + " from " + realPosition);
 
             Direction d = Direction.IDLE;
             if (mobPosX - next.x > 0.5)
@@ -72,10 +69,10 @@ public final class MobMoveController {
             nextPosition = null;
         }
 
-        GraphPath<GraphNode> path = this.state.get().getLevel().get().findPath(myPosition, heroPosition);
+        GraphPath<GraphNode> path = this.state.get().getLevel().get().findPath(relativePosition, heroPosition);
 
         Gdx.app.debug(getClass().getCanonicalName(), "X: " + mobPosX + " Y: " + mobPosY);
-        Gdx.app.debug(getClass().getCanonicalName(), "Finding path from " + myPosition + " to " + heroPosition);
+        Gdx.app.debug(getClass().getCanonicalName(), "Finding path from " + relativePosition + " to " + heroPosition);
 
         if (path.getCount() < 2)
             return;

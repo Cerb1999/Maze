@@ -158,7 +158,7 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
             GraphNode fromNode = fromNodeOpt.get(), toNode = toNodeOpt.get();
 
             boolean found = new IndexedAStarPathFinder<>(this).searchNodePath(fromNode, toNode, this.heuristic, path);
-            Gdx.app.log(getClass().getCanonicalName(), "Any path found? " + found);
+            Gdx.app.debug(getClass().getCanonicalName(), "Any path found? " + found);
         }
 
         return path;

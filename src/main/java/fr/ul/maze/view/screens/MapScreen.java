@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import compiler.Options;
 import fr.ul.maze.controller.MobMoveController;
 import fr.ul.maze.controller.contact.MasterContactController;
 import fr.ul.maze.controller.keyboard.HeroAttackController;
@@ -52,7 +53,6 @@ public final class MapScreen implements Screen {
 
 
     public MapScreen(final Stage stage, final AtomicReference<MasterState> state) {
-        Box2D.init();
         this.state = state;
 
         this.stage = stage;
@@ -99,8 +99,6 @@ public final class MapScreen implements Screen {
         this.heroAttackController = new HeroAttackController(this.state);
         this.mux.addProcessor(this.heroAttackController);
 
-
-
         Gdx.input.setInputProcessor(this.mux);
 
         this.world = this.state.get().getWorld();
@@ -128,7 +126,8 @@ public final class MapScreen implements Screen {
         this.stage.act(v);
         this.stage.draw();
 
-        this.debugRenderer.render(this.world, this.camera.combined);
+        if (Options.DEBUG)
+            this.debugRenderer.render(this.world, this.camera.combined);
 
         this.world.step(1f / 60f, 6, 2);
     }

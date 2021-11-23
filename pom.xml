@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.ul.maze</groupId>
@@ -19,6 +19,33 @@
 
     <libgdx.version>1.10.0</libgdx.version>
   </properties>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <properties>
+        <runtime.debug>true</runtime.debug>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>prod</id>
+      <activation>
+        <property>
+          <name>debug</name>
+          <value>false</value>
+        </property>
+      </activation>
+
+      <properties>
+        <runtime.debug>false</runtime.debug>
+      </properties>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
@@ -70,12 +97,17 @@
   </dependencies>
 
   <build>
-		<resources>
-			<resource>
-				<directory>src/assets</directory>
-			</resource>
-		</resources>
-    
+    <resources>
+      <resource>
+        <directory>src/assets</directory>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <plugins>
       <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
       <plugin>
@@ -97,6 +129,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
         <configuration>
           <archive>
             <manifest>
@@ -117,7 +150,7 @@
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
-					<appendAssemblyId>false</appendAssemblyId>
+          <appendAssemblyId>false</appendAssemblyId>
         </configuration>
         <executions>
           <execution>

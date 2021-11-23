@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import compiler.Options;
 import fr.ul.maze.model.entities.Ladder;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.MazeAssetManager;
@@ -51,7 +52,8 @@ public final class MazeGame extends Game {
 
     @Override
     public void create() {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        if (Options.DEBUG)
+            Gdx.app.setLogLevel(Application.LOG_DEBUG);
         Gdx.app.setApplicationLogger(new ColoredStderrLogger());
 
         Box2D.init();
@@ -60,7 +62,7 @@ public final class MazeGame extends Game {
         this.stage = new Stage(new ScreenViewport());
         this.screen = new MasterScreen(this.stage, this.state);
 
-        this.stage.setDebugAll(true);
+        this.stage.setDebugAll(Options.DEBUG);
 
         this.screen.switchScreen(this.screen.MAIN_SCREEN.get());
         this.setScreen(this.screen);
