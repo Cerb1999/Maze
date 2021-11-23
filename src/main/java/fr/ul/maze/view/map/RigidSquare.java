@@ -39,6 +39,10 @@ public final class RigidSquare extends Actor {
         }
     }
 
+    public Square.Type getSquareType() {
+        return squareType;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
