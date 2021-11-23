@@ -21,12 +21,14 @@ cd maze
 # - `compile` : compile les sources Java
 # - `test` : exécute les tests
 # - `package` : crée un fichier JAR dans `target/`
-mvn package
+mvn package -P prod
 
 # Le .jar se trouve maintenant dans `target/` si aucune erreur n'est survenue
 # dans l'étape précédente
-java -jar target/maze-1.0-SNAPSHOT.jar
+java -jar target/maze-2.0-SNAPSHOT.jar
 ```
+
+Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en téléchargement direct [ici](https://github.com/Cerb1999/Maze/releases).
 
 ## Fonctionnalités envisagées
 
