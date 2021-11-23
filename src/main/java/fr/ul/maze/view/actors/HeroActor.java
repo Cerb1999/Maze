@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import fr.ul.maze.model.MazeAssetManager;
+import fr.ul.maze.model.assets.MazeAssetManager;
 import fr.ul.maze.model.entities.EntityActionState;
 import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.view.map.RigidSquare;

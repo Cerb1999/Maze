@@ -2,8 +2,7 @@ package fr.ul.maze.view.actors;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import fr.ul.maze.MazeGame;
-import fr.ul.maze.model.MazeAssetManager;
+import fr.ul.maze.model.assets.MazeAssetManager;
 
 /**
  * Custom class for texture animation

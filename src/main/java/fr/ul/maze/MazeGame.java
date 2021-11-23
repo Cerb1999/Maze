@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import compiler.Options;
 import fr.ul.maze.model.entities.Ladder;
 import fr.ul.maze.model.MasterState;
-import fr.ul.maze.model.MazeAssetManager;
+import fr.ul.maze.model.assets.MazeAssetManager;
 import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.generator.RandomMazeGenerator;

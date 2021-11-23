@@ -5,11 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import fr.ul.maze.model.Direction;
-import fr.ul.maze.model.MazeAssetManager;
-import fr.ul.maze.model.entities.EntityActionState;
+import fr.ul.maze.model.assets.MazeAssetManager;
 import fr.ul.maze.model.entities.Ladder;
-import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;

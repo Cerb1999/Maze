@@ -1,17 +1,14 @@
 package fr.ul.maze.view.actors;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import fr.ul.maze.model.Direction;
-import fr.ul.maze.model.MazeAssetManager;
+import fr.ul.maze.model.assets.MazeAssetManager;
 import fr.ul.maze.model.entities.EntityActionState;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.view.map.RigidSquare;

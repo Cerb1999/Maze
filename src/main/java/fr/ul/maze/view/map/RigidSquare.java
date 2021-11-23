@@ -1,20 +1,13 @@
 package fr.ul.maze.view.map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import fr.ul.maze.model.MazeAssetManager;
+import fr.ul.maze.model.assets.MazeAssetManager;
 import fr.ul.maze.model.map.Square;
-import org.lwjgl.Sys;
 
 public final class RigidSquare extends Actor {
     public final static int WIDTH = 64;

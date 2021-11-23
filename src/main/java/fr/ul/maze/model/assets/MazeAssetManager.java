@@ -1,4 +1,4 @@
-package fr.ul.maze.model;
+package fr.ul.maze.model.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
