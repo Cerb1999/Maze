@@ -40,7 +40,7 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - [x] Les niveaux sont générés aléatoirement.
   - [x] Le labyrinthe est généré à partir d’un fichier (pour les niveaux spéciaux).
   - [x] Le héros ne peut pas traverser les murs.
-  - [ ] les monstres ne peuvent pas traverser les murs
+  - [x] les monstres ne peuvent pas traverser les murs
   - [x] Une partie commence au niveau 1.
   - [ ] Certaines cases du labyrinthe sont spéciales :
     - [ ] clé : requise pour accéder au prochain niveau
@@ -54,15 +54,15 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - [x] Afficher le labyrinthe graphiquement
 
 - Monstres
-  - [ ] Des monstres sont placés de manière aléatoire dans le labyrinthe.
-  - [ ] Les monstres se déplacent
-    - [ ] aléatoirement dans un petit rayon quand le joueur est au délà de la portée de détection
-    - [ ] intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
+  - [x] Des monstres sont placés de manière aléatoire dans le labyrinthe.
+  - [x] Les monstres se déplacent
+    - [x] aléatoirement dans un petit rayon quand le joueur est au délà de la portée de détection
+    - [x] intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
  
 - Attaques
   - [ ] Le héros perd une vie au contact d’un monstre
     - [ ] replacé au début du niveau (sans réapparation des objets).
-  - [ ] Le héros peut attaquer les monstres (corps à corps - case adjacente)
+  - [x] Le héros peut attaquer les monstres (corps à corps - case adjacente)
   - [ ] Perte de vie par collision entre le héros et les monstres.
   - [ ] ((Attaque des monstres))
   
