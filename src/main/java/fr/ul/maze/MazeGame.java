@@ -26,28 +26,15 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class MazeGame extends Game {
     private MasterScreen screen;
     private final AtomicReference<MasterState> state;
-    private final AtomicReference<Maze> level;
-    private final AtomicReference<Hero> hero;
-    private final AtomicReference<Ladder> ladder;
-    private final List<AtomicReference<Mob>> mobs;
 
     private Stage stage;
 
     public MazeGame() {
-        World world = new World(new Vector2(0, 0), true);
 
-        Tuple3<Maze, Vector2, Vector2> randomMaze = new RandomMazeGenerator().generateMaze(world);
-        this.level = new AtomicReference<>(randomMaze.fst);
-        this.hero = new AtomicReference<>(new Hero(world, randomMaze.snd));
-        this.ladder = new AtomicReference<>(new Ladder(world, randomMaze.thd));
-        this.mobs = new LinkedList<>();
 
-        this.state = new AtomicReference<>(new MasterState(world, this.level, this.hero, this.ladder, this.mobs));
+        this.state = new AtomicReference<>(new MasterState());
 
-        final int levelNumber = this.state.get().getCurrentLevelNumber();
-        for (int i = 0; i < levelNumber * 1.5; ++i) {
-            this.mobs.add(new AtomicReference<>(new Mob(world, level.get().randomPosition())));
-        }
+
     }
 
     @Override
