@@ -1,4 +1,4 @@
-package fr.ul.maze.view.actors;
+package fr.ul.maze.view.actors.animated;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
