@@ -112,7 +112,7 @@ public final class MapScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.stage.dispose();
+        //this.stage.dispose();
     }
 
     public void constructLevel() {
