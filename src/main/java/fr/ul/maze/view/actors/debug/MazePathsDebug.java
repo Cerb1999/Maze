@@ -14,7 +14,13 @@ import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * A debugging actor only used to output paths information to the debug renderer.
+ */
 public class MazePathsDebug extends Actor {
+    /**
+     * The underlying {@link Maze} to debug.
+     */
     private final AtomicReference<Maze> map;
 
     public MazePathsDebug(final AtomicReference<Maze> maze) {
@@ -30,7 +36,7 @@ public class MazePathsDebug extends Actor {
 
             shapes.setColor(Color.FOREST);
             shapes.set(ShapeRenderer.ShapeType.Filled);
-            shapes.circle(pos.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, pos.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2, 5);
+            shapes.circle(pos.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2f, pos.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2f, 5);
 
             for (Connection<GraphNode> line : entry.value) {
                 Vector2 from = line.getFromNode().fst;
@@ -39,10 +45,10 @@ public class MazePathsDebug extends Actor {
                 shapes.setColor(Color.BROWN);
                 shapes.set(ShapeRenderer.ShapeType.Line);
                 shapes.line(
-                        from.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2,
-                        from.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2,
-                        to.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2,
-                        to.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2
+                        from.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2f,
+                        from.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2f,
+                        to.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2f,
+                        to.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2f
                 );
             }
         }

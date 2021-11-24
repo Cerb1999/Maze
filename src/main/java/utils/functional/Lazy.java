@@ -33,10 +33,9 @@ public interface Lazy<T> extends Supplier<T> {
      */
     T init();
 
-    abstract class Cache<T> {
+    abstract class Cache {
         /**
-         * @implNote
-         * It is mandatory to use <code>Object</code> here instead of <code>T</code> as the value of the
+         * @implNote It is mandatory to use <code>Object</code> here instead of <code>T</code> as the value of the
          * map, because <code>T</code> cannot be referenced from a static context.
          */
         private static final IdentityHashMap<Object, Object> values = new IdentityHashMap<>();
@@ -52,7 +51,7 @@ public interface Lazy<T> extends Supplier<T> {
          * @param creator    the supplier used to create new instances of objects of type <code>T</code>
          * @param <T>        the type of objects to retrieve from the cache
          * @return the cached value if one has already been created, else a new one generated (and cached) from
-         * th supplier.
+         * the supplier.
          */
         public static synchronized <T> T getInstance(Lazy<T> lazyHolder, Supplier<T> creator) {
             Object instance = values.get(lazyHolder);
