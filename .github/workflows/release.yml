@@ -24,7 +24,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Package using Maven
-        run: mvn --update-snapshots package
+        run: mvn --update-snapshots package -P prod
 
       - name: Get tag
         id: release-tag
