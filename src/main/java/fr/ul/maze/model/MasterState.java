@@ -17,10 +17,10 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class MasterState {
     private static int levelNumberFactory = 0;
 
-    private AtomicReference<Maze> level;
+    private final AtomicReference<Maze> level;
     private int currentLevelNumber;
-    private AtomicReference<Hero> hero;
-    private AtomicReference<Ladder> ladder;
+    private final AtomicReference<Hero> hero;
+    private final AtomicReference<Ladder> ladder;
     private List<AtomicReference<Mob>> mobs;
 
     private World world;
@@ -66,16 +66,15 @@ public final class MasterState {
     public void nextLevel(){
         this.world =new World(new Vector2(0, 0), true);
         Tuple3<Maze, Vector2, Vector2> randomMaze = new RandomMazeGenerator().generateMaze(world);
-        this.level = new AtomicReference<>(randomMaze.fst);
+        this.level.set(randomMaze.fst);
         this.currentLevelNumber = ++levelNumberFactory;
         int lasthp = this.hero.get().getHp();
-        this.hero = new AtomicReference<>(new Hero(world, randomMaze.snd));
+        this.hero.set(new Hero(world, randomMaze.snd));
         this.hero.get().setHp(lasthp);
-        this.ladder = new AtomicReference<>(new Ladder(world, randomMaze.thd));
+        this.ladder.set(new Ladder(world, randomMaze.thd));
         this.mobs = new LinkedList<>();
         for (int i = 0; i < currentLevelNumber * 1.5; ++i) {
             this.mobs.add(new AtomicReference<>(new Mob(world, level.get().randomPosition())));
         }
-        System.out.println(currentLevelNumber);
     }
 }

@@ -30,11 +30,7 @@ public final class MazeGame extends Game {
     private Stage stage;
 
     public MazeGame() {
-
-
         this.state = new AtomicReference<>(new MasterState());
-
-
     }
 
     @Override
