@@ -1,0 +1,44 @@
+Liste des fonctionnalités prévues au sprint 2 :
+
+[X] Labyrinthe - Les monstres se déplacent dans la labyrinthe aléatoirement & intelligemment
+
+	Validé.
+
+[X] Monstres - Placés aléatoirement dans le labyrinthe
+
+	Validé.
+
+[X] Attaques - Le héros perd une vie au contact d'un monstre 
+
+	Validé.
+	Le héros n'est pas encore replacé dans le labyrinthe : cette fonctionnalité a été déplacée au prochain sprint.
+
+[X] Autres - Musique
+
+	Validé.
+
+[X] Autres - Timer
+
+	Validé.
+
+[X] Autres - Game over
+
+	Validé.
+	Le bouton pour recommencer une partie est encore à ajouter.
+
+[X] Autres - Menu de départ
+
+	Validé.
+
+[X] Autres - Transition entre niveaux
+
+	Validé.
+
+[X] Autres - Statistiques & affichage
+
+	Validé.
+
+[ ] Labyrinthe - clé requise pour passer au niveau suivant
+
+	Non implémentée par manque de temps.
+	Cette fonctionnalité sera reprise au prochain sprint.
