@@ -1,0 +1,14 @@
+Points faibles :
+- Début de sprint : la communication était encore difficile
+- La conception a été revue en profondeur afin de poursuivre les objectifs que nous nous étions fixés au début du projet
+  L'intégration de la libgdx a beaucoup changé notre point de vue en matière de conception et nous a demandé de revoir beaucoup de composants de notre application
+  Le manque de communication n'a malheureusement pas aidé à s'en rendre compte plus tôt (mais il n'est jamais trop tard)
+- Il a fallu passer un peu de temps à comprendre et s'adapter à la nouvelle conception en plein milieu du sprint
+  Celle-ci n'ayant pas été prévue, il a été d'autant plus difficile de changer en plein milieu du sprint
+
+
+Points forts :
+- Fin de sprint : après beaucoup de brainstorming, la communication s'est nettement améliorée, et cela a conduit a une meilleure ambiance/qualité de travail
+- La conception est bien plus solide maintenant, et respecte d'autant plus nos objectifs initiaux
+- La majorité des fonctionnalités prévues ont été implémentées dans les temps et validées
+- Le jeu est maintenant un jeu avec un objectif à poursuivre : aller le plus loin possible sans mourir tout en restant dans les temps (100s par niveau)
