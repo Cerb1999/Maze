@@ -131,4 +131,4 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 
 #### Diagramme de classe à la fin du sprint
 
-![diagramme de classe fin sprint 2](./doc/sprint2/class_diagram_end_sprint2.png)
+![diagramme de classe fin sprint 2](./doc/sprint2/class_diagram_end_sprint2.svg)
