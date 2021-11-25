@@ -1,50 +1,37 @@
 package fr.ul.maze.controller.keyboard;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import exceptions.Exn;
-import fr.ul.maze.model.Direction;
+import com.badlogic.gdx.utils.Timer;
+import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
-import fr.ul.maze.model.entities.EntityActionState;
-import fr.ul.maze.model.entities.Hero;
+import fr.ul.maze.view.screens.MasterScreen;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public final class HeroAttackController implements InputProcessor {
+public final class GameOverController implements InputProcessor {
     private final AtomicReference<MasterState> state;
+    private final MasterScreen master;
 
-    public HeroAttackController(final AtomicReference<MasterState> state) {
+    public GameOverController(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
-    }
-
-    /**
-     * Method used to make the hero attack
-     * Start animation attack
-     */
-    public void attack() {
-        AtomicReference<Hero> hero = this.state.get().getHero();
-
-        hero.updateAndGet(h -> {
-            h.updateBody(body -> {
-                if(h.getActionState() == EntityActionState.IDLE) {
-                    h.setActionState(EntityActionState.ATTACK);
-                    h.setMoveState(Direction.IDLE);
-                    body.setLinearVelocity(0,0);
-                    h.createSwordBody();
-                }
-            });
-            return h;
-        });
-
-
+        this.master = masterScreen;
     }
 
     @Override
     public boolean keyDown(int i) {
-        if (i == Input.Keys.SPACE) {
-            this.attack();
+        switch (i) {
+            case Input.Keys.SPACE: {
+                ////
+                break;
+            }
+            case Input.Keys.ESCAPE: {
+                Gdx.app.exit();
+                System.exit(0);
+                break;
+            }
         }
-
         return false;
     }
 

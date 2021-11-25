@@ -17,9 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.ul.maze.controller.TimerSingleton;
+import fr.ul.maze.controller.keyboard.GameOverController;
+import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
-import fr.ul.maze.model.assets.MusicAssetManager;
-import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
@@ -32,8 +32,9 @@ public class GameOverScreen implements Screen {
     private final OrthographicCamera camera;
 
     private InputMultiplexer mux;
+    private GameOverController gameOverController;
 
-    public GameOverScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public GameOverScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.stage = new Stage();
 
         this.state = state;
@@ -46,7 +47,6 @@ public class GameOverScreen implements Screen {
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
 
         this.constructScreen();
-        MusicAssetManager.getInstance().playGameoverMusic();
     }
 
     private void constructScreen() {
@@ -54,12 +54,12 @@ public class GameOverScreen implements Screen {
         lStyle.font = master.getFontBIG();
         Label l = new Label("Game Over ...", lStyle);
 
-        TextButton.TextButtonStyle bStyle = new TextButton.TextButtonStyle();
-        bStyle.font = master.getFontMID();
+        Label.LabelStyle l2Style = new Label.LabelStyle();
+        l2Style.font = master.getFontMID();
 
         //TODO new game
-        TextButton restartButton = new TextButton("Recommencer", bStyle);
-        TextButton exitButton = new TextButton("Quitter", bStyle);
+        Label restart = new Label("[SPACE] Recommencer", l2Style);
+        Label exit = new Label("[ESC] Quitter", l2Style);
 
         Table table = new Table();
         table.setFillParent(true);
@@ -67,33 +67,24 @@ public class GameOverScreen implements Screen {
         table.top();
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        //btnGroup.add(restartButton);
+        //btnGroup.add(restart);
         table.row();
-        table.add(exitButton);
-
-        restartButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //DesktopLauncher.main(new String[] {"new game"});
-            }
-        });
-
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                TimerSingleton.clear();
-                Gdx.app.exit();
-                System.exit(0);
-            }
-        });
+        table.add(exit);
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
+
+        gameOverController = new GameOverController(state, master);
+
+        stage.addActor(table);
+        mux = new InputMultiplexer();
+        mux.addProcessor(stage);
+        mux.addProcessor(gameOverController);
     }
 
     @Override
     public void show() {
-        MusicAssetManager.getInstance().playGameoverMusic();
+        Gdx.input.setInputProcessor(mux);
     }
 
     @Override
@@ -122,6 +113,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resume() {
+
     }
 
     @Override
@@ -132,6 +124,5 @@ public class GameOverScreen implements Screen {
     @Override
     public void dispose() {
         this.stage.dispose();
-        MusicAssetManager.getInstance().stopMusic();
     }
 }

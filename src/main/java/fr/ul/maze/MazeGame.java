@@ -35,7 +35,7 @@ public final class MazeGame extends Game {
 		MazeAssetManager.getInstance();
 
 		this.stage = new Stage(new ScreenViewport());
-		this.screen = new MasterScreen(this.stage, this.state);
+		this.screen = new MasterScreen(this.state);
 
 		this.stage.setDebugAll(Options.DEBUG);
 

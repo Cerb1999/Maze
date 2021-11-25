@@ -13,8 +13,6 @@ public final class Hero extends Entity {
     private static final float BASE_ATTACK_SPEED = 0.5f;
     private static final int THRESHOLD = 0;
 
-    protected Body attackBody;
-
     public Hero(final World world, final Vector2 position) {
         super(BASE_HP, BASE_MOVEMENT_SPEED, BASE_ATTACK_RANGE, BASE_ATTACK_SPEED, Direction.IDLE, Direction.DOWN, EntityActionState.IDLE, world, position);
 
@@ -103,10 +101,6 @@ public final class Hero extends Entity {
      */
     public void die(){
         this.actionState = EntityActionState.DYING;
-    }
-
-    public void destroyAttackBody() {
-        if(attackBody!=null)this.world.destroyBody(this.attackBody);
     }
 
     public void destroyBody() {

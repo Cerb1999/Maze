@@ -10,10 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import fr.ul.maze.model.MasterState;
 import utils.functional.Lazy;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MasterScreen implements Screen {
-    private static String BACKGROUND_NAME = "background.jpg";
+    private static String BACKGROUND_NAME = "Background.jpg";
     private static String FONT_NAME = "Ancient.ttf";
 
     public final Lazy<Screen> MAIN_SCREEN;
@@ -23,17 +24,17 @@ public final class MasterScreen implements Screen {
     public final Lazy<Screen> GAME_OVER_SCREEN;
     private Screen currentScreen;
     
-    private BitmapFont fontBIG, fontMID;
+    private BitmapFont fontBIG, fontMID, fontSMALL;
     private Texture background;
 
-    public MasterScreen(final Stage stage, final AtomicReference<MasterState> state) {
+    public MasterScreen(final AtomicReference<MasterState> state) {
         initFontAndBackground();
 
-        MAIN_SCREEN = () -> new MapScreen(stage, state, this);
-        PAUSE_SCREEN = () -> new PauseScreen(stage, state, this);
-        MENU_SCREEN = () -> new MenuScreen(stage, state, this);
-        LEVEL_TRANSITION_SCREEN = () -> new LevelTransitionScreen(stage, state, this);
-        GAME_OVER_SCREEN = () -> new GameOverScreen(stage, state, this);
+        MAIN_SCREEN = () -> new MapScreen(state, this);
+        PAUSE_SCREEN = () -> new PauseScreen(state, this);
+        MENU_SCREEN = () -> new MenuScreen(state, this);
+        LEVEL_TRANSITION_SCREEN = () -> new LevelTransitionScreen(state, this);
+        GAME_OVER_SCREEN = () -> new GameOverScreen(state, this);
     }
 
     private void initFontAndBackground() {
@@ -45,6 +46,9 @@ public final class MasterScreen implements Screen {
         params.size = 140;
         params.color = Color.WHITE;
         fontMID = generator.generateFont(params);
+        params.size = 100;
+        params.color = Color.YELLOW;
+        fontSMALL = generator.generateFont(params);
         generator.dispose();
 
         background = new Texture(Gdx.files.internal(BACKGROUND_NAME));
@@ -52,7 +56,10 @@ public final class MasterScreen implements Screen {
 
 
     public void switchScreen(Screen newScreen) {
+        if (!Objects.isNull(this.currentScreen))
+            this.currentScreen.hide();
         this.currentScreen = newScreen;
+        this.currentScreen.show();
     }
 
     @Override
@@ -103,6 +110,10 @@ public final class MasterScreen implements Screen {
 
     public BitmapFont getFontMID() {
         return fontMID;
+    }
+
+    public BitmapFont getFontSMALL() {
+        return fontSMALL;
     }
 
     public Texture getBackground() {

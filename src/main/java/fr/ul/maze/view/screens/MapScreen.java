@@ -9,15 +9,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import compiler.Options;
 import fr.ul.maze.controller.MobMoveController;
 import fr.ul.maze.controller.TimerSingleton;
@@ -26,9 +26,7 @@ import fr.ul.maze.controller.keyboard.HeroAttackController;
 import fr.ul.maze.controller.keyboard.HeroMoveController;
 import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
-import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.entities.Mob;
-import fr.ul.maze.model.map.Square;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.actors.HeroActor;
 import fr.ul.maze.view.actors.LadderActor;
@@ -45,9 +43,10 @@ public final class MapScreen implements Screen {
     private final AtomicReference<MasterState> state;
     private PauseController pauseController;
     private final Camera camera;
-    private InputMultiplexer mux;
     private final Stage stage;
     private final MasterScreen master;
+
+    private InputMultiplexer mux;
 
     private LinkedList<RigidSquare> squares;
     private RefCell<HeroActor> hero;
@@ -65,8 +64,7 @@ public final class MapScreen implements Screen {
 
     private Label time;
 
-
-    public MapScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public MapScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
         this.master = masterScreen;
@@ -78,19 +76,11 @@ public final class MapScreen implements Screen {
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight + 160, this.camera));
         this.constructLevel();
         this.constructScreen();
-        MusicAssetManager.getInstance().playGameMusic();
     }
 
     private void constructScreen() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Ancient.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-
         Label.LabelStyle lTime = new Label.LabelStyle();
-        lTime.font = font;
-        lTime.fontColor = Color.YELLOW;
+        lTime.font = master.getFontSMALL();
 
         time = new Label(TimerSingleton.getTime()+"", lTime);
 
@@ -105,12 +95,13 @@ public final class MapScreen implements Screen {
 
         stage.addActor(table);
         mux.addProcessor(pauseController);
+
         Gdx.input.setInputProcessor(mux);
     }
 
     @Override
     public void show() {
-        MusicAssetManager.getInstance().playGameMusic();
+        Gdx.input.setInputProcessor(this.mux);
     }
 
     @Override
@@ -144,7 +135,7 @@ public final class MapScreen implements Screen {
 
     @Override
     public void pause() {
-        MusicAssetManager.getInstance().stopMusic();
+
     }
 
     @Override
@@ -160,7 +151,6 @@ public final class MapScreen implements Screen {
     @Override
     public void dispose() {
         //this.stage.dispose();
-        MusicAssetManager.getInstance().stopMusic();
     }
 
     public void constructLevel() {
@@ -196,7 +186,8 @@ public final class MapScreen implements Screen {
             return st;
         });
 
-        this.mux = new InputMultiplexer(stage);
+        this.mux = new InputMultiplexer();
+        this.mux.addProcessor(stage);
 
         this.heroMoveController = new HeroMoveController(this.state);
         this.mux.addProcessor(this.heroMoveController);
@@ -209,10 +200,5 @@ public final class MapScreen implements Screen {
         this.masterContactListener = new MasterContactController(this.state, this, master);
 
         this.world.setContactListener(this.masterContactListener);
-
-        //order sprite z-index
-        this.mobs.inner.forEach(Actor::toFront);
-        this.hero.inner.toFront();
-        this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
     }
 }
