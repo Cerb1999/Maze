@@ -60,19 +60,18 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
     - [x] intelligemment (essaye de l'attraper) lorsque le joueur est dans la portée de détection du monstre.
  
 - Attaques
-  - [ ] Le héros perd une vie au contact d’un monstre
+  - [x] Le héros perd une vie au contact d’un monstre
     - [ ] replacé au début du niveau (sans réapparation des objets).
   - [x] Le héros peut attaquer les monstres (corps à corps - case adjacente)
-  - [ ] Perte de vie par collision entre le héros et les monstres.
   - [ ] ((Attaque des monstres))
   
  - Autre
    - [X] Pause
-   - [ ] Menu de départ
-   - [ ] Game over
-   - [ ] Statistiques (vie, score, ...)
-   - [ ] ((Timer))
-   - [ ] ((Musique))
+   - [x] Menu de départ
+   - [x] Game over
+   - [x] Statistiques (vie, score, ...)
+   - [x] ((Timer))
+   - [x] ((Musique))
 
 ## Sprint 1
 
@@ -115,12 +114,12 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - Le héros perd une vie au contact d’un monstre
     - replacé au début du niveau (sans réapparation des objets).
   - Perte de vie par collision entre le héros et les monstres.
- - Autre
-   - Musique
-   - Timer
-   - Game over
-   - Menu de départ
-   - Statistiques (vie, score, ...)
+- Autre
+  - Musique
+  - Timer
+  - Game over
+  - Menu de départ
+  - Statistiques (vie, score, ...)
 
 #### Diagramme de classe au début du sprint
 
