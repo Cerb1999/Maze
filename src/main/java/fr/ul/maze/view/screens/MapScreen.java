@@ -64,6 +64,8 @@ public final class MapScreen implements Screen {
 
     private Label time;
 
+    private final PauseController pauseController;
+
     public MapScreen(final AtomicReference<MasterState> state, final PauseController pauseController, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
@@ -74,6 +76,8 @@ public final class MapScreen implements Screen {
         this.stage.getViewport().setCamera(this.camera);
         this.camera.position.set(this.camera.viewportWidth / 2, this.camera.viewportHeight / 2, 0);
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
+
+        this.pauseController = pauseController;
 
         this.constructLevel();
         this.constructScreen(pauseController);
@@ -194,6 +198,8 @@ public final class MapScreen implements Screen {
 
         this.heroAttackController = new HeroAttackController(this.state);
         this.mux.addProcessor(this.heroAttackController);
+
+        this.mux.addProcessor(this.pauseController);
 
         this.debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 
