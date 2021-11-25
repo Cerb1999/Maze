@@ -31,8 +31,30 @@ public final class HeroMoveController implements InputProcessor {
         hero.updateAndGet(h -> {
             h.updateBody(body -> {
                 if(h.getActionState() == EntityActionState.IDLE){
-                    if(d==Direction.UPRIGHT || d==Direction.UPLEFT) h.setMoveState(Direction.UP);
-                    else if(d==Direction.DOWNRIGHT || d==Direction.DOWNLEFT) h.setMoveState(Direction.DOWN);
+                    if(d==Direction.UPRIGHT || d==Direction.UPLEFT){
+                        switch (h.getLastMoveState()){
+                            case UP :
+                                h.setMoveState(Direction.UP);
+                                break;
+                            case LEFT:
+                                h.setMoveState(Direction.LEFT);
+                                break;
+                            case RIGHT:
+                                h.setMoveState(Direction.RIGHT);
+                        }
+                    }
+                    else if(d==Direction.DOWNRIGHT || d==Direction.DOWNLEFT){
+                        switch (h.getLastMoveState()){
+                            case DOWN:
+                                h.setMoveState(Direction.DOWN);
+                                break;
+                            case LEFT:
+                                h.setMoveState(Direction.LEFT);
+                                break;
+                            case RIGHT:
+                                h.setMoveState(Direction.RIGHT);
+                        }
+                    }
                     else h.setMoveState(d);
                     switch(d) {
                         case UP:

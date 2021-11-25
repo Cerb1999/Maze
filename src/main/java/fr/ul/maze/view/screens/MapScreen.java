@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -28,6 +29,7 @@ import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.entities.Mob;
+import fr.ul.maze.model.map.Square;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.actors.HeroActor;
 import fr.ul.maze.view.actors.LadderActor;
@@ -111,7 +113,6 @@ public final class MapScreen implements Screen {
 
         this.camera.update();
         this.stage.getBatch().setProjectionMatrix(this.camera.combined);
-
 
         this.mobMoveControllers.inner.forEach(MobMoveController::moveMob);
         this.stage.act(v);
@@ -200,5 +201,9 @@ public final class MapScreen implements Screen {
         this.masterContactListener = new MasterContactController(this.state, this, master);
 
         this.world.setContactListener(this.masterContactListener);
+
+        this.hero.inner.toFront();
+        this.mobs.inner.forEach(Actor::toFront);
+        this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
     }
 }
