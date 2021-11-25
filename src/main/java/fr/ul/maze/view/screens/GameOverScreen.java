@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.MusicAssetManager;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
@@ -44,6 +46,7 @@ public class GameOverScreen implements Screen {
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
 
         this.constructScreen();
+        MusicAssetManager.getInstance().playGameoverMusic();
     }
 
     private void constructScreen() {
@@ -90,6 +93,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        MusicAssetManager.getInstance().playGameoverMusic();
     }
 
     @Override
@@ -118,7 +122,6 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -129,5 +132,6 @@ public class GameOverScreen implements Screen {
     @Override
     public void dispose() {
         this.stage.dispose();
+        MusicAssetManager.getInstance().stopMusic();
     }
 }

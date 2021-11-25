@@ -78,6 +78,7 @@ public final class MapScreen implements Screen {
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight + 160, this.camera));
         this.constructLevel();
         this.constructScreen();
+        MusicAssetManager.getInstance().playGameMusic();
     }
 
     private void constructScreen() {

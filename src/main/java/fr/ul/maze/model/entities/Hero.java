@@ -2,6 +2,7 @@ package fr.ul.maze.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.view.map.RigidSquare;
 import fr.ul.maze.model.Direction;
 
@@ -93,6 +94,7 @@ public final class Hero extends Entity {
 
     public void damage(final int dmg) {
         super.damage(dmg);
+        SoundAssetManager.getInstance().playHeroHurtSound();
         if(this.getHp()==0) this.die();
     }
 

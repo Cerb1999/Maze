@@ -57,6 +57,7 @@ public class SoundAssetManager {
     }
 
     public void playHeroHurtSound(){
-        heroHurtSound.play();
+        long id = heroHurtSound.play();
+        heroHurtSound.setVolume(id, 0.2f);
     }
 }

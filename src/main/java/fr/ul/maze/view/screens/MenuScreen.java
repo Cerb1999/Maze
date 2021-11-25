@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
@@ -87,6 +88,7 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        MusicAssetManager.getInstance().playMenuMusic();
     }
 
     @Override
@@ -126,5 +128,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         this.stage.dispose();
+        MusicAssetManager.getInstance().stopMusic();
     }
 }
