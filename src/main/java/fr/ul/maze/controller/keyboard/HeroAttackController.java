@@ -23,10 +23,20 @@ public final class HeroAttackController implements InputProcessor {
      */
     public void attack() {
         AtomicReference<Hero> hero = this.state.get().getHero();
-        if(hero.get().getActionState() == EntityActionState.IDLE) {
-            hero.get().setActionState(EntityActionState.ATTACK);
-            hero.get().createSwordBody();
-        }
+
+        hero.updateAndGet(h -> {
+            h.updateBody(body -> {
+                if(h.getActionState() == EntityActionState.IDLE) {
+                    h.setActionState(EntityActionState.ATTACK);
+                    h.setMoveState(Direction.IDLE);
+                    body.setLinearVelocity(0,0);
+                    h.createSwordBody();
+                }
+            });
+            return h;
+        });
+
+
     }
 
     @Override

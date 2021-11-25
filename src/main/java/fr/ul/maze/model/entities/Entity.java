@@ -20,6 +20,7 @@ public abstract class Entity {
     protected EntityActionState actionState;
 
     protected Body body;
+    protected Body attackBody;
 
 
     protected Entity(final int baseHp, final float baseAttackRange, final World world, final Vector2 position) {
@@ -107,5 +108,9 @@ public abstract class Entity {
 
     public void destroyBody() {
         this.world.destroyBody(this.body);
+    }
+
+    public void destroyAttackBody() {
+        if(attackBody!=null)this.world.destroyBody(this.attackBody);
     }
 }

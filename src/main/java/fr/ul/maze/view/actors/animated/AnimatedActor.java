@@ -109,6 +109,7 @@ public class AnimatedActor extends Actor {
                         else {
                             this.model.get().setActionState(EntityActionState.IDLE);
                             this.model.get().setMoveState(Direction.IDLE);
+                            this.model.get().destroyAttackBody();
                         }
                         break;
                     case LEFT:
@@ -117,6 +118,7 @@ public class AnimatedActor extends Actor {
                         else {
                             this.model.get().setActionState(EntityActionState.IDLE);
                             this.model.get().setMoveState(Direction.IDLE);
+                            this.model.get().destroyAttackBody();
                         }
                         break;
                     case UP:
@@ -125,6 +127,7 @@ public class AnimatedActor extends Actor {
                         else {
                             this.model.get().setActionState(EntityActionState.IDLE);
                             this.model.get().setMoveState(Direction.IDLE);
+                            this.model.get().destroyAttackBody();
                         }
                         break;
                     case DOWN:
@@ -133,6 +136,7 @@ public class AnimatedActor extends Actor {
                         else {
                             this.model.get().setActionState(EntityActionState.IDLE);
                             this.model.get().setMoveState(Direction.IDLE);
+                            this.model.get().destroyAttackBody();
                         }
                         break;
                 }
