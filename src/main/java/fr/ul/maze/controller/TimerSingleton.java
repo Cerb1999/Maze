@@ -30,8 +30,8 @@ public class TimerSingleton extends Timer.Task {
     public void run() {
         time--;
         if(time == 0) {
-            masterScreen.switchScreen(masterScreen.MENU_SCREEN.get());
-            stop();
+            masterScreen.switchScreen(masterScreen.GAME_OVER_SCREEN.get());
+            clear();
         }
     }
 
