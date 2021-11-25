@@ -92,11 +92,11 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 
 #### Diagramme de classe au début du sprint
 
-![diagramme de classe début sprint 1](./readme_assets/class_diagram_sprint1_start.png)
+![diagramme de classe début sprint 1](./doc/sprint1/class_diagram_sprint1_start.png)
 
 #### Diagramme de classe à la fin du sprint
 
-![diagramme de classe fin sprint 1](./readme_assets/class_diagram_sprint1_end.png)
+![diagramme de classe fin sprint 1](./doc/sprint1/class_diagram_sprint1_end.png)
 
 ## Sprint 2
 
@@ -123,11 +123,12 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 
 #### Diagramme de classe au début du sprint
 
-![diagramme de classe début sprint 2](./readme_assets/class_diagram_begin_sprint2.png)
+![diagramme de classe début sprint 2](./doc/sprint2/class_diagram_begin_sprint2.png)
 
 #### Diagramme de sequence mouvement Mob au début du sprint
 
-![diagramme de sequanece mouvement mob début sprint 2](./readme_assets/class_sequence_mob_movement_begin_sprint2.png)
+![diagramme de sequanece mouvement mob début sprint 2](./doc/sprint2/class_sequence_mob_movement_begin_sprint2.png)
 
 #### Diagramme de classe à la fin du sprint
 
+![diagramme de classe fin sprint 2](./doc/sprint2/class_diagram_end_sprint2.png)
