@@ -1,47 +1,41 @@
 package fr.ul.maze.view.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import fr.ul.maze.MazeGame;
 import fr.ul.maze.controller.TimerSingleton;
-import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PauseScreen implements Screen {
-    private static final String background = "Background.jpg";
-
+public class LevelTransitionScreen implements Screen {
     private final AtomicReference<MasterState> state;
-
-    private final Camera camera;
-    private InputMultiplexer mux;
+    private final OrthographicCamera camera;
     private final Stage stage;
-    private PauseController pauseController;
+    private final MasterScreen master;
 
-    private MasterScreen master;
-    private Table table;
+    private Label curLvl;
 
-    public PauseScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public LevelTransitionScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
-        this.stage = new Stage();
-
         this.master = masterScreen;
+
+        this.stage = new Stage();
         this.camera = new OrthographicCamera(RigidSquare.WIDTH * Maze.WIDTH, RigidSquare.HEIGHT * Maze.HEIGHT);
 
         this.stage.getViewport().setCamera(this.camera);
@@ -52,43 +46,38 @@ public class PauseScreen implements Screen {
     }
 
     private void constructScreen() {
-        Label.LabelStyle lStyle = new Label.LabelStyle();
-        lStyle.font = master.getFontBIG();
-        Label l = new Label("Pause", lStyle);
+        Label.LabelStyle curLvlStyle = new Label.LabelStyle();
+        curLvlStyle.font = master.getFontBIG();
+        curLvl = new Label("Niveau : " + state.get().getCurrentLevelNumber() + " complété !", curLvlStyle);
 
-        TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
-        btnStyle.font = master.getFontMID();
+        Label.LabelStyle lvlStyle = new Label.LabelStyle();
+        lvlStyle.font = master.getFontMID();
+        Label lvl = new Label("Niveau suivant ...", lvlStyle);
 
-        TextButton pauseButton = new TextButton("Continuer", btnStyle);
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         table.align(Align.center);
         table.top();
-        table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
+        table.add(curLvl).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        table.add(pauseButton);
-
-
-
-        this.pauseController = new PauseController(true, this.state, master);
-
-        pauseButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                pauseController.unpause();
-            }
-        });
+        table.add(lvl);
 
         stage.addActor(table);
-        this.mux = new InputMultiplexer();
-        this.mux.addProcessor(stage);
-        this.mux.addProcessor(pauseController);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(mux);
+        curLvl.setText("Niveau : " + state.get().getCurrentLevelNumber() + " complété !");
+        Timer timer = new Timer();
+        Timer.Task task = timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run () {
+                TimerSingleton.refresh();
+                stage.setViewport(new StretchViewport(stage.getCamera().viewportWidth, stage.getCamera().viewportHeight + 160, stage.getCamera()));
+                master.switchScreen(master.MAIN_SCREEN.get());
+            }
+        }, 2);
     }
 
     @Override
@@ -105,10 +94,10 @@ public class PauseScreen implements Screen {
         this.stage.draw();
     }
 
-    @Override
     public void resize(int i, int i1) {
         this.stage.getViewport().update(i, i1, true);
     }
+
 
     @Override
     public void pause() {

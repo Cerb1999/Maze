@@ -7,7 +7,6 @@ import fr.ul.maze.model.entities.Ladder;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.generator.RandomMazeGenerator;
 import fr.ul.maze.model.maze.Maze;
-import org.lwjgl.Sys;
 import utils.functional.Tuple3;
 
 import java.util.LinkedList;
@@ -24,6 +23,7 @@ public final class MasterState {
     private List<AtomicReference<Mob>> mobs;
 
     private World world;
+
 
     public MasterState(){
         this.world = new World(new Vector2(0, 0), true);

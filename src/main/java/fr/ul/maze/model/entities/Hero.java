@@ -32,7 +32,8 @@ public final class Hero extends Entity {
         fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
-        fixture.setUserData("Hero");
+        //fixture.setUserData("Hero");
+        fixture.setUserData(this);
 
         shape.dispose();//shape not needed after
     }
@@ -90,6 +91,11 @@ public final class Hero extends Entity {
         shape.dispose();//shape not needed after
     }
 
+    public void damage(final int dmg) {
+        super.damage(dmg);
+        if(this.getHp()==0) this.die();
+    }
+
     /**
      * The hero dies. Start dying animation
      */
@@ -103,5 +109,9 @@ public final class Hero extends Entity {
 
     public void destroyBody() {
         if(body!=null)this.world.destroyBody(this.body);
+    }
+
+    public boolean isDead() {
+        return this.actionState == EntityActionState.DYING;
     }
 }

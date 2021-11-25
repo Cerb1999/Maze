@@ -98,7 +98,6 @@ public final class MobMoveController {
                     if(d==Direction.UPRIGHT || d==Direction.UPLEFT) h.setMoveState(Direction.UP);
                     else if(d==Direction.DOWNRIGHT || d==Direction.DOWNLEFT) h.setMoveState(Direction.DOWN);
                     else h.setMoveState(d);
-                    //System.out.println(h.getMoveState());
                     switch(d) {
                         case UP:
                             body.setLinearVelocity(0,h.getWalkSpeed());
