@@ -22,12 +22,11 @@ public class PauseScreen implements Screen {
     private final Camera camera;
     private InputMultiplexer mux;
     private final Stage stage;
-    private PauseController pauseController;
 
     private MasterScreen master;
     private Table table;
 
-    public PauseScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public PauseScreen(final AtomicReference<MasterState> state, final PauseController pauseController, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
 
@@ -38,10 +37,10 @@ public class PauseScreen implements Screen {
         this.camera.position.set(this.camera.viewportWidth / 2, this.camera.viewportHeight / 2, 0);
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
 
-        this.constructScreen();
+        this.constructScreen(pauseController);
     }
 
-    private void constructScreen() {
+    private void constructScreen(final PauseController pauseController) {
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = master.getFontBIG();
         Label l = new Label("Pause", lStyle);
@@ -58,8 +57,6 @@ public class PauseScreen implements Screen {
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
         table.add(l2);
-
-        pauseController = new PauseController(true, this.state, master);
 
         stage.addActor(table);
         mux = new InputMultiplexer();

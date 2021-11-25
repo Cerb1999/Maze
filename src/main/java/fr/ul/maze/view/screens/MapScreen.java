@@ -42,7 +42,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class MapScreen implements Screen {
     private final AtomicReference<MasterState> state;
-    private PauseController pauseController;
     private final Camera camera;
     private final Stage stage;
     private final MasterScreen master;
@@ -65,7 +64,7 @@ public final class MapScreen implements Screen {
 
     private Label time;
 
-    public MapScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public MapScreen(final AtomicReference<MasterState> state, final PauseController pauseController, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
         this.master = masterScreen;
@@ -77,10 +76,10 @@ public final class MapScreen implements Screen {
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
 
         this.constructLevel();
-        this.constructScreen();
+        this.constructScreen(pauseController);
     }
 
-    private void constructScreen() {
+    private void constructScreen(final PauseController pauseController) {
         Label.LabelStyle lTime = new Label.LabelStyle();
         lTime.font = master.getFontSMALL();
 
@@ -92,8 +91,6 @@ public final class MapScreen implements Screen {
         table.top();
         table.add(time).padRight(stage.getCamera().viewportWidth/10);
         table.row();
-
-        pauseController = new PauseController(false, state, master);
 
         stage.addActor(table);
         mux.addProcessor(pauseController);

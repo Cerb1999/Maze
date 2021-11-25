@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import fr.ul.maze.MazeGame;
+import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import utils.functional.Lazy;
 
@@ -24,6 +25,8 @@ public final class MasterScreen implements Screen {
     public final Lazy<Screen> LEVEL_TRANSITION_SCREEN;
     public final Lazy<Screen> GAME_OVER_SCREEN;
     private Screen currentScreen;
+
+    private final PauseController pauseController;
     
     private BitmapFont fontBIG, fontMID, fontSMALL;
     private Texture background;
@@ -31,8 +34,10 @@ public final class MasterScreen implements Screen {
     public MasterScreen(final AtomicReference<MasterState> state) {
         initFontAndBackground();
 
-        MAIN_SCREEN = () -> new MapScreen(state, this);
-        PAUSE_SCREEN = () -> new PauseScreen(state, this);
+        pauseController = new PauseController(false, state, this);
+
+        MAIN_SCREEN = () -> new MapScreen(state, pauseController, this);
+        PAUSE_SCREEN = () -> new PauseScreen(state, pauseController, this);
         MENU_SCREEN = () -> new MenuScreen(state, this);
         LEVEL_TRANSITION_SCREEN = () -> new LevelTransitionScreen(state, this);
         GAME_OVER_SCREEN = () -> new GameOverScreen(state, this);

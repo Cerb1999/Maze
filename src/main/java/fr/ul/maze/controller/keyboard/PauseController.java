@@ -1,5 +1,6 @@
 package fr.ul.maze.controller.keyboard;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import exceptions.Exn;
@@ -35,10 +36,12 @@ public final class PauseController implements InputProcessor {
     public boolean keyDown(int i) {
         switch (i) {
             case Input.Keys.ESCAPE: {
+                Gdx.app.debug(getClass().getCanonicalName(), "Received [Esc]: " + paused);
+
                 paused^=true;
                 if(paused) pause();
                 else unpause();
-                break;
+                return true;
             }
         }
         return false;
