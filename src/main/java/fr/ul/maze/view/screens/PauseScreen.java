@@ -4,19 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.maze.Maze;
@@ -25,8 +17,6 @@ import fr.ul.maze.view.map.RigidSquare;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PauseScreen implements Screen {
-    private static final String background = "Background.jpg";
-
     private final AtomicReference<MasterState> state;
 
     private final Camera camera;
@@ -37,7 +27,7 @@ public class PauseScreen implements Screen {
     private MasterScreen master;
     private Table table;
 
-    public PauseScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public PauseScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
 
@@ -56,10 +46,10 @@ public class PauseScreen implements Screen {
         lStyle.font = master.getFontBIG();
         Label l = new Label("Pause", lStyle);
 
-        TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
-        btnStyle.font = master.getFontMID();
+        Label.LabelStyle l2Style = new Label.LabelStyle();
+        l2Style.font = master.getFontMID();
 
-        TextButton pauseButton = new TextButton("Continuer", btnStyle);
+        Label l2 = new Label("[ESC] Continuer", l2Style);
 
         table = new Table();
         table.setFillParent(true);
@@ -67,28 +57,20 @@ public class PauseScreen implements Screen {
         table.top();
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        table.add(pauseButton);
+        table.add(l2);
 
-
-
-        this.pauseController = new PauseController(true, this.state, master);
-
-        pauseButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                pauseController.unpause();
-            }
-        });
+        pauseController = new PauseController(true, this.state, master);
 
         stage.addActor(table);
-        this.mux = new InputMultiplexer();
-        this.mux.addProcessor(stage);
-        this.mux.addProcessor(pauseController);
+        mux = new InputMultiplexer();
+        mux.addProcessor(stage);
+        mux.addProcessor(pauseController);
+        Gdx.input.setInputProcessor(mux);
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(mux);
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import compiler.Options;
 import fr.ul.maze.controller.MobMoveController;
 import fr.ul.maze.controller.TimerSingleton;
@@ -63,8 +64,7 @@ public final class MapScreen implements Screen {
 
     private Label time;
 
-
-    public MapScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public MapScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
         this.master = masterScreen;
@@ -79,15 +79,8 @@ public final class MapScreen implements Screen {
     }
 
     private void constructScreen() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Ancient.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 100;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-
         Label.LabelStyle lTime = new Label.LabelStyle();
-        lTime.font = font;
-        lTime.fontColor = Color.YELLOW;
+        lTime.font = master.getFontSMALL();
 
         time = new Label(TimerSingleton.getTime()+"", lTime);
 
@@ -102,6 +95,7 @@ public final class MapScreen implements Screen {
 
         stage.addActor(table);
         mux.addProcessor(pauseController);
+
         Gdx.input.setInputProcessor(mux);
     }
 
@@ -191,7 +185,8 @@ public final class MapScreen implements Screen {
             return st;
         });
 
-        this.mux = new InputMultiplexer(stage);
+        this.mux = new InputMultiplexer();
+        this.mux.addProcessor(stage);
 
         this.heroMoveController = new HeroMoveController(this.state);
         this.mux.addProcessor(this.heroMoveController);

@@ -18,18 +18,20 @@ public final class MasterContactController implements ContactListener {
     private final MobAttackController mobAttackController;
     private final AtomicReference<MasterState> state;
     private final MapScreen mapScreen;
+    private final MasterScreen master;
 
     public MasterContactController(AtomicReference<MasterState> state, MapScreen mapScreen, MasterScreen masterScreen) {
         this.endLevelController = new EndLevelController();
         this.mobAttackController = new MobAttackController(masterScreen);
         this.state = state;
         this.mapScreen = mapScreen;
+        this.master = masterScreen;
     }
 
     @Override
     public void beginContact(Contact contact) {
             if((contact.getFixtureA().getUserData() instanceof Hero && contact.getFixtureB().getUserData().equals("Ladder")) || (contact.getFixtureB().getUserData() instanceof Hero && contact.getFixtureA().getUserData().equals("Ladder")))
-            endLevelController.nextLevel(this.state, this.mapScreen);
+            endLevelController.nextLevel(this.state, this.mapScreen, this.master);
         else if((contact.getFixtureA().getUserData().equals("HeroSword") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("HeroSword") && contact.getFixtureA().getUserData() instanceof Mob)){
             Mob mob;
             if(contact.getFixtureB().getUserData() instanceof Mob)

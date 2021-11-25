@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.ul.maze.controller.TimerSingleton;
+import fr.ul.maze.controller.keyboard.MenuController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
@@ -28,7 +29,11 @@ public class MenuScreen implements Screen {
     private final Stage stage;
     private final MasterScreen master;
 
-    public MenuScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    private InputMultiplexer mux;
+
+    private MenuController menuController;
+
+    public MenuScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
 
@@ -47,11 +52,11 @@ public class MenuScreen implements Screen {
         lStyle.font = master.getFontBIG();
         Label l = new Label("Maze", lStyle);
 
-        TextButton.TextButtonStyle bStyle = new TextButton.TextButtonStyle();
-        bStyle.font = master.getFontMID();
+        Label.LabelStyle l2Style = new Label.LabelStyle();
+        l2Style.font = master.getFontMID();
 
-        TextButton startButton = new TextButton("Commencer", bStyle);
-        TextButton exitButton = new TextButton("Quitter", bStyle);
+        Label start = new Label("[SPACE] Commencer", l2Style);
+        Label exit = new Label("[ESC] Quitter", l2Style);
 
         Table table = new Table();
         table.setFillParent(true);
@@ -59,34 +64,21 @@ public class MenuScreen implements Screen {
         table.top();
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        table.add(startButton);
+        table.add(start);
         table.row();
-        table.add(exitButton);
+        table.add(exit);
 
-
-        startButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                master.switchScreen(master.MAIN_SCREEN.get());
-                Timer timer = new Timer();
-                TimerSingleton.launch(timer, master);
-            }
-        });
-
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-                System.exit(0);
-            }
-        });
+        menuController = new MenuController(state, master);
+        mux = new InputMultiplexer();
 
         stage.addActor(table);
+        mux.addProcessor(stage);
+        mux.addProcessor(menuController);
+        Gdx.input.setInputProcessor(mux);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
