@@ -12,13 +12,12 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * Randomly generates a maze by applying the randomized Prim's algorithm.
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Prim's_algorithm">Prim's algorithm</a>
+ */
 public class RandomMazeGenerator extends AbstractMazeGenerator {
-    /**
-     * Randomly generates a maze by applying the randomized Prim's algorithm.
-     *
-     * @return a procedurally generated random maze.
-     * @see <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_Prim's_algorithm">Prim's algorithm</a>
-     */
     @Override
     public Tuple3<Maze, Vector2, Vector2> generateMaze(final World world) {
         Square.Type[][] grid = IntStream.range(0, Maze.HEIGHT)
@@ -57,17 +56,6 @@ public class RandomMazeGenerator extends AbstractMazeGenerator {
         do {
             ladderVector2 = new Vector2(rnd.nextInt(Maze.WIDTH), rnd.nextInt(Maze.HEIGHT));
         } while (grid[Math.round(ladderVector2.y)][Math.round(ladderVector2.x)] == Square.Type.WALL);
-
-        //grid[ladderVector2.y()][ladderVector2.x()] = new LadderCell();
-
-        // generate mobs postions
-/*        int nbMobs = numberLevel * 2;
-        for (int i = 1; i <= nbMobs; i++) {
-            Vector2 mobVector2 = Vector2.random(rnd);
-            while (grid[mobVector2.y()][mobVector2.x()] == NodeType.WALL)
-                mobVector2 = Vector2.random(rnd);
-            grid[mobVector2.y()][mobVector2.x()] = new MobCell();
-        } */
 
         // our grid should be the correct size :)
         return new Tuple3<>(new Maze(world, grid), heroVector2, ladderVector2);

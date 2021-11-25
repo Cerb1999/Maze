@@ -4,6 +4,10 @@ import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.math.Vector2;
 import fr.ul.maze.model.maze.GraphNode;
 
+/**
+ * A very simple heuristic which simply computes the Manhattan distance between two
+ * points.
+ */
 public class SimpleHeuristic implements Heuristic<GraphNode> {
     @Override
     public float estimate(GraphNode n1, GraphNode n2) {

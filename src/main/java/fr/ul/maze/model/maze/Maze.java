@@ -20,7 +20,11 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class Maze extends Actor implements IndexedGraph<GraphNode> {
+/**
+ * A specialized instance of {@link IndexedGraph} to represent the maze with
+ * pathfinding abilities (using GdxAI).
+ */
+public class Maze implements IndexedGraph<GraphNode> {
     /**
      * Fixed width for the maze, in a number of cells.
      */
@@ -30,12 +34,26 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
      */
     public static final int HEIGHT = 30;
 
+    /**
+     * Contains all the connections between paths in the maze.
+     */
     private final ObjectMap<GraphNode, Array<Connection<GraphNode>>> paths;
-    private int nodeCount;
-
-    private HashMap<Vector2,Square> squares;
-
+    /**
+     * Maps node positions with their respective models.
+     *
+     * @see Square
+     */
+    private final HashMap<Vector2, Square> squares;
+    /**
+     * The heuristic used to determine paths between two nodes.
+     *
+     * @implNote This is simply set to a new instance of {@link SimpleHeuristic}.
+     */
     private final Heuristic<GraphNode> heuristic;
+    /**
+     * The number of path nodes which are contained in the maze.
+     */
+    private int nodeCount;
 
     private Maze() {
         this.paths = new ObjectMap<>();
@@ -56,6 +74,7 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
     public Maze(final World world, final Square.Type[][] grid) {
         this();
 
+        // a bidirectional map between {@link GraphNode}s and their indices.
         HashMap<GraphNode, Integer> memoryLeft = new HashMap<>();
         HashMap<Integer, GraphNode> memoryRight = new HashMap<>();
 
@@ -63,11 +82,13 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
             for (int j = 0; j < Maze.WIDTH; ++j) {
                 Vector2 pos = new Vector2(j, i);
                 Square.Type type = grid[i][j];
+
                 Square square = new Square(world, type, pos);
                 squares.put(pos, square);
 
                 switch (type) {
-                    case WALL: continue;
+                    case WALL:
+                        continue;
                     case PATH: {
                         GraphNode myself;
                         Integer memorized = memoryLeft.get(new GraphNode(pos, -1));
@@ -145,6 +166,14 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
         return Optional.empty();
     }
 
+    /**
+     * Determines the best path between the two given nodes, as long as they are contained in
+     * the maze.
+     *
+     * @param from the position the path starts from
+     * @param to   the position which should be reached
+     * @return an empty path if none was found, else that path which was found
+     */
     public GraphPath<GraphNode> findPath(Vector2 from, Vector2 to) {
         GraphPath<GraphNode> path = new DefaultGraphPath<>();
 
@@ -164,23 +193,44 @@ public class Maze extends Actor implements IndexedGraph<GraphNode> {
         return path;
     }
 
+    /**
+     * Returns a new random valid position in the maze, where a valid position is
+     * a position pointing to a {@link Square.Type#PATH} square.
+     *
+     * @return a valid position in the maze
+     */
     public Vector2 randomPosition() {
         Vector2 vec;
         Random rnd = new Random();
+
         do {
             vec = new Vector2(rnd.nextInt(Maze.WIDTH), rnd.nextInt(Maze.HEIGHT));
         } while (this.squares.get(vec).getType() == Square.Type.WALL);
+
         return vec;
     }
 
-    public void forEachCell(Consumer<Square> f){
-        for(int i=0; i<HEIGHT;i++){
-            for(int j=0; j<WIDTH;j++){
-                f.accept(squares.get(new Vector2(j,i)));
+    /**
+     * Iterates through cells {@link #WIDTH}-wise first and applies a function to each
+     * {@link Square} in the maze (paths and walls included).
+     *
+     * @param f the consumer to apply to each {@link Square}
+     */
+    public void forEachCell(Consumer<Square> f) {
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                f.accept(squares.get(new Vector2(j, i)));
             }
         }
     }
 
+    /**
+     * Allows iterating through all connections in the underlying {@link IndexedGraph}.
+     * This is mainly exposed for debug purposes.
+     *
+     * @return an iterable collection of connections, where keys are the origin node, and values are arrays
+     * of connections to neighbour nodes.
+     */
     public Iterable<? extends ObjectMap.Entry<GraphNode, Array<Connection<GraphNode>>>> getAllPaths() {
         return this.paths;
     }

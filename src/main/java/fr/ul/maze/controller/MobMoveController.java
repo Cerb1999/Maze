@@ -17,6 +17,7 @@ import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MobMoveController {
@@ -69,7 +70,15 @@ public final class MobMoveController {
             nextPosition = null;
         }
 
-        GraphPath<GraphNode> path = this.state.get().getLevel().get().findPath(relativePosition, heroPosition);
+        GraphPath<GraphNode> path;
+        if(!mob.get().isWandering() || (Math.abs(heroPosition.x - relativePosition.x) <= mob.get().getVisionRange()) && (Math.abs(heroPosition.y - relativePosition.y) <= mob.get().getVisionRange())){
+            Gdx.app.debug(getClass().getCanonicalName(), "Hero seen ! distance between mob and hero: x: " + Math.abs(heroPosition.x - relativePosition.x) + " y:" + Math.abs(heroPosition.y - relativePosition.y));
+            mob.get().setWander(false);
+            path = this.state.get().getLevel().get().findPath(relativePosition, heroPosition);
+        }
+        else {
+            path = this.state.get().getLevel().get().findPath(relativePosition, mob.get().getWanderPos());
+        }
 
         Gdx.app.debug(getClass().getCanonicalName(), "X: " + mobPosX + " Y: " + mobPosY);
         Gdx.app.debug(getClass().getCanonicalName(), "Finding path from " + relativePosition + " to " + heroPosition);
@@ -98,7 +107,6 @@ public final class MobMoveController {
                     if(d==Direction.UPRIGHT || d==Direction.UPLEFT) h.setMoveState(Direction.UP);
                     else if(d==Direction.DOWNRIGHT || d==Direction.DOWNLEFT) h.setMoveState(Direction.DOWN);
                     else h.setMoveState(d);
-                    //System.out.println(h.getMoveState());
                     switch(d) {
                         case UP:
                             body.setLinearVelocity(0,h.getWalkSpeed());

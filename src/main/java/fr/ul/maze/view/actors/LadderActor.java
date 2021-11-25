@@ -19,12 +19,12 @@ public final class LadderActor extends Actor {
     public LadderActor(final World world, AtomicReference<Ladder> ladder) {
         this.model = ladder;
         sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture("ladder1")).getRegion());
-        sprite.setPosition(ladder.get().getBody().getPosition().x - RigidSquare.WIDTH/2,ladder.get().getBody().getPosition().x - RigidSquare.HEIGHT/2);
+        sprite.setPosition(ladder.get().getBody().getPosition().x - RigidSquare.WIDTH / 2, ladder.get().getBody().getPosition().x - RigidSquare.HEIGHT / 2);
 
         //Parameter for the actor linked with the body
         this.setWidth(sprite.getWidth());
         this.setHeight(sprite.getHeight());
-        this.setOrigin(this.getWidth()/2,this.getHeight()/2);
+        this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
     }
 
     @Override
@@ -45,11 +45,11 @@ public final class LadderActor extends Actor {
         super.act(delta);
 
         //Update actor from body position and angle
-        this.setRotation(model.get().getBody().getAngle()*  MathUtils.radiansToDegrees);
-        this.setPosition(model.get().getBody().getPosition().x-this.getWidth()/2,model.get().getBody().getPosition().y-this.getHeight()/2);
+        this.setRotation(model.get().getBody().getAngle() * MathUtils.radiansToDegrees);
+        this.setPosition(model.get().getBody().getPosition().x - this.getWidth() / 2, model.get().getBody().getPosition().y - this.getHeight() / 2);
 
         //Update actor from actor position
-        sprite.setPosition(this.getX(),this.getY());
+        sprite.setPosition(this.getX(), this.getY());
 
     }
 }

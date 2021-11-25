@@ -3,7 +3,9 @@ package fr.ul.maze.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,35 +15,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import fr.ul.maze.controller.TimerSingleton;
-import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PauseScreen implements Screen {
-    private static final String background = "Background.jpg";
-
-    private final AtomicReference<MasterState> state;
-
-    private final Camera camera;
-    private InputMultiplexer mux;
+public class GameOverScreen implements Screen {
+    private final MasterScreen master;
     private final Stage stage;
-    private PauseController pauseController;
+    private final AtomicReference<MasterState> state;
+    private final OrthographicCamera camera;
 
-    private MasterScreen master;
-    private Table table;
+    private InputMultiplexer mux;
 
-    public PauseScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
-        this.state = state;
+    public GameOverScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.stage = new Stage();
 
+        this.state = state;
         this.master = masterScreen;
+
         this.camera = new OrthographicCamera(RigidSquare.WIDTH * Maze.WIDTH, RigidSquare.HEIGHT * Maze.HEIGHT);
 
         this.stage.getViewport().setCamera(this.camera);
@@ -54,41 +49,47 @@ public class PauseScreen implements Screen {
     private void constructScreen() {
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = master.getFontBIG();
-        Label l = new Label("Pause", lStyle);
+        Label l = new Label("Game Over ...", lStyle);
 
-        TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
-        btnStyle.font = master.getFontMID();
+        TextButton.TextButtonStyle bStyle = new TextButton.TextButtonStyle();
+        bStyle.font = master.getFontMID();
 
-        TextButton pauseButton = new TextButton("Continuer", btnStyle);
+        //TODO new game
+        TextButton restartButton = new TextButton("Recommencer", bStyle);
+        TextButton exitButton = new TextButton("Quitter", bStyle);
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         table.align(Align.center);
         table.top();
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        table.add(pauseButton);
+        //btnGroup.add(restartButton);
+        table.row();
+        table.add(exitButton);
 
-
-
-        this.pauseController = new PauseController(true, this.state, master);
-
-        pauseButton.addListener(new ClickListener() {
+        restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                pauseController.unpause();
+                //DesktopLauncher.main(new String[] {"new game"});
+            }
+        });
+
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                TimerSingleton.clear();
+                Gdx.app.exit();
+                System.exit(0);
             }
         });
 
         stage.addActor(table);
-        this.mux = new InputMultiplexer();
-        this.mux.addProcessor(stage);
-        this.mux.addProcessor(pauseController);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(mux);
     }
 
     @Override

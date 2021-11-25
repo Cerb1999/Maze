@@ -15,29 +15,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import fr.ul.maze.controller.TimerSingleton;
-import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PauseScreen implements Screen {
-    private static final String background = "Background.jpg";
-
+public class MenuScreen implements Screen {
     private final AtomicReference<MasterState> state;
-
     private final Camera camera;
-    private InputMultiplexer mux;
     private final Stage stage;
-    private PauseController pauseController;
+    private final MasterScreen master;
 
-    private MasterScreen master;
-    private Table table;
-
-    public PauseScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
+    public MenuScreen(final Stage stage, final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
         this.stage = new Stage();
 
@@ -54,41 +45,48 @@ public class PauseScreen implements Screen {
     private void constructScreen() {
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = master.getFontBIG();
-        Label l = new Label("Pause", lStyle);
+        Label l = new Label("Maze", lStyle);
 
-        TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
-        btnStyle.font = master.getFontMID();
+        TextButton.TextButtonStyle bStyle = new TextButton.TextButtonStyle();
+        bStyle.font = master.getFontMID();
 
-        TextButton pauseButton = new TextButton("Continuer", btnStyle);
+        TextButton startButton = new TextButton("Commencer", bStyle);
+        TextButton exitButton = new TextButton("Quitter", bStyle);
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         table.align(Align.center);
         table.top();
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        table.add(pauseButton);
+        table.add(startButton);
+        table.row();
+        table.add(exitButton);
 
 
-
-        this.pauseController = new PauseController(true, this.state, master);
-
-        pauseButton.addListener(new ClickListener() {
+        startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                pauseController.unpause();
+                master.switchScreen(master.MAIN_SCREEN.get());
+                Timer timer = new Timer();
+                TimerSingleton.launch(timer, master);
+            }
+        });
+
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+                System.exit(0);
             }
         });
 
         stage.addActor(table);
-        this.mux = new InputMultiplexer();
-        this.mux.addProcessor(stage);
-        this.mux.addProcessor(pauseController);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(mux);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
