@@ -52,6 +52,15 @@ public final class MasterContactController implements ContactListener {
                 hero = (Hero) contact.getFixtureB().getUserData();
             }
             mobAttackController.attack(mob, hero);
+        } else if((contact.getFixtureA().getUserData() instanceof Hero && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData() instanceof Hero && contact.getFixtureA().getUserData() instanceof Mob)){
+            Hero hero;
+            if(contact.getFixtureA().getUserData() instanceof Hero) {
+                    hero = (Hero) contact.getFixtureA().getUserData();
+                    hero.damage(1);
+                } else {
+                    hero = (Hero) contact.getFixtureB().getUserData();
+                    hero.damage(1);
+                }
         }
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import fr.ul.maze.view.map.RigidSquare;
 import fr.ul.maze.model.Direction;
+import org.lwjgl.Sys;
 
 public final class Hero extends Entity {
     private final static int BASE_HP = 3;
@@ -93,6 +94,7 @@ public final class Hero extends Entity {
 
     public void damage(final int dmg) {
         super.damage(dmg);
+        System.out.println("\n Hero current hp"+ this.getHp());
         if(this.getHp()==0) this.die();
     }
 

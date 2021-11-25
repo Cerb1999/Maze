@@ -63,6 +63,9 @@ public final class MapScreen implements Screen {
     private World world;
 
     private Label time;
+    private Label hplab;
+    private Label scorelab;
+
 
     public MapScreen(final AtomicReference<MasterState> state, MasterScreen masterScreen) {
         this.state = state;
@@ -79,16 +82,35 @@ public final class MapScreen implements Screen {
     }
 
     private void constructScreen() {
+
+        //Variables : Time, Hp and score
         Label.LabelStyle lTime = new Label.LabelStyle();
         lTime.font = master.getFontSMALL();
 
-        time = new Label(TimerSingleton.getTime()+"", lTime);
+        Label.LabelStyle lScore = new Label.LabelStyle();
+        lScore.font = master.getFontSMALL();
+
+        Label.LabelStyle lHp = new Label.LabelStyle();
+        lHp.font = master.getFontSMALL();
+
+
+        int score = this.state.get().getCurrentLevelNumber();
+        int hp = this.state.get().getHero().get().getHp();
+
+
+        time = new Label("Time"+TimerSingleton.getTime()+"", lTime);
+        scorelab = new Label("Score" + score + "",lScore);
+        hplab = new Label("Hp"+hp+"",lHp);
+
+
 
         Table table = new Table();
         table.setFillParent(true);
         table.align(Align.right);
         table.top();
         table.add(time).padRight(stage.getCamera().viewportWidth/10);
+        table.add(scorelab).padRight(stage.getCamera().viewportWidth/10);
+        table.add(hplab).padRight(stage.getCamera().viewportWidth/10);
         table.row();
 
         pauseController = new PauseController(false, state, master);
@@ -117,8 +139,9 @@ public final class MapScreen implements Screen {
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(master.getBackground(), 0, 0, stage.getCamera().viewportWidth,stage.getCamera().viewportHeight);
         this.stage.getBatch().end();
-        this.time.setText(TimerSingleton.getTime());
-
+        this.time.setText("Timer "+ TimerSingleton.getTime());
+        this.hplab.setText("Hp " + this.state.get().getHero().get().getHp());
+        this.scorelab.setText("Score " + this.state.get().getCurrentLevelNumber());
         this.stage.draw();
 
         if (Options.DEBUG)
