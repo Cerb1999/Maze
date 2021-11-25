@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.view.map.RigidSquare;
 import fr.ul.maze.model.Direction;
+import org.lwjgl.Sys;
 
 public final class Hero extends Entity {
     private final static int BASE_HP = 3;
@@ -92,7 +93,9 @@ public final class Hero extends Entity {
 
     public void damage(final int dmg) {
         super.damage(dmg);
+        
         SoundAssetManager.getInstance().playHeroHurtSound();
+
         if(this.getHp()==0) this.die();
     }
 

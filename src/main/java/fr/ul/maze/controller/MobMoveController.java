@@ -72,7 +72,7 @@ public final class MobMoveController {
 
         GraphPath<GraphNode> path;
         if(!mob.get().isWandering() || (Math.abs(heroPosition.x - relativePosition.x) <= mob.get().getVisionRange()) && (Math.abs(heroPosition.y - relativePosition.y) <= mob.get().getVisionRange())){
-            Gdx.app.debug(getClass().getCanonicalName(), "Hero seen ! distance between mob and hero: x: " + Math.abs(heroPosition.x - relativePosition.x) + " y:" + Math.abs(heroPosition.y - relativePosition.y));
+            //Gdx.app.debug(getClass().getCanonicalName(), "Hero seen ! distance between mob and hero: x: " + Math.abs(heroPosition.x - relativePosition.x) + " y:" + Math.abs(heroPosition.y - relativePosition.y));
             mob.get().setWander(false);
             path = this.state.get().getLevel().get().findPath(relativePosition, heroPosition);
         }
@@ -80,17 +80,17 @@ public final class MobMoveController {
             path = this.state.get().getLevel().get().findPath(relativePosition, mob.get().getWanderPos());
         }
 
-        Gdx.app.debug(getClass().getCanonicalName(), "X: " + mobPosX + " Y: " + mobPosY);
-        Gdx.app.debug(getClass().getCanonicalName(), "Finding path from " + relativePosition + " to " + heroPosition);
+        //Gdx.app.debug(getClass().getCanonicalName(), "X: " + mobPosX + " Y: " + mobPosY);
+        //Gdx.app.debug(getClass().getCanonicalName(), "Finding path from " + relativePosition + " to " + heroPosition);
 
         if (path.getCount() < 2)
             return;
 
-        Gdx.app.debug(getClass().getCanonicalName(), "Path found! Moving towards it");
+        //Gdx.app.debug(getClass().getCanonicalName(), "Path found! Moving towards it");
 
         nextPosition = path.get(1).fst; // only consider the first next cell to move to
 
-        Gdx.app.debug(getClass().getCanonicalName(), "Next position to chase: " + this.nextPosition);
+        //Gdx.app.debug(getClass().getCanonicalName(), "Next position to chase: " + this.nextPosition);
     }
 
     /**

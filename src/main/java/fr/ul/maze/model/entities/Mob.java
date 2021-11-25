@@ -14,10 +14,10 @@ public class Mob extends Entity {
     private final static float BASE_ATTACK_RANGE = 10f;
     private static final float BASE_ATTACK_SPEED = 0.5f;
     private static final int THRESHOLD = 0;
-
     private static final int VISION_RANGE = 10;
     private static final int WANDER_RANGE = 5;
 
+    private static int score = 0;
     private final Vector2 startingPos;
     private Vector2 wanderPos;
     private boolean wander = true;
@@ -60,6 +60,12 @@ public class Mob extends Entity {
      */
     public void die(){
         this.actionState = EntityActionState.DYING;
+        this.score = score + 1;
+        System.out.println("\n Score:" + score);
+    }
+
+    public static int getScore(){
+        return score;
     }
 
     public Vector2 getStartingPos() {
