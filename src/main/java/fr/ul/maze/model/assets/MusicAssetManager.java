@@ -7,17 +7,17 @@ import com.badlogic.gdx.audio.Music;
 public class MusicAssetManager {
     private final AssetManager assetManager;
     private static final String MUSIC_PATH = "music/";
-    private static final String MENU_MUSIC = "mymusic.mp3";
+    private static final String MENU_MUSIC = "menu.ogg";
     private static final String GAME_MUSIC = "mysical_theme.mp3";
-    private static final String GAMEOVER_MUSIC = "mymusic.mp3";
+    private static final String GAMEOVER_MUSIC = "gameover.mp3";
 
     private static Music bMusic;
 
     private MusicAssetManager(){
         assetManager = new AssetManager();
-        //assetManager.load(MUSIC_PATH + MENU_MUSIC, Music.class);
+        assetManager.load(MUSIC_PATH + MENU_MUSIC, Music.class);
         assetManager.load(MUSIC_PATH + GAME_MUSIC, Music.class);
-        //assetManager.load(MUSIC_PATH + GAMEOVER_MUSIC, Music.class);
+        assetManager.load(MUSIC_PATH + GAMEOVER_MUSIC, Music.class);
         assetManager.finishLoading();
     }
 
