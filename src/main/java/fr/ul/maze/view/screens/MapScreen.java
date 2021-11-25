@@ -82,10 +82,10 @@ public final class MapScreen implements Screen {
         this.pauseController = pauseController;
 
         this.constructLevel();
-        this.constructScreen(pauseController);
+        this.constructScreen();
     }
 
-    private void constructScreen(final PauseController pauseController) {
+    private void constructScreen() {
         Label.LabelStyle lTime = new Label.LabelStyle();
         lTime.font = master.getFontSMALL();
 
@@ -99,7 +99,7 @@ public final class MapScreen implements Screen {
         table.row();
 
         stage.addActor(table);
-        mux.addProcessor(pauseController);
+        mux.addProcessor(this.pauseController);
 
         Gdx.input.setInputProcessor(mux);
     }
@@ -212,5 +212,7 @@ public final class MapScreen implements Screen {
         this.hero.inner.toFront();
         this.mobs.inner.forEach(Actor::toFront);
         this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
+
+        this.constructScreen();
     }
 }
