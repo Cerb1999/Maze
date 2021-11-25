@@ -24,8 +24,7 @@ public final class MenuController implements InputProcessor {
         switch (i) {
             case Input.Keys.SPACE: {
                 master.switchScreen(master.MAIN_SCREEN.get());
-                Timer timer = new Timer();
-                TimerSingleton.launch(timer, master);
+                TimerSingleton.launch(master);
                 break;
             }
             case Input.Keys.ESCAPE: {

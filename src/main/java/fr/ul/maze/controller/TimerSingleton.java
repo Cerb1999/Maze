@@ -3,8 +3,6 @@ package fr.ul.maze.controller;
 import com.badlogic.gdx.utils.Timer;
 import fr.ul.maze.view.screens.MasterScreen;
 
-import java.util.TimerTask;
-
 public class TimerSingleton extends Timer.Task {
     private static int BASE_TIMER = 100;
     private static int time = BASE_TIMER;
@@ -37,12 +35,6 @@ public class TimerSingleton extends Timer.Task {
         }
     }
 
-    public static void scheduleOne(Timer t, MasterScreen masterScreen) {
-        TimerSingleton singleton = TimerSingleton.init(masterScreen);
-        t.scheduleTask(singleton, 1f, 1f);
-    }
-
-
     public static void start() {
         Timer.instance().start();
     }
@@ -55,7 +47,7 @@ public class TimerSingleton extends Timer.Task {
     /**
      * launch timer every 1 second
      */
-    public static void launch(Timer t, MasterScreen masterScreen) {
+    public static void launch(MasterScreen masterScreen) {
         TimerSingleton singleton = TimerSingleton.init(masterScreen);
         Timer.schedule(singleton, 1f, 1f);
     }
