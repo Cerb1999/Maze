@@ -70,11 +70,12 @@ public final class MapScreen implements Screen {
         this.stage = new Stage();
         this.master = masterScreen;
 
-        this.camera = new OrthographicCamera(RigidSquare.WIDTH * Maze.WIDTH, RigidSquare.HEIGHT * Maze.HEIGHT);
+        this.camera = new OrthographicCamera(RigidSquare.WIDTH * Maze.WIDTH, RigidSquare.HEIGHT * Maze.HEIGHT + 160);
 
         this.stage.getViewport().setCamera(this.camera);
-        this.camera.position.set(this.camera.viewportWidth / 2, this.camera.viewportHeight / 2 + 160, 0);
-        this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight + 160, this.camera));
+        this.camera.position.set(this.camera.viewportWidth / 2, this.camera.viewportHeight / 2, 0);
+        this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
+
         this.constructLevel();
         this.constructScreen();
     }

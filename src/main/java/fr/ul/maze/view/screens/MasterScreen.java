@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import fr.ul.maze.MazeGame;
 import fr.ul.maze.model.MasterState;
 import utils.functional.Lazy;
 
@@ -58,7 +59,9 @@ public final class MasterScreen implements Screen {
     public void switchScreen(Screen newScreen) {
         if (!Objects.isNull(this.currentScreen))
             this.currentScreen.hide();
+
         this.currentScreen = newScreen;
+        this.currentScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.currentScreen.show();
     }
 
