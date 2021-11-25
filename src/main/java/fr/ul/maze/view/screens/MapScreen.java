@@ -85,7 +85,6 @@ public final class MapScreen implements Screen {
         this.pauseController = pauseController;
 
         this.constructLevel();
-        this.constructScreen();
     }
 
     private void constructScreen() {
