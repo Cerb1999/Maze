@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.keyboard.MenuController;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
@@ -80,6 +81,7 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this.mux);
+        MusicAssetManager.getInstance().playMenuMusic();
     }
 
     @Override

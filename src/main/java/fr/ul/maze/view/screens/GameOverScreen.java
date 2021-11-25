@@ -20,6 +20,7 @@ import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.keyboard.GameOverController;
 import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.map.RigidSquare;
 
@@ -85,6 +86,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(mux);
+        MusicAssetManager.getInstance().playGameoverMusic();
     }
 
     @Override

@@ -65,8 +65,11 @@ public final class HeroMoveController implements InputProcessor {
                     }
                     SoundAssetManager.getInstance().playFootstep();
                 }
-                else
+                else{
                     body.setLinearVelocity(0,0);
+                    SoundAssetManager.getInstance().stopFootstep();
+                }
+
             });
             return h;
         });
