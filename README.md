@@ -126,5 +126,9 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 
 ![diagramme de classe début sprint 2](./readme_assets/class_diagram_begin_sprint2.png)
 
+#### Diagramme de sequence mouvement Mob au début du sprint
+
+![diagramme de sequanece mouvement mob début sprint 2](./readme_assets/class_sequence_mob_movement_begin_sprint2.png)
+
 #### Diagramme de classe à la fin du sprint
 
