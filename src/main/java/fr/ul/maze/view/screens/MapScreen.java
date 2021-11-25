@@ -101,6 +101,7 @@ public final class MapScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this.mux);
     }
 
     @Override

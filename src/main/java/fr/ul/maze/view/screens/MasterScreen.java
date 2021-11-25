@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import fr.ul.maze.model.MasterState;
 import utils.functional.Lazy;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MasterScreen implements Screen {
@@ -55,7 +56,10 @@ public final class MasterScreen implements Screen {
 
 
     public void switchScreen(Screen newScreen) {
+        if (!Objects.isNull(this.currentScreen))
+            this.currentScreen.hide();
         this.currentScreen = newScreen;
+        this.currentScreen.show();
     }
 
     @Override

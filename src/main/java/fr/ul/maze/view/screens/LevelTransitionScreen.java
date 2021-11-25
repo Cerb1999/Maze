@@ -59,8 +59,7 @@ public class LevelTransitionScreen implements Screen {
     }
 
     @Override
-    public void show() {
-    }
+    public void show() {}
 
     @Override
     public void render(float v) {
