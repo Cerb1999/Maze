@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import compiler.Options;
 import fr.ul.maze.controller.MobMoveController;
+import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.contact.MasterContactController;
 import fr.ul.maze.controller.keyboard.HeroAttackController;
 import fr.ul.maze.controller.keyboard.HeroMoveController;
@@ -43,25 +45,23 @@ public final class MapScreen implements Screen {
     private final AtomicReference<MasterState> state;
     private PauseController pauseController;
     private final Camera camera;
-    private final InputMultiplexer mux;
+    private InputMultiplexer mux;
     private final Stage stage;
     private final MasterScreen master;
 
-    private InputMultiplexer mux;
+    private LinkedList<RigidSquare> squares;
+    private RefCell<HeroActor> hero;
+    private RefCell<LadderActor> ladder;
+    private RefCell<List<MobActor>> mobs;
 
-    private final LinkedList<RigidSquare> squares;
-    private final RefCell<HeroActor> hero;
-    private final RefCell<LadderActor> ladder;
-    private final RefCell<List<MobActor>> mobs;
+    private HeroMoveController heroMoveController;
+    private HeroAttackController heroAttackController;
+    private MasterContactController masterContactListener;
+    private RefCell<List<MobMoveController>> mobMoveControllers;
 
-    private final HeroMoveController heroMoveController;
-    private final HeroAttackController heroAttackController;
-    private final MasterContactController masterContactListener;
-    private final RefCell<List<MobMoveController>> mobMoveControllers;
+    private Box2DDebugRenderer debugRenderer;
 
-    private final Box2DDebugRenderer debugRenderer;
-
-    private final World world;
+    private World world;
 
     private Label time;
 

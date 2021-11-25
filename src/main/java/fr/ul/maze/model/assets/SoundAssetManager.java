@@ -9,7 +9,7 @@ public class SoundAssetManager {
     private static final String SOUND_PATH = "sound/";
     private static final String DRAW_SWORD_SOUND = "drawSword.ogg";
     private static final String FOOTSTEP_SOUND = "footstep.ogg";
-    private static final String HEROHURT_SOUND = "heroHurt.flac";
+    private static final String HEROHURT_SOUND = "heroHurt.ogg";
 
     private static Sound swordSlashSound;
     private static Sound footstepSound;
@@ -19,6 +19,7 @@ public class SoundAssetManager {
         assetManager = new AssetManager();
         assetManager.load(SOUND_PATH + DRAW_SWORD_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + FOOTSTEP_SOUND, Sound.class);
+        assetManager.load(SOUND_PATH + HEROHURT_SOUND, Sound.class);
         assetManager.finishLoading();
         swordSlashSound = assetManager.get(SOUND_PATH + DRAW_SWORD_SOUND);
         footstepSound = assetManager.get(SOUND_PATH + FOOTSTEP_SOUND);

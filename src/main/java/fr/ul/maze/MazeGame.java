@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import compiler.Options;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.MazeAssetManager;
+import fr.ul.maze.model.assets.MusicAssetManager;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.view.screens.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -45,5 +47,7 @@ public final class MazeGame extends Game {
 	public void dispose() {
 		this.screen.dispose();
 		MazeAssetManager.getInstance().dispose();
+		MusicAssetManager.getInstance().dispose();
+		SoundAssetManager.getInstance().dispose();
 	}
 }
