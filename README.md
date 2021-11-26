@@ -155,7 +155,7 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - Attaque (animation) des monstres
 
 - Variété
-  - Variété murs et sol
-  - Variété mobs
+  - Variété sur les murs et le sol
+  - Variété sur les mobs
 
 #### Diagramme de classe au début du sprint
