@@ -73,6 +73,11 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
    - [x] ((Timer))
    - [x] ((Musique))
 
+- Variété
+  - [ ] Variété murs et sol
+  - [ ] Variété mobs
+  
+
 ## Sprint 1
 
 - Héros
@@ -132,3 +137,25 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 #### Diagramme de classe à la fin du sprint
 
 ![diagramme de classe fin sprint 2](./doc/sprint2/class_diagram_end_sprint2.svg)
+
+## Sprint 3
+
+- Labyrinthe
+  - Certaines cases du labyrinthe sont spéciales :
+    - clé : requise pour accéder au prochain niveau
+    - pièges : piège classique sur une case, fait perdre une vie
+    - magiques : si un personnage arrive sur la case un effet est déclenché
+      - ralentissement
+      - perte d'attaque
+      - +1 vie
+
+- Attaques
+  - Le héros perd une vie au contact d’un monstre
+    - Hero replacé au début du niveau si blessé et pas tué(sans réapparation des objets).
+  - Attaque (animation) des monstres
+
+- Variété
+  - Variété murs et sol
+  - Variété mobs
+
+#### Diagramme de classe au début du sprint
