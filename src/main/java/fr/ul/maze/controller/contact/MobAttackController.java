@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import exceptions.Exn;
 import fr.ul.maze.controller.Box2DTaskQueue;
+import fr.ul.maze.controller.TimerNoAttackSingleton;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
@@ -36,11 +37,13 @@ public final class MobAttackController {
 
         Timer.Task todo;
         if (hero.isDead()) {
+
+            TimerNoAttackSingleton.disableIfNeeded();
             todo = new Timer.Task() {
                 @Override
                 public void run() {
                     master.switchScreen(master.GAME_OVER_SCREEN.get());
-                    TimerSingleton.clear();
+                    TimerSingleton.stop();
                 }
             };
 

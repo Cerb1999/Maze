@@ -24,6 +24,10 @@ public abstract class Mob extends Entity {
         this.wanderRange = wander_range;
     }
 
+    public static void resetScore() {
+        score = 0;
+    }
+
     public void destroyBody() {
         if (body != null) this.world.destroyBody(this.body);
     }

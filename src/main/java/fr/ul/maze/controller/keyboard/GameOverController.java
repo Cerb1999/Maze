@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.Timer;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.SoundAssetManager;
+import fr.ul.maze.view.screens.MapScreen;
 import fr.ul.maze.view.screens.MasterScreen;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -23,7 +25,11 @@ public final class GameOverController implements InputProcessor {
     public boolean keyDown(int i) {
         switch (i) {
             case Input.Keys.SPACE: {
-                ////
+                TimerSingleton.refresh();
+                master.switchScreen(master.MAIN_SCREEN.get());
+                state.get().reset();
+                ((MapScreen) master.MAIN_SCREEN.get()).constructLevel();
+                TimerSingleton.start();
                 break;
             }
             case Input.Keys.ESCAPE: {

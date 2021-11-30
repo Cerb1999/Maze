@@ -50,7 +50,6 @@ public class GameOverScreen implements Screen {
         Label.LabelStyle l2Style = new Label.LabelStyle();
         l2Style.font = master.getFontMID();
 
-        //TODO new game
         Label restart = new Label("[SPACE] Recommencer", l2Style);
         Label exit = new Label("[ESC] Quitter", l2Style);
 
@@ -60,7 +59,7 @@ public class GameOverScreen implements Screen {
         table.top();
         table.add(l).pad(stage.getCamera().viewportHeight/6, 0, stage.getCamera().viewportHeight/4, 0);
         table.row();
-        //btnGroup.add(restart);
+        table.add(restart);
         table.row();
         table.add(exit);
 

@@ -30,7 +30,7 @@ public final class HeroMoveController implements InputProcessor {
 
         hero.updateAndGet(h -> {
             h.updateBody(body -> {
-                if(h.getActionState() == EntityActionState.IDLE){
+                if(h.getActionState() == EntityActionState.IDLE || h.getActionState() == EntityActionState.NOATTACK){
                     if(d==Direction.UPRIGHT || d==Direction.UPLEFT){
                         switch (h.getLastMoveState()){
                             case UP :
@@ -88,7 +88,7 @@ public final class HeroMoveController implements InputProcessor {
                     SoundAssetManager.getInstance().stopFootstep();
                     SoundAssetManager.getInstance().playFootstep();
                 }
-                else{
+                else {
                     body.setLinearVelocity(0,0);
                     SoundAssetManager.getInstance().stopFootstep();
                 }

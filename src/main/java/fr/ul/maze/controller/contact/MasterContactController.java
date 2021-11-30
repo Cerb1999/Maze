@@ -4,10 +4,12 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import exceptions.Exn;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.model.entities.Mob;
+import fr.ul.maze.model.entities.items.Item;
 import fr.ul.maze.view.screens.MapScreen;
 import fr.ul.maze.view.screens.MasterScreen;
 
@@ -16,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class MasterContactController implements ContactListener {
     private final EndLevelController endLevelController;
     private final MobAttackController mobAttackController;
+    private final NoAttackController noAttackController;
     private final AtomicReference<MasterState> state;
     private final MapScreen mapScreen;
     private final MasterScreen master;
@@ -23,6 +26,7 @@ public final class MasterContactController implements ContactListener {
     public MasterContactController(AtomicReference<MasterState> state, MapScreen mapScreen, MasterScreen masterScreen) {
         this.endLevelController = new EndLevelController();
         this.mobAttackController = new MobAttackController(masterScreen);
+        this.noAttackController = new NoAttackController();
         this.state = state;
         this.mapScreen = mapScreen;
         this.master = masterScreen;
@@ -30,8 +34,25 @@ public final class MasterContactController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-            if((contact.getFixtureA().getUserData() instanceof Hero && contact.getFixtureB().getUserData().equals("Ladder")) || (contact.getFixtureB().getUserData() instanceof Hero && contact.getFixtureA().getUserData().equals("Ladder")))
-            endLevelController.nextLevel(this.state, this.mapScreen, this.master);
+        if ((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData() instanceof Item || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData() instanceof Item))) {
+            Item item;
+            if((contact.getFixtureB().getUserData() instanceof Item))
+                item = (Item) contact.getFixtureB().getUserData();
+            else item = (Item) contact.getFixtureA().getUserData();
+            switch (item.getItemType()) {
+                case LADDER:
+                    endLevelController.nextLevel(this.state, this.mapScreen, this.master);
+                    break;
+                case LIFEUP:
+                    state.get().getHero().get().heal(1);
+                    item.remove();
+                    break;
+                case NOATTACK:
+                    noAttackController.disableWeapon(state);
+                    item.remove();
+                    break;
+            }
+        }
         else if((contact.getFixtureA().getUserData().equals("HeroSword") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("HeroSword") && contact.getFixtureA().getUserData() instanceof Mob)){
             Mob mob;
             if(contact.getFixtureB().getUserData() instanceof Mob)
@@ -40,27 +61,19 @@ public final class MasterContactController implements ContactListener {
                 mob = (Mob) contact.getFixtureA().getUserData();
             mob.damage(1);
         //instanceof needed
-        } else if((contact.getFixtureA().getUserData() instanceof Hero && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData() instanceof Hero && contact.getFixtureA().getUserData() instanceof Mob))
+        } else if((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData() instanceof Mob))
         {
             Mob mob;
-            Hero hero;
+            Hero hero = state.get().getHero().get();
             if(contact.getFixtureB().getUserData() instanceof Mob) {
                 mob = (Mob) contact.getFixtureB().getUserData();
-                hero = (Hero) contact.getFixtureA().getUserData();
             } else {
                 mob = (Mob) contact.getFixtureA().getUserData();
-                hero = (Hero) contact.getFixtureB().getUserData();
             }
             mobAttackController.attack(mob, hero);
-        } else if((contact.getFixtureA().getUserData() instanceof Hero && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData() instanceof Hero && contact.getFixtureA().getUserData() instanceof Mob)){
-            Hero hero;
-            if(contact.getFixtureA().getUserData() instanceof Hero) {
-                    hero = (Hero) contact.getFixtureA().getUserData();
-                    hero.damage(1);
-                } else {
-                    hero = (Hero) contact.getFixtureB().getUserData();
-                    hero.damage(1);
-                }
+        } else if((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData() instanceof Mob)){
+            Hero hero = state.get().getHero().get();;
+            hero.damage(1);
         }
     }
 

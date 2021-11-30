@@ -4,5 +4,6 @@ public enum EntityActionState {
     ATTACK,
     DYING,
     IDLE,
+    NOATTACK,
     DAMAGED,
 }

@@ -34,7 +34,7 @@ public final class HeroAttackController implements InputProcessor {
                     body.setLinearVelocity(0,0);
                     SoundAssetManager.getInstance().stopFootstep();
                     h.createSwordBody();
-                }
+                } else if(h.getActionState() == EntityActionState.NOATTACK) SoundAssetManager.getInstance().playClash();
             });
             return h;
         });

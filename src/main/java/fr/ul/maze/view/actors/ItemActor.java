@@ -6,20 +6,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import fr.ul.maze.model.assets.MazeAssetManager;
-import fr.ul.maze.model.entities.Ladder;
+import fr.ul.maze.model.entities.items.Item;
 import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public final class LadderActor extends Actor {
-    private final AtomicReference<Ladder> model;
+public final class ItemActor extends Actor {
+    private final AtomicReference<Item> model;
 
     protected Sprite sprite;
 
-    public LadderActor(final World world, AtomicReference<Ladder> ladder) {
-        this.model = ladder;
-        sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture("ladder1")).getRegion());
-        sprite.setPosition(ladder.get().getBody().getPosition().x - RigidSquare.WIDTH / 2, ladder.get().getBody().getPosition().x - RigidSquare.HEIGHT / 2);
+    public ItemActor(final World world, AtomicReference<Item> item) {
+        this.model = item;
+        sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture(item.get().getItemType().toLowerCase()+"1")).getRegion());
+        sprite.setPosition(item.get().getBody().getPosition().x - RigidSquare.WIDTH / 2, item.get().getBody().getPosition().x - RigidSquare.HEIGHT / 2);
 
         //Parameter for the actor linked with the body
         this.setWidth(sprite.getWidth());
@@ -50,6 +50,9 @@ public final class LadderActor extends Actor {
 
         //Update actor from actor position
         sprite.setPosition(this.getX(), this.getY());
-
+        if (model.get().isToBeRemoved()) {
+            this.model.get().destroyBody();
+            this.remove();
+        }
     }
 }

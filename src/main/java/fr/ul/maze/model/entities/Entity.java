@@ -20,13 +20,11 @@ public abstract class Entity {
     protected EntityActionState actionState;
     protected Body body;
     protected Body attackBody;
-    private int hp;
-    private Vector2 position;
+    protected int hp;
 
     public Entity(int baseHp, float baseMovementSpeed, float baseAttackRange, float baseAttackSpeed, Direction moveState, Direction lastMoveState, EntityActionState actionState, World world, Vector2 position) {
         this.hp = baseHp;
         this.attackRange = baseAttackRange;
-        this.position = position;
         this.startingPosition = position;
         this.world = world;
 
@@ -37,7 +35,7 @@ public abstract class Entity {
         this.actionState = actionState;
     }
 
-    public final void heal(final int heal) {
+    public void heal(final int heal) {
         this.hp += heal;
     }
 
@@ -51,7 +49,6 @@ public abstract class Entity {
 
     public void updateBody(Consumer<Body> update) {
         update.accept(this.body);
-        this.position = getPosition();
     }
 
     public Body getBody() {

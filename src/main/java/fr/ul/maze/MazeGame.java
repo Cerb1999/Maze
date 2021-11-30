@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class MazeGame extends Game {
 	private MasterScreen screen;
-	private final AtomicReference<MasterState> state;
+	private AtomicReference<MasterState> state;
 
 	private Stage stage;
 

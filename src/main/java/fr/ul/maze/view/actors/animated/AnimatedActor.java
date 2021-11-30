@@ -62,6 +62,7 @@ public class AnimatedActor extends Actor {
 
         switch (st) {
             case IDLE:
+            case NOATTACK:
                 switch (this.model.get().getMoveState()) {
                     case RIGHT:
                         walkRightAnimation.update(delta);

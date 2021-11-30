@@ -2,6 +2,7 @@ package fr.ul.maze.controller.contact;
 
 import com.badlogic.gdx.utils.Timer;
 import exceptions.Exn;
+import fr.ul.maze.controller.TimerNoAttackSingleton;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.view.screens.MapScreen;

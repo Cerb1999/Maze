@@ -1,10 +1,11 @@
 package fr.ul.maze.controller;
 
 import com.badlogic.gdx.utils.Timer;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.view.screens.MasterScreen;
 
 public class TimerSingleton extends Timer.Task {
-    private static int BASE_TIMER = 100;
+    private static final int BASE_TIMER = 100;
     private static int time = BASE_TIMER;
     private static TimerSingleton singleton = null;
     private final MasterScreen masterScreen;
@@ -25,13 +26,15 @@ public class TimerSingleton extends Timer.Task {
 
     public static void refresh() {
         time = BASE_TIMER;
+        TimerNoAttackSingleton.disableIfNeeded();
     }
 
     public void run() {
         time--;
         if(time == 0) {
             masterScreen.switchScreen(masterScreen.GAME_OVER_SCREEN.get());
-            clear();
+            SoundAssetManager.getInstance().stopFootstep();
+            stop();
         }
     }
 
@@ -39,9 +42,11 @@ public class TimerSingleton extends Timer.Task {
         Timer.instance().start();
     }
     public static void stop() {
+        TimerNoAttackSingleton.stopIfNeeded();
         Timer.instance().stop();
     }
     public static void clear() {
+        TimerNoAttackSingleton.disableIfNeeded();
         Timer.instance().clear();
     }
     /**

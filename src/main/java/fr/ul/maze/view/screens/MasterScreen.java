@@ -33,7 +33,6 @@ public final class MasterScreen implements Screen {
 
     public MasterScreen(final AtomicReference<MasterState> state) {
         initFontAndBackground();
-
         pauseController = new PauseController(false, state, this);
 
         MAIN_SCREEN = () -> new MapScreen(state, pauseController, this);
@@ -126,5 +125,9 @@ public final class MasterScreen implements Screen {
 
     public Texture getBackground() {
         return background;
+    }
+
+    public Screen getCurrentScreen() {
+        return currentScreen;
     }
 }

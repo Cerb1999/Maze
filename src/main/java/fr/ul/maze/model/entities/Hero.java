@@ -31,8 +31,7 @@ public final class Hero extends Entity {
         fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
-        //fixture.setUserData("Hero");
-        fixture.setUserData(this);
+        fixture.setUserData("Hero");
 
         shape.dispose();//shape not needed after
     }
@@ -105,6 +104,12 @@ public final class Hero extends Entity {
             this.damaged();
     }
 
+
+    public void heal(final int heal) {
+        if (hp < BASE_HP) super.heal(heal);
+        SoundAssetManager.getInstance().playDrinkSound();
+    }
+
     /**
      * The hero dies. Start dying animation
      */
@@ -116,11 +121,28 @@ public final class Hero extends Entity {
         this.actionState = EntityActionState.DAMAGED;
     }
 
+    /**
+     * when hero breaks his sword
+     */
+    public void silence() {
+        this.actionState = EntityActionState.NOATTACK;
+        SoundAssetManager.getInstance().playBreakSound();
+    }
+
+    public void recover() {
+        if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
+        SoundAssetManager.getInstance().playRedrawSound();
+    }
+
     public void destroyBody() {
         if (body != null) this.world.destroyBody(this.body);
     }
 
     public boolean isDead() {
         return super.getHp() == 0; // this.actionState == EntityActionState.DYING;
+    }
+
+    public void reset() {
+        this.hp = BASE_HP;
     }
 }

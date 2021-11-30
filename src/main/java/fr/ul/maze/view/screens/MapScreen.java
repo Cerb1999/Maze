@@ -25,6 +25,7 @@ import fr.ul.maze.controller.keyboard.PauseController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.entities.Mob;
+import fr.ul.maze.model.entities.items.Item;
 import fr.ul.maze.model.map.Square;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.actors.*;
@@ -48,8 +49,12 @@ public final class MapScreen implements Screen {
 
     private LinkedList<RigidSquare> squares;
     private RefCell<HeroActor> hero;
-    private RefCell<LadderActor> ladder;
+
+    private RefCell<ItemActor> ladder;
+
     private RefCell<List<AnimatedActor>> mobs;
+    private RefCell<List<ItemActor>> lifeups;
+    private RefCell<List<ItemActor>> noattacks;
 
     private HeroMoveController heroMoveController;
     private HeroAttackController heroAttackController;
@@ -187,9 +192,14 @@ public final class MapScreen implements Screen {
         this.world = this.state.get().getWorld();
 
         this.hero = new RefCell<>();
+
         this.ladder = new RefCell<>();
+
         this.mobs = new RefCell<>();
         this.mobMoveControllers = new RefCell<>();
+
+        this.lifeups = new RefCell<>();
+        this.noattacks = new RefCell<>();
 
         this.squares = new LinkedList<>();
         this.state.updateAndGet(st -> {
@@ -201,7 +211,8 @@ public final class MapScreen implements Screen {
             this.hero.inner = new HeroActor(st.getWorld(), st.getHero());
             this.stage.addActor(this.hero.inner);
 
-            this.ladder.inner = new LadderActor(st.getWorld(), st.getLadder());
+            this.ladder.inner = new ItemActor(st.getWorld(), st.getLadder());
+
             this.stage.addActor(this.ladder.inner);
 
             this.mobMoveControllers.inner = new LinkedList<>();
@@ -221,6 +232,18 @@ public final class MapScreen implements Screen {
                 this.mobMoveControllers.inner.add(new MobMoveController(this.state, mob));
             }
             this.mobs.inner.forEach(this.stage::addActor);
+
+            this.lifeups.inner = new LinkedList<>();
+            for (AtomicReference<Item> lifeup : st.getLifeups()) {
+                this.lifeups.inner.add(new ItemActor(st.getWorld(), lifeup));
+            }
+            this.lifeups.inner.forEach(this.stage::addActor);
+
+            this.noattacks.inner = new LinkedList<>();
+            for (AtomicReference<Item> lifeup : st.getNoattacks()) {
+                this.noattacks.inner.add(new ItemActor(st.getWorld(), lifeup));
+            }
+            this.noattacks.inner.forEach(this.stage::addActor);
 
             return st;
         });
@@ -244,6 +267,8 @@ public final class MapScreen implements Screen {
 
         this.hero.inner.toFront();
         this.mobs.inner.forEach(Actor::toFront);
+        this.lifeups.inner.forEach(Actor::toFront);
+        this.noattacks.inner.forEach(Actor::toFront);
         this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
 
         this.constructScreen();
