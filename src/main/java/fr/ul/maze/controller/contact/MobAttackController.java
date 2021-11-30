@@ -4,7 +4,9 @@ import com.badlogic.gdx.utils.Timer;
 import exceptions.Exn;
 import fr.ul.maze.controller.Box2DTaskQueue;
 import fr.ul.maze.controller.TimerSingleton;
+import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.entities.EntityActionState;
 import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.view.screens.MasterScreen;
@@ -21,6 +23,9 @@ public final class MobAttackController {
     public void attack(Mob monster, Hero hero) {
         if (monster.getHp() <= 0)
             return; // cancel attack if the mob is dying/dead
+
+        monster.setActionState(EntityActionState.ATTACK);
+        monster.setMoveState(Direction.IDLE);
 
         hero.damage(1);
 
