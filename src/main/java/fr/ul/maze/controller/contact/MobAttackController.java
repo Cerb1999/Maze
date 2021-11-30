@@ -2,6 +2,7 @@ package fr.ul.maze.controller.contact;
 
 import com.badlogic.gdx.utils.Timer;
 import exceptions.Exn;
+import fr.ul.maze.controller.Box2DTaskQueue;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.entities.Hero;
@@ -33,6 +34,9 @@ public final class MobAttackController {
                     TimerSingleton.clear();
                 }
             }, 2);
+        } else {
+            // put the hero at its starting position
+            Box2DTaskQueue.getQueue().add(hero::respawn);
         }
     }
 }

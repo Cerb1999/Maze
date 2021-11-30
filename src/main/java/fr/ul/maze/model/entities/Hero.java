@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.view.map.RigidSquare;
 import fr.ul.maze.model.Direction;
-import org.lwjgl.Sys;
 
 public final class Hero extends Entity {
     private final static int BASE_HP = 3;
@@ -21,11 +20,11 @@ public final class Hero extends Entity {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true; // stop body fom spinning on itself
-        bodyDef.position.set(position.x * RigidSquare.WIDTH + RigidSquare.WIDTH/2, position.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT/2);
+        bodyDef.position.set(position.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, position.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2);
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();//shape of the body
-        shape.setAsBox(RigidSquare.WIDTH/4, RigidSquare.HEIGHT/4);
+        shape.setAsBox(RigidSquare.WIDTH / 4, RigidSquare.HEIGHT / 4);
 
         FixtureDef fixtureDef = new FixtureDef();//properties of the body
         fixtureDef.shape = shape;
@@ -38,34 +37,34 @@ public final class Hero extends Entity {
         shape.dispose();//shape not needed after
     }
 
-    public void createSwordBody(){
+    public void createSwordBody() {
         float attackBodyPosX = 0;
         float attackBodyPosY = 0;
         float attackShapeHX = 0;
         float attackShapeHY = 0;
-        switch(lastMoveState) {
+        switch (lastMoveState) {
             case RIGHT:
                 attackBodyPosX = body.getPosition().x + this.attackRange;
                 attackBodyPosY = body.getPosition().y;
                 attackShapeHX = this.attackRange;
-                attackShapeHY = this.attackRange/2;
+                attackShapeHY = this.attackRange / 2;
                 break;
             case LEFT:
                 attackBodyPosX = body.getPosition().x - this.attackRange;
                 attackBodyPosY = body.getPosition().y;
                 attackShapeHX = this.attackRange;
-                attackShapeHY = this.attackRange/2;
+                attackShapeHY = this.attackRange / 2;
                 break;
             case UP:
                 attackBodyPosX = body.getPosition().x;
                 attackBodyPosY = body.getPosition().y + this.attackRange;
-                attackShapeHX = this.attackRange/2;
+                attackShapeHX = this.attackRange / 2;
                 attackShapeHY = this.attackRange;
                 break;
             case DOWN:
                 attackBodyPosX = body.getPosition().x;
                 attackBodyPosY = body.getPosition().y - this.attackRange;
-                attackShapeHX = this.attackRange/2;
+                attackShapeHX = this.attackRange / 2;
                 attackShapeHY = this.attackRange;
                 break;
         }
@@ -93,21 +92,21 @@ public final class Hero extends Entity {
 
     public void damage(final int dmg) {
         super.damage(dmg);
-        
+
         SoundAssetManager.getInstance().playHeroHurtSound();
 
-        if(this.getHp()==0) this.die();
+        if (this.getHp() == 0) this.die();
     }
 
     /**
      * The hero dies. Start dying animation
      */
-    public void die(){
+    public void die() {
         this.actionState = EntityActionState.DYING;
     }
 
     public void destroyBody() {
-        if(body!=null)this.world.destroyBody(this.body);
+        if (body != null) this.world.destroyBody(this.body);
     }
 
     public boolean isDead() {

@@ -5,41 +5,36 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.function.Consumer;
+
 import fr.ul.maze.model.Direction;
+import fr.ul.maze.view.map.RigidSquare;
 
 public abstract class Entity {
-    private int hp;
+    protected final World world;
+    private final Vector2 startingPosition;
     protected float attackSpeed;
     protected float attackRange;
     protected float walkSpeed;
-    private Vector2 position;
-    protected final World world;
-
     protected Direction moveState;
     protected Direction lastMoveState;
     protected EntityActionState actionState;
-
     protected Body body;
     protected Body attackBody;
-
-
-    protected Entity(final int baseHp, final float baseAttackRange, final World world, final Vector2 position) {
-        this.hp = baseHp;
-        this.attackRange = baseAttackRange;
-        this.position = position;
-        this.world = world;
-    }
+    private int hp;
+    private Vector2 position;
 
     public Entity(int baseHp, float baseMovementSpeed, float baseAttackRange, float baseAttackSpeed, Direction moveState, Direction lastMoveState, EntityActionState actionState, World world, Vector2 position) {
         this.hp = baseHp;
-        this.walkSpeed = baseMovementSpeed;
         this.attackRange = baseAttackRange;
+        this.position = position;
+        this.startingPosition = position;
+        this.world = world;
+
+        this.walkSpeed = baseMovementSpeed;
         this.attackSpeed = baseAttackSpeed;
         this.moveState = moveState;
         this.lastMoveState = lastMoveState;
         this.actionState = actionState;
-        this.position = position;
-        this.world = world;
     }
 
     public final void heal(final int heal) {
@@ -56,6 +51,7 @@ public abstract class Entity {
 
     public void updateBody(Consumer<Body> update) {
         update.accept(this.body);
+        this.position = getPosition();
     }
 
     public Body getBody() {
@@ -102,7 +98,7 @@ public abstract class Entity {
         return hp;
     }
 
-    public void setHp(int hp){
+    public void setHp(int hp) {
         this.hp = hp;
     }
 
@@ -111,6 +107,15 @@ public abstract class Entity {
     }
 
     public void destroyAttackBody() {
-        if(attackBody!=null)this.world.destroyBody(this.attackBody);
+        if (attackBody != null) this.world.destroyBody(this.attackBody);
+    }
+
+    public void respawn() {
+        this.body.setTransform(this.startingPosition.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, this.startingPosition.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2, body.getAngle());
+
+    }
+
+    public Vector2 getStartingPos() {
+        return startingPosition;
     }
 }

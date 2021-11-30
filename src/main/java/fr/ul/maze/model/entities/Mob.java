@@ -18,7 +18,6 @@ public class Mob extends Entity {
     private static final int WANDER_RANGE = 5;
 
     private static int score = 0;
-    private final Vector2 startingPos;
     private Vector2 wanderPos;
     private boolean wander = true;
 
@@ -44,7 +43,6 @@ public class Mob extends Entity {
         fixture.setUserData(this);
 
         shape.dispose();//shape not needed after
-        this.startingPos = position;
     }
 
     public static int getScore() {
@@ -66,10 +64,6 @@ public class Mob extends Entity {
     public void die() {
         this.actionState = EntityActionState.DYING;
         score += 1;
-    }
-
-    public Vector2 getStartingPos() {
-        return startingPos;
     }
 
     public int getVisionRange() {

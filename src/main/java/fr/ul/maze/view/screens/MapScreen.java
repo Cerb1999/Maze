@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import compiler.Options;
+import fr.ul.maze.controller.Box2DTaskQueue;
 import fr.ul.maze.controller.MobMoveController;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.contact.MasterContactController;
@@ -38,6 +39,7 @@ import fr.ul.maze.view.actors.debug.MazePathsDebug;
 import fr.ul.maze.view.map.RigidSquare;
 import utils.RefCell;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -153,6 +155,11 @@ public final class MapScreen implements Screen {
             this.debugRenderer.render(this.world, this.camera.combined);
 
         this.world.step(1f / 60f, 6, 2);
+
+        Deque<Runnable> tasks = Box2DTaskQueue.getQueue();
+        while (!tasks.isEmpty()) {
+            tasks.pop().run();
+        }
     }
 
     @Override
