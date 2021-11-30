@@ -159,3 +159,5 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - Variété sur les mobs
 
 #### Diagramme de classe au début du sprint
+
+![diagramme de classe début sprint 3](./doc/sprint3/diag_classe_debut_sprint3.svg)
