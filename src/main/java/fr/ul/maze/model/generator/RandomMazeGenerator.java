@@ -48,6 +48,18 @@ public class RandomMazeGenerator extends AbstractMazeGenerator {
             }
         }
 
+        final int nbCells = (Maze.WIDTH - 2) * (Maze.HEIGHT - 2);
+        int toAdd = nbCells / 50;
+
+        while (toAdd-- > 0) {
+            Vector2 newPath;
+            do {
+                newPath = new Vector2(rnd.nextInt(Maze.WIDTH - 2) + 1, rnd.nextInt(Maze.HEIGHT - 2) + 1);
+            } while (grid[Math.round(newPath.y)][Math.round(newPath.x)] != Square.Type.WALL);
+
+            grid[Math.round(newPath.y)][Math.round(newPath.x)] = Square.Type.PATH;
+        }
+
         // generate random starting and ending positions
         Vector2 heroVector2, ladderVector2;
         do {

@@ -40,7 +40,7 @@ public class LevelTransitionScreen implements Screen {
     private void constructScreen() {
         Label.LabelStyle curLvlStyle = new Label.LabelStyle();
         curLvlStyle.font = master.getFontBIG();
-        curLvl = new Label("Niveau : " + state.get().getCurrentLevelNumber() + " complété !", curLvlStyle);
+        curLvl = new Label("Niveau " + state.get().getCurrentLevelNumber() + " complété !", curLvlStyle);
 
         Label.LabelStyle lvlStyle = new Label.LabelStyle();
         lvlStyle.font = master.getFontMID();
@@ -68,7 +68,7 @@ public class LevelTransitionScreen implements Screen {
 
         this.camera.update();
         this.stage.getBatch().setProjectionMatrix(this.camera.combined);
-        this.curLvl.setText("Niveau : " + state.get().getCurrentLevelNumber() + " complété !");
+        this.curLvl.setText("Niveau " + state.get().getCurrentLevelNumber() + " complété !");
 
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(master.getBackground(), 0, 0, stage.getCamera().viewportWidth,stage.getCamera().viewportHeight);
