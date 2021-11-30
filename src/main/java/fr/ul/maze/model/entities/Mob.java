@@ -29,11 +29,11 @@ public class Mob extends Entity {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true; // stop body fom spinning on itself
-        bodyDef.position.set(position.x * RigidSquare.WIDTH + RigidSquare.WIDTH/2, position.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT/2);
+        bodyDef.position.set(position.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, position.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2);
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();//shape of the body
-        shape.setAsBox(RigidSquare.WIDTH/4, RigidSquare.HEIGHT/4);
+        shape.setAsBox(RigidSquare.WIDTH / 4, RigidSquare.HEIGHT / 4);
 
         FixtureDef fixtureDef = new FixtureDef();//properties of the body
         fixtureDef.shape = shape;
@@ -46,26 +46,25 @@ public class Mob extends Entity {
         this.startingPos = position;
     }
 
+    public static int getScore() {
+        return score;
+    }
+
     public void destroyBody() {
-        if(body!=null)this.world.destroyBody(this.body);
+        if (body != null) this.world.destroyBody(this.body);
     }
 
     public void damage(final int dmg) {
         super.damage(dmg);
-        if(this.getHp()==0) this.die();
+        if (this.getHp() == 0) this.die();
     }
 
     /**
      * The mob dies. Start dying animation
      */
-    public void die(){
+    public void die() {
         this.actionState = EntityActionState.DYING;
-        this.score = score + 1;
-        System.out.println("\n Score:" + score);
-    }
-
-    public static int getScore(){
-        return score;
+        score += 1;
     }
 
     public Vector2 getStartingPos() {
@@ -79,7 +78,7 @@ public class Mob extends Entity {
     public Vector2 getWanderPos() {
         Random rnd = new Random();
         //10% chance of changing direction for wander
-        if(Objects.isNull(wanderPos) || (rnd.nextFloat() * WANDER_RANGE <= 0.1)){
+        if (Objects.isNull(wanderPos) || (rnd.nextFloat() * WANDER_RANGE <= 0.1)) {
             float wanderPosX = rnd.nextInt((int) ((this.getStartingPos().x + WANDER_RANGE) - (this.getStartingPos().x - WANDER_RANGE) + 1)) + (this.getStartingPos().x - WANDER_RANGE);
             float wanderPosY = rnd.nextInt((int) ((this.getStartingPos().y + WANDER_RANGE) - (this.getStartingPos().y - WANDER_RANGE) + 1)) + (this.getStartingPos().y - WANDER_RANGE);
             this.wanderPos = new Vector2(wanderPosX, wanderPosY);
