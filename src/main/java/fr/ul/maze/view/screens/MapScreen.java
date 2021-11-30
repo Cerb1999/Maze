@@ -199,7 +199,7 @@ public final class MapScreen implements Screen {
 
         this.squares = new LinkedList<>();
         this.state.updateAndGet(st -> {
-            st.getLevel().get().forEachCell( sq -> this.squares.push(new RigidSquare(st.getWorld(), sq)));
+            st.getLevel().get().forEachCell( sq -> this.squares.push(new RigidSquare(st.getWorld(), sq, this.state.get().getCurrentLevelNumber())));
             this.squares.forEach(this.stage::addActor);
 
             this.stage.addActor(new MazePathsDebug(st.getLevel()));
