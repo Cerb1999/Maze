@@ -49,7 +49,6 @@ public final class RigidSquare extends Actor {
         if(model.getType() == Square.Type.WALL){
             String spriteName = "wall";
             spriteName = spriteName.concat(String.valueOf(1 + ((currentLevelNumber/5)%4)));
-            Gdx.app.error(this.debug().getClass().getCanonicalName(), spriteName);
             Random rnd = new Random();
             //Moss on the wall ?
             if(rnd.nextFloat()<=0.75) spriteName = spriteName.concat("-1");
