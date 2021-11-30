@@ -37,6 +37,7 @@ public class Mob extends Entity {
 
         FixtureDef fixtureDef = new FixtureDef();//properties of the body
         fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
         fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body

@@ -18,7 +18,11 @@ public final class MobAttackController {
     }
 
     public void attack(Mob monster, Hero hero) {
+        if (monster.getHp() <= 0)
+            return; // cancel attack if the mob is dying/dead
+
         hero.damage(1);
+
         if(hero.isDead()) {
             TimerSingleton.stop();
             Timer timer = new Timer();
