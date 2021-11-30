@@ -78,7 +78,7 @@ public final class MapScreen implements Screen {
         this.stage = new Stage();
         this.master = masterScreen;
 
-        this.camera = new OrthographicCamera(RigidSquare.WIDTH * Maze.WIDTH, RigidSquare.HEIGHT * Maze.HEIGHT + 160);
+        this.camera = new OrthographicCamera(RigidSquare.WIDTH * Maze.WIDTH, RigidSquare.HEIGHT * Maze.HEIGHT + master.getFontSMALL().getLineHeight() + 30);
 
         this.stage.getViewport().setCamera(this.camera);
         this.camera.position.set(this.camera.viewportWidth / 2, this.camera.viewportHeight / 2, 0);
@@ -106,9 +106,9 @@ public final class MapScreen implements Screen {
         int hp = this.state.get().getHero().get().getHp();
 
 
-        time = new Label("Time"+TimerSingleton.getTime()+"", lTime);
-        scorelab = new Label("Score" + score + "",lScore);
-        hplab = new Label("Hp"+hp+"",lHp);
+        time = new Label("Time "+TimerSingleton.getTime()+"", lTime);
+        scorelab = new Label("Score " + score + "",lScore);
+        hplab = new Label("Hp "+hp+"",lHp);
 
 
 

@@ -46,13 +46,13 @@ public final class MasterScreen implements Screen {
     private void initFontAndBackground() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_NAME));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        params.size = 200;
+        params.size = 130;
         params.color = Color.RED;
         fontBIG = generator.generateFont(params);
-        params.size = 140;
+        params.size = 70;
         params.color = Color.WHITE;
         fontMID = generator.generateFont(params);
-        params.size = 100;
+        params.size = 70;
         params.color = Color.YELLOW;
         fontSMALL = generator.generateFont(params);
         generator.dispose();

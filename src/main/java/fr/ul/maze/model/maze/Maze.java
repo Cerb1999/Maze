@@ -28,11 +28,11 @@ public class Maze implements IndexedGraph<GraphNode> {
     /**
      * Fixed width for the maze, in a number of cells.
      */
-    public static final int WIDTH = 50;
+    public static final int WIDTH = 30;
     /**
      * Fixed height for the maze, in a number of cells.
      */
-    public static final int HEIGHT = 30;
+    public static final int HEIGHT = 16;
 
     /**
      * Contains all the connections between paths in the maze.
