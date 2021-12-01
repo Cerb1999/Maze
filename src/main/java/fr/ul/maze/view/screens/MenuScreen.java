@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.keyboard.MenuController;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.MusicAssetManager;

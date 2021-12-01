@@ -2,9 +2,7 @@ package fr.ul.maze.controller.contact;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
-import exceptions.Exn;
 import fr.ul.maze.controller.Box2DTaskQueue;
-import fr.ul.maze.controller.TimerNoAttackSingleton;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
@@ -17,9 +15,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class MobAttackController {
     private final MasterScreen master;
+    private final AtomicReference<MasterState> state;
 
-    public MobAttackController(MasterScreen masterScreen) {
+    public MobAttackController(MasterScreen masterScreen, AtomicReference<MasterState> state) {
         this.master = masterScreen;
+        this.state = state;
     }
 
     public void attack(Mob monster, Hero hero) {
@@ -37,17 +37,16 @@ public final class MobAttackController {
 
         Timer.Task todo;
         if (hero.isDead()) {
-
+            TimerSingleton instance = TimerSingleton.getInstance();
+            instance.stopTasks();
             TimerNoAttackSingleton.disableIfNeeded();
             todo = new Timer.Task() {
                 @Override
                 public void run() {
+                    instance.clearTasks();
                     master.switchScreen(master.GAME_OVER_SCREEN.get());
-                    TimerSingleton.stop();
                 }
             };
-
-            TimerSingleton.stop();
         } else {
             todo = new Timer.Task() {
                 @Override

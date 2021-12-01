@@ -28,7 +28,7 @@ public final class MazeGame extends Game {
 
 	@Override
 	public void create() {
-		if (Options.DEBUG) Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		//if (Options.DEBUG) Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		Gdx.app.setApplicationLogger(new ColoredStderrLogger());
 
 		Box2D.init();

@@ -105,7 +105,8 @@ public final class MapScreen implements Screen {
         int hp = this.state.get().getHero().get().getHp();
 
 
-        time = new Label("Time "+TimerSingleton.getTime()+"", lTime);
+        time = new Label("Time ", lTime);
+
         scorelab = new Label("Score " + score + "",lScore);
         hplab = new Label("Hp "+hp+"",lHp);
 
@@ -145,7 +146,7 @@ public final class MapScreen implements Screen {
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(master.getBackground(), 0, 0, stage.getCamera().viewportWidth,stage.getCamera().viewportHeight);
         this.stage.getBatch().end();
-        this.time.setText("Timer "+ TimerSingleton.getTime());
+        this.time.setText("Time " + TimerSingleton.getInstance().getTime());
         this.hplab.setText("Hp " + this.state.get().getHero().get().getHp());
         this.scorelab.setText("Score " + this.state.get().getCurrentLevelNumber());
         this.stage.draw();

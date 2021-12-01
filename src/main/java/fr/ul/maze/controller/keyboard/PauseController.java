@@ -3,7 +3,6 @@ package fr.ul.maze.controller.keyboard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import fr.ul.maze.controller.TimerNoAttackSingleton;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.view.screens.MasterScreen;
@@ -23,14 +22,12 @@ public final class PauseController implements InputProcessor {
     }
 
     public void pause() {
-        TimerSingleton.stop();
-        TimerNoAttackSingleton.stopIfNeeded();
+        TimerSingleton.getInstance().stopTasks();
         master.switchScreen(master.PAUSE_SCREEN.get());
     }
 
     public void unpause() {
-        TimerSingleton.start();
-        TimerNoAttackSingleton.startIfNeeded();
+        TimerSingleton.getInstance().startTasks();
         master.switchScreen(master.MAIN_SCREEN.get());
     }
 

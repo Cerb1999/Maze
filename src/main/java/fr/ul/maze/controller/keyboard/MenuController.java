@@ -3,8 +3,9 @@ package fr.ul.maze.controller.keyboard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.utils.Timer;
 import fr.ul.maze.controller.TimerSingleton;
+import fr.ul.maze.controller.tasks.GameTimerTask;
+import fr.ul.maze.controller.tasks.TaskType;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.view.screens.MasterScreen;
 
@@ -23,12 +24,11 @@ public final class MenuController implements InputProcessor {
     public boolean keyDown(int i) {
         switch (i) {
             case Input.Keys.SPACE: {
+                TimerSingleton.init().addTask(new GameTimerTask(state, master), TaskType.GAME);
                 master.switchScreen(master.MAIN_SCREEN.get());
-                TimerSingleton.launch(master);
                 break;
             }
             case Input.Keys.ESCAPE: {
-                TimerSingleton.clear();
                 Gdx.app.exit();
                 System.exit(0);
             }

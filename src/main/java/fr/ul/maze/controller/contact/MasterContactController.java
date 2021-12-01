@@ -25,7 +25,7 @@ public final class MasterContactController implements ContactListener {
 
     public MasterContactController(AtomicReference<MasterState> state, MapScreen mapScreen, MasterScreen masterScreen) {
         this.endLevelController = new EndLevelController();
-        this.mobAttackController = new MobAttackController(masterScreen);
+        this.mobAttackController = new MobAttackController(masterScreen, state);
         this.noAttackController = new NoAttackController();
         this.state = state;
         this.mapScreen = mapScreen;

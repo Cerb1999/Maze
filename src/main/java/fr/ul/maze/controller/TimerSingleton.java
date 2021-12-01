@@ -1,63 +1,64 @@
 package fr.ul.maze.controller;
 
-import com.badlogic.gdx.utils.Timer;
-import fr.ul.maze.model.assets.SoundAssetManager;
-import fr.ul.maze.view.screens.MasterScreen;
+import fr.ul.maze.controller.tasks.CustomTask;
+import fr.ul.maze.controller.tasks.GameTimerTask;
+import fr.ul.maze.controller.tasks.TaskType;
 
-public class TimerSingleton extends Timer.Task {
-    private static final int BASE_TIMER = 100;
-    private static int time = BASE_TIMER;
-    private static TimerSingleton singleton = null;
-    private final MasterScreen masterScreen;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
 
-    private TimerSingleton(MasterScreen masterScreen) {
-        this.masterScreen = masterScreen;
+public class TimerSingleton {
+    private static TimerSingleton instance = null;
+    private final Map<TaskType, CustomTask> tasks;
+
+    private TimerSingleton() {
+        this.tasks = Collections.synchronizedMap(new EnumMap<>(TaskType.class));
     }
 
-    public synchronized static TimerSingleton init(MasterScreen masterScreen) {
-        if (singleton != null)
+    public synchronized static TimerSingleton init() {
+        if (instance != null)
         {
             throw new AssertionError("You already initialized me");
         }
 
-        singleton = new TimerSingleton(masterScreen);
-        return singleton;
+        instance = new TimerSingleton();
+        return instance;
     }
 
-    public static void refresh() {
-        time = BASE_TIMER;
-        TimerNoAttackSingleton.disableIfNeeded();
+    public static TimerSingleton getInstance() {
+        return instance;
     }
 
-    public void run() {
-        time--;
-        if(time == 0) {
-            masterScreen.switchScreen(masterScreen.GAME_OVER_SCREEN.get());
-            SoundAssetManager.getInstance().stopFootstep();
-            stop();
+
+    public void addTask(CustomTask customTask, TaskType taskType)
+    {
+        if(tasks.containsKey(taskType)) tasks.get(taskType).refresh();
+        else {
+            tasks.put(taskType, customTask);
+            customTask.launch();
         }
     }
 
-    public static void start() {
-        Timer.instance().start();
+    public void stopTasks() {
+        this.tasks.forEach((taskType,task) -> task.stop());
     }
-    public static void stop() {
-        TimerNoAttackSingleton.stopIfNeeded();
-        Timer.instance().stop();
-    }
-    public static void clear() {
-        TimerNoAttackSingleton.disableIfNeeded();
-        Timer.instance().clear();
-    }
-    /**
-     * launch timer every 1 second
-     */
-    public static void launch(MasterScreen masterScreen) {
-        TimerSingleton singleton = TimerSingleton.init(masterScreen);
-        Timer.schedule(singleton, 1f, 1f);
+    public void startTasks() {
+        this.tasks.forEach((taskType,task) -> task.start());
     }
 
-    public static int getTime() {
-        return time;
+    public void removeTask(CustomTask task) {
+        if(this.tasks.containsValue(task)) {
+            tasks.values().remove(task);
+        }
+    }
+
+    public void clearTasks() {
+        this.tasks.forEach((taskType,task) -> task.clear());
+        this.tasks.clear();
+    }
+
+    public String getTime() {
+        return tasks.get(TaskType.GAME).getTime();
     }
 }

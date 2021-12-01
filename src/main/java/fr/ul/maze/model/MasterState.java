@@ -27,7 +27,6 @@ public final class MasterState {
 
     private World world;
 
-
     public MasterState(){
         this.world = new World(new Vector2(0, 0), true);
 
@@ -46,7 +45,7 @@ public final class MasterState {
             this.lifeups.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.LIFEUP)));
         }
         this.noattacks = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER; ++i) {
+        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 10; ++i) {
             this.noattacks.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.NOATTACK)));
         }
     }
