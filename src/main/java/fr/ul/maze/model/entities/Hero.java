@@ -129,6 +129,9 @@ public final class Hero extends Entity {
         SoundAssetManager.getInstance().playBreakSound();
     }
 
+    /**
+     * when hero recovers his sword
+     */
     public void recover() {
         if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
         SoundAssetManager.getInstance().playRedrawSound();
