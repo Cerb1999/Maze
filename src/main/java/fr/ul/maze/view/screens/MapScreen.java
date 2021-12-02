@@ -4,11 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -17,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import compiler.Options;
 import fr.ul.maze.controller.Box2DTaskQueue;
 import fr.ul.maze.controller.MobMoveController;
@@ -32,9 +27,8 @@ import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.map.Square;
 import fr.ul.maze.model.maze.Maze;
-import fr.ul.maze.view.actors.HeroActor;
-import fr.ul.maze.view.actors.LadderActor;
-import fr.ul.maze.view.actors.MobActor;
+import fr.ul.maze.view.actors.*;
+import fr.ul.maze.view.actors.animated.AnimatedActor;
 import fr.ul.maze.view.actors.debug.MazePathsDebug;
 import fr.ul.maze.view.map.RigidSquare;
 import utils.RefCell;
@@ -42,7 +36,6 @@ import utils.RefCell;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MapScreen implements Screen {
@@ -56,7 +49,7 @@ public final class MapScreen implements Screen {
     private LinkedList<RigidSquare> squares;
     private RefCell<HeroActor> hero;
     private RefCell<LadderActor> ladder;
-    private RefCell<List<MobActor>> mobs;
+    private RefCell<List<AnimatedActor>> mobs;
 
     private HeroMoveController heroMoveController;
     private HeroAttackController heroAttackController;
@@ -214,7 +207,17 @@ public final class MapScreen implements Screen {
             this.mobMoveControllers.inner = new LinkedList<>();
             this.mobs.inner = new LinkedList<>();
             for (AtomicReference<Mob> mob : st.getMobs()) {
-                this.mobs.inner.add(new MobActor(st.getWorld(), mob));
+                switch (mob.get().getMobType()){
+                    case "Zombie":
+                        this.mobs.inner.add(new ZombieActor(st.getWorld(), mob));
+                        break;
+                    case "Rat":
+                        this.mobs.inner.add(new RatActor(st.getWorld(), mob));
+                        break;
+                    case "Bat":
+                        this.mobs.inner.add(new BatActor(st.getWorld(), mob));
+                        break;
+                }
                 this.mobMoveControllers.inner.add(new MobMoveController(this.state, mob));
             }
             this.mobs.inner.forEach(this.stage::addActor);

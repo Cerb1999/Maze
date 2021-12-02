@@ -1,26 +1,34 @@
 package fr.ul.maze.view.actors;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import fr.ul.maze.model.Direction;
-import fr.ul.maze.model.assets.MazeAssetManager;
-import fr.ul.maze.model.entities.EntityActionState;
+import com.badlogic.gdx.physics.box2d.World;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.view.actors.animated.AnimatedActor;
 import fr.ul.maze.view.actors.animated.Animation;
 import fr.ul.maze.view.map.RigidSquare;
 
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-public final class MobActor extends AnimatedActor {
-    public MobActor(final World world, AtomicReference<Mob> mob) {
-        super(mob, mob.get().getSpriteName()+"WalkS1", mob.get().getSpriteName()+"WalkR", mob.get().getSpriteName()+"WalkN", mob.get().getSpriteName()+"WalkL", mob.get().getSpriteName()+"WalkS", mob.get().getSpriteName()+"SmashR", mob.get().getSpriteName()+"SmashN", mob.get().getSpriteName()+"SmashL", mob.get().getSpriteName()+"SmashS", mob.get().getSpriteName()+"Die");
+public final class RatActor extends AnimatedActor {
+    public RatActor(final World world, AtomicReference<Mob> mob) {
+        super(mob, mob.get().getSpriteName()+"WalkS1");
+
+        //Init walk animations
+        this.walkRightAnimation = new Animation(mob.get().getSpriteName()+"WalkR", 3, 1f);
+        this.walkUpAnimation = new Animation(mob.get().getSpriteName()+"WalkN", 3, 1f);
+        this.walkLeftAnimation = new Animation(mob.get().getSpriteName()+"WalkL", 3, 1f);
+        this.walkDownAnimation = new Animation(mob.get().getSpriteName()+"WalkS", 3, 1f);
+
+        //Init attack animations
+        this.attackRightAnimation = new Animation(mob.get().getSpriteName()+"WalkR", 3, this.model.get().getAttackSpeed(), false);
+        this.attackUpAnimation = new Animation(mob.get().getSpriteName()+"WalkN", 3, this.model.get().getAttackSpeed(), false);
+        this.attackLeftAnimation = new Animation(mob.get().getSpriteName()+"WalkL", 3, this.model.get().getAttackSpeed(), false);
+        this.attackDownAnimation = new Animation(mob.get().getSpriteName()+"WalkS", 3, this.model.get().getAttackSpeed(), false);
+
+        //Init dying animation
+        this.dieAnimation = new Animation(mob.get().getSpriteName()+"WalkS", 1, 2, false);
 
         sprite.setPosition(mob.get().getPosition().x - RigidSquare.WIDTH / 2, mob.get().getPosition().x - RigidSquare.HEIGHT / 2);
 

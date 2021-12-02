@@ -8,49 +8,21 @@ import fr.ul.maze.view.map.RigidSquare;
 import java.util.Objects;
 import java.util.Random;
 
-public class Mob extends Entity {
-    private final static int BASE_HP = 1;
-    private static final float BASE_MOVEMENT_SPEED = 50f;
-    private final static float BASE_ATTACK_RANGE = 10f;
-    private static final float BASE_ATTACK_SPEED = 0.5f;
-    private static final int THRESHOLD = 0;
-    private static final int VISION_RANGE = 10;
-    private static final int WANDER_RANGE = 5;
-
-    private static int score = 0;
+public abstract class Mob extends Entity {
     private Vector2 wanderPos;
     private boolean wander = true;
 
-    private final String spriteName;
+    private int VISION_RANGE;
+    private int WANDER_RANGE;
 
-    public Mob(final World world, final Vector2 position) {
-        super(BASE_HP, BASE_MOVEMENT_SPEED, BASE_ATTACK_RANGE, BASE_ATTACK_SPEED, Direction.IDLE, Direction.DOWN, EntityActionState.IDLE, world, position);
+    protected String spriteName;
+    protected String mobType;
 
-        this.spriteName = "zombie" + (new Random().nextFloat()<=0.5 ? "" : "2");
+    public Mob(int baseHp, float baseMovementSpeed, float baseAttackRange, float baseAttackSpeed, int vision_range, int wander_range, final World world, final Vector2 position) {
+        super(baseHp, baseMovementSpeed, baseAttackRange, baseAttackSpeed, Direction.IDLE, Direction.DOWN, EntityActionState.IDLE, world, position);
 
-        //Create body (hitbox)
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.fixedRotation = true; // stop body fom spinning on itself
-        bodyDef.position.set(position.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, position.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2);
-        body = world.createBody(bodyDef);
-
-        PolygonShape shape = new PolygonShape();//shape of the body
-        shape.setAsBox(RigidSquare.WIDTH / 4, RigidSquare.HEIGHT / 4);
-
-        FixtureDef fixtureDef = new FixtureDef();//properties of the body
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
-        fixtureDef.density = 1f;
-
-        Fixture fixture = body.createFixture(fixtureDef);//Information shared with the body
-        fixture.setUserData(this);
-
-        shape.dispose();//shape not needed after
-    }
-
-    public static int getScore() {
-        return score;
+        this.VISION_RANGE = vision_range;
+        this.WANDER_RANGE = wander_range;
     }
 
     public void destroyBody() {
@@ -67,7 +39,6 @@ public class Mob extends Entity {
      */
     public void die() {
         this.actionState = EntityActionState.DYING;
-        score += 1;
     }
 
     public int getVisionRange() {
@@ -93,6 +64,7 @@ public class Mob extends Entity {
         this.wander = wander;
     }
 
-    public String getSpriteName(){
-        return spriteName;};
+    public String getSpriteName(){ return spriteName;}
+
+    public String getMobType(){ return mobType;}
 }

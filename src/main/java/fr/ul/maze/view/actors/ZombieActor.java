@@ -7,37 +7,37 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.assets.MazeAssetManager;
-import fr.ul.maze.model.entities.Entity;
 import fr.ul.maze.model.entities.EntityActionState;
-import fr.ul.maze.model.entities.Hero;
+import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.view.actors.animated.AnimatedActor;
 import fr.ul.maze.view.actors.animated.Animation;
 import fr.ul.maze.view.map.RigidSquare;
-import fr.ul.maze.model.Direction;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-public final class HeroActor extends AnimatedActor {
-    public HeroActor(final World world, AtomicReference<Hero> hero) {
-        super(hero, "walkS1");
+public final class ZombieActor extends AnimatedActor {
+    public ZombieActor(final World world, AtomicReference<Mob> mob) {
+        super(mob, mob.get().getSpriteName()+"WalkS1");
 
         //Init walk animations
-        this.walkRightAnimation = new Animation("walkR", 9, 0.5f);
-        this.walkUpAnimation = new Animation("walkN", 9, 0.5f);
-        this.walkLeftAnimation = new Animation("walkL", 9, 0.5f);
-        this.walkDownAnimation = new Animation("walkS", 9, 0.5f);
+        this.walkRightAnimation = new Animation(mob.get().getSpriteName()+"WalkR", 9, 0.5f);
+        this.walkUpAnimation = new Animation(mob.get().getSpriteName()+"WalkN", 9, 0.5f);
+        this.walkLeftAnimation = new Animation(mob.get().getSpriteName()+"WalkL", 9, 0.5f);
+        this.walkDownAnimation = new Animation(mob.get().getSpriteName()+"WalkS", 9, 0.5f);
 
         //Init attack animations
-        this.attackRightAnimation = new Animation("slashR", 6, this.model.get().getAttackSpeed(), false);
-        this.attackUpAnimation = new Animation("slashN", 6, this.model.get().getAttackSpeed(), false);
-        this.attackLeftAnimation = new Animation("slashL", 6, this.model.get().getAttackSpeed(), false);
-        this.attackDownAnimation = new Animation("slashS", 6, this.model.get().getAttackSpeed(), false);
+        this.attackRightAnimation = new Animation(mob.get().getSpriteName()+"SmashR", 6, this.model.get().getAttackSpeed(), false);
+        this.attackUpAnimation = new Animation(mob.get().getSpriteName()+"SmashN", 6, this.model.get().getAttackSpeed(), false);
+        this.attackLeftAnimation = new Animation(mob.get().getSpriteName()+"SmashL", 6, this.model.get().getAttackSpeed(), false);
+        this.attackDownAnimation = new Animation(mob.get().getSpriteName()+"SmashS", 6, this.model.get().getAttackSpeed(), false);
 
         //Init dying animation
-        this.dieAnimation = new Animation("die", 6, 2, false);
+        this.dieAnimation = new Animation(mob.get().getSpriteName()+"Die", 6, 2, false);
 
-        sprite.setPosition(hero.get().getPosition().x - RigidSquare.WIDTH / 2, hero.get().getPosition().x - RigidSquare.HEIGHT / 2);
+        sprite.setPosition(mob.get().getPosition().x - RigidSquare.WIDTH / 2, mob.get().getPosition().x - RigidSquare.HEIGHT / 2);
 
         //Parameter for the actor linked with the body
         this.setWidth(sprite.getWidth());

@@ -54,13 +54,13 @@ public final class MobMoveController {
             );
 
             Direction d = Direction.IDLE;
-            if (mobPosX - next.x > 0.5)
+            if (mobPosX - next.x > 1)
                 d = Direction.LEFT;
-            else if (next.x - mobPosX > 0.5)
+            else if (next.x - mobPosX > 1)
                 d = Direction.RIGHT;
-            else if (mobPosY - next.y > 0.5)
+            else if (mobPosY - next.y > 1)
                 d = Direction.DOWN;
-            else if (next.y - mobPosY > 0.5)
+            else if (next.y - mobPosY > 1)
                 d = Direction.UP;
 
             this.move(d);

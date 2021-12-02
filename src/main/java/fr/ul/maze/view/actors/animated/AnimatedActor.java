@@ -16,35 +16,22 @@ public class AnimatedActor extends Actor {
     protected final Sprite sprite;
 
     //Animations
-    protected final Animation walkRightAnimation;
-    protected final Animation walkUpAnimation;
-    protected final Animation walkLeftAnimation;
-    protected final Animation walkDownAnimation;
-    protected final Animation attackRightAnimation;
-    protected final Animation attackUpAnimation;
-    protected final Animation attackLeftAnimation;
-    protected final Animation attackDownAnimation;
-    protected final Animation dieAnimation;
+    protected Animation walkRightAnimation;
+    protected Animation walkUpAnimation;
+    protected Animation walkLeftAnimation;
+    protected Animation walkDownAnimation;
+    protected Animation attackRightAnimation;
+    protected Animation attackUpAnimation;
+    protected Animation attackLeftAnimation;
+    protected Animation attackDownAnimation;
+    protected Animation dieAnimation;
 
-    protected AnimatedActor(AtomicReference<? extends Entity> model, String sprite, String walkRight, String walkUp, String walkLeft, String walkDown, String attackRight, String attackUp, String attackLeft, String attackDown, String die) {
+    protected AnimatedActor(AtomicReference<? extends Entity> model, String sprite) {
         this.model = model;
 
         this.sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture(sprite)).getRegion());
 
-        //Init walk animations
-        this.walkRightAnimation = new Animation(walkRight, 9, 0.5f);
-        this.walkUpAnimation = new Animation(walkUp, 9, 0.5f);
-        this.walkLeftAnimation = new Animation(walkLeft, 9, 0.5f);
-        this.walkDownAnimation = new Animation(walkDown, 9, 0.5f);
 
-        //Init attack animations
-        this.attackRightAnimation = new Animation(attackRight, 6, this.model.get().getAttackSpeed(), false);
-        this.attackUpAnimation = new Animation(attackUp, 6, this.model.get().getAttackSpeed(), false);
-        this.attackLeftAnimation = new Animation(attackLeft, 6, this.model.get().getAttackSpeed(), false);
-        this.attackDownAnimation = new Animation(attackDown, 6, this.model.get().getAttackSpeed(), false);
-
-        //Init dying animation
-        this.dieAnimation = new Animation(die, 6, 2, false);
     }
 
     @Override
