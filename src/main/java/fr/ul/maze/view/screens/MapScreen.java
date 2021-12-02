@@ -42,6 +42,7 @@ import utils.RefCell;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MapScreen implements Screen {

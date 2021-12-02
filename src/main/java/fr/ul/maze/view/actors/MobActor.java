@@ -15,11 +15,12 @@ import fr.ul.maze.view.actors.animated.AnimatedActor;
 import fr.ul.maze.view.actors.animated.Animation;
 import fr.ul.maze.view.map.RigidSquare;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MobActor extends AnimatedActor {
     public MobActor(final World world, AtomicReference<Mob> mob) {
-        super(mob, "zombieWalkS1", "zombieWalkR", "zombieWalkN", "zombieWalkL", "zombieWalkS", "zombieSmashR", "zombieSmashN", "zombieSmashL", "zombieSmashS", "zombieDie");
+        super(mob, mob.get().getSpriteName()+"WalkS1", mob.get().getSpriteName()+"WalkR", mob.get().getSpriteName()+"WalkN", mob.get().getSpriteName()+"WalkL", mob.get().getSpriteName()+"WalkS", mob.get().getSpriteName()+"SmashR", mob.get().getSpriteName()+"SmashN", mob.get().getSpriteName()+"SmashL", mob.get().getSpriteName()+"SmashS", mob.get().getSpriteName()+"Die");
 
         sprite.setPosition(mob.get().getPosition().x - RigidSquare.WIDTH / 2, mob.get().getPosition().x - RigidSquare.HEIGHT / 2);
 

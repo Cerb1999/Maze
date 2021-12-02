@@ -21,8 +21,12 @@ public class Mob extends Entity {
     private Vector2 wanderPos;
     private boolean wander = true;
 
+    private final String spriteName;
+
     public Mob(final World world, final Vector2 position) {
         super(BASE_HP, BASE_MOVEMENT_SPEED, BASE_ATTACK_RANGE, BASE_ATTACK_SPEED, Direction.IDLE, Direction.DOWN, EntityActionState.IDLE, world, position);
+
+        this.spriteName = "zombie" + (new Random().nextFloat()<=0.5 ? "" : "2");
 
         //Create body (hitbox)
         BodyDef bodyDef = new BodyDef();
@@ -88,4 +92,7 @@ public class Mob extends Entity {
     public void setWander(boolean wander) {
         this.wander = wander;
     }
+
+    public String getSpriteName(){
+        return spriteName;};
 }
