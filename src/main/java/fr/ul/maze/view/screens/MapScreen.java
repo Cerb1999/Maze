@@ -104,11 +104,17 @@ public final class MapScreen implements Screen {
         int score = this.state.get().getCurrentLevelNumber();
         int hp = this.state.get().getHero().get().getHp();
 
+        Label.LabelStyle lTimeLabel = new Label.LabelStyle();
+        lTimeLabel.font = master.getFontSMALL();
 
-        time = new Label("Time ", lTime);
+        time = new Label("Time", lTime);
+        time.setWrap(true);
 
         scorelab = new Label("Score " + score + "",lScore);
+        scorelab.setWrap(true);
+
         hplab = new Label("Hp "+hp+"",lHp);
+
 
 
 
@@ -116,8 +122,8 @@ public final class MapScreen implements Screen {
         table.setFillParent(true);
         table.align(Align.right);
         table.top();
-        table.add(time).padRight(stage.getCamera().viewportWidth/10);
-        table.add(scorelab).padRight(stage.getCamera().viewportWidth/10);
+        table.add(time).padRight(stage.getCamera().viewportWidth/5);
+        table.add(scorelab).padRight(stage.getCamera().viewportWidth/5);
         table.add(hplab).padRight(stage.getCamera().viewportWidth/10);
         table.row();
 
@@ -146,7 +152,7 @@ public final class MapScreen implements Screen {
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(master.getBackground(), 0, 0, stage.getCamera().viewportWidth,stage.getCamera().viewportHeight);
         this.stage.getBatch().end();
-        this.time.setText("Time " + TimerSingleton.getInstance().getTime());
+        this.time.setText("Time : " + TimerSingleton.getInstance().getTime());
         this.hplab.setText("Hp " + this.state.get().getHero().get().getHp());
         this.scorelab.setText("Score " + this.state.get().getCurrentLevelNumber());
         this.stage.draw();
