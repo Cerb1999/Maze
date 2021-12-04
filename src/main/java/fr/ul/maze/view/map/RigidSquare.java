@@ -25,7 +25,7 @@ public final class RigidSquare extends Actor {
         this.model = model;
         Vector2 relativePosition = model.getPosition();
         this.squareType = model.getType();
-        if(model.getType() == Square.Type.WALL)sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture("wall1")).getRegion());
+        if(model.getType() == Square.Type.WALL)sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture("wall1-1")).getRegion());
         else sprite = new Sprite((MazeAssetManager.getInstance().getManagedTexture("floor1")).getRegion());
         sprite.setPosition(relativePosition.x * WIDTH, relativePosition.y * HEIGHT);
 

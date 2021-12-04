@@ -64,6 +64,22 @@ public abstract class Mob extends Entity {
         return wanderPos;
     }
 
+    /**
+     * When the hero is slowed by a hourglass
+     * @param slow
+     */
+    public void slow(final float slow) {
+        super.slow(slow);
+    }
+
+    /**
+     * When the hero gets his movement speed back
+     */
+    public void speed() {
+        if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
+        this.walkSpeed = BASE_MOVEMENT_SPEED;
+    }
+
     public boolean isWandering() {
         return wander;
     }

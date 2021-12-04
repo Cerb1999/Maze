@@ -6,14 +6,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class SlowHeroTimerTask extends CustomTask {
 
-    private static final int BASE_SLOW_TIME = 5;
+    private static final int BASE_HERO_SLOW_TIME = 5;
 
     /**
      * create custom task
      */
 
     public SlowHeroTimerTask(AtomicReference<MasterState> state) {
-        super(state, BASE_SLOW_TIME, () -> {} ,  () -> {
+        super(state, BASE_HERO_SLOW_TIME, () -> {} ,  () -> {
             state.get().getHero().get().speed();
         });
     }

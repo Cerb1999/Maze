@@ -25,6 +25,7 @@ public final class MasterState {
     private List<AtomicReference<Item>> lifeups;
     private List<AtomicReference<Item>> noattacks;
     private List<AtomicReference<Item>> slowhero;
+    private List<AtomicReference<Item>> slowmob;
 
     private World world;
 
@@ -53,6 +54,11 @@ public final class MasterState {
         for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 10; ++i) {
             this.slowhero.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWHERO)));
         }
+        this.slowmob = new LinkedList<>();
+        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 10; ++i) {
+            this.slowmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWMOB)));
+        }
+
     }
 
     public World getWorld() {
@@ -77,6 +83,10 @@ public final class MasterState {
 
     public List<AtomicReference<Item>> getSlowHero() {
         return slowhero;
+    }
+
+    public List<AtomicReference<Item>> getSlowMob() {
+        return slowmob;
     }
 
     public List<AtomicReference<Item>> getLifeups() {
@@ -120,6 +130,11 @@ public final class MasterState {
         this.slowhero = new LinkedList<>();
         for (int i = 0; i < currentLevelNumber; ++i) {
             this.slowhero.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWHERO)));
+        }
+
+        this.slowmob = new LinkedList<>();
+        for (int i = 0; i < currentLevelNumber; ++i) {
+            this.slowmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWMOB)));
         }
     }
 

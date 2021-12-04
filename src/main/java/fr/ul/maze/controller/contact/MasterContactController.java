@@ -18,6 +18,7 @@ public final class MasterContactController implements ContactListener {
     private final MobAttackController mobAttackController;
     private final NoAttackController noAttackController;
     private final SlowHeroController slowHeroController;
+    private final SlowMobController slowMobController;
     private final AtomicReference<MasterState> state;
     private final MapScreen mapScreen;
     private final MasterScreen master;
@@ -27,6 +28,7 @@ public final class MasterContactController implements ContactListener {
         this.mobAttackController = new MobAttackController(masterScreen, state);
         this.noAttackController = new NoAttackController();
         this.slowHeroController = new SlowHeroController();
+        this.slowMobController = new SlowMobController();
         this.state = state;
         this.mapScreen = mapScreen;
         this.master = masterScreen;
@@ -53,6 +55,10 @@ public final class MasterContactController implements ContactListener {
                     break;
                 case SLOWHERO:
                     slowHeroController.slowHero(state);
+                    item.remove();
+                    break;
+                case SLOWMOB:
+                    slowMobController.slowMob(state);
                     item.remove();
                     break;
             }

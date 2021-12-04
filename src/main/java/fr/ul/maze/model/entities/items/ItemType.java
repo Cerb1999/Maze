@@ -5,6 +5,7 @@ public enum ItemType {
     KEY,
     LIFEUP,
     SLOWHERO,
+    SLOWMOB,
     NOATTACK,
     ;
 
