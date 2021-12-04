@@ -113,6 +113,9 @@ public abstract class Entity {
     public void respawn() {
         this.body.setTransform(this.startingPosition.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, this.startingPosition.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2, body.getAngle());
 
+        this.actionState = EntityActionState.IDLE;
+        this.moveState = Direction.IDLE;
+        this.lastMoveState = Direction.DOWN;
     }
 
     public Vector2 getStartingPos() {

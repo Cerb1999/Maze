@@ -53,6 +53,7 @@ public interface Lazy<T> extends Supplier<T> {
          * @return the cached value if one has already been created, else a new one generated (and cached) from
          * the supplier.
          */
+        @SuppressWarnings("unchecked")
         public static synchronized <T> T getInstance(Lazy<T> lazyHolder, Supplier<T> creator) {
             Object instance = values.get(lazyHolder);
             if (Objects.isNull(instance)) {
@@ -66,7 +67,6 @@ public interface Lazy<T> extends Supplier<T> {
             // a <code>T</code> (because <code>T</code> is an erased generic parameter).
             // So we simply put this comment to disable the warning generated.
 
-            //noinspection unchecked
             return (T) instance;
         }
     }
