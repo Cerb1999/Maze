@@ -4,7 +4,7 @@ public enum ItemType {
     LADDER,
     KEY,
     LIFEUP,
-    SLOWNESS,
+    SLOWHERO,
     NOATTACK,
     ;
 

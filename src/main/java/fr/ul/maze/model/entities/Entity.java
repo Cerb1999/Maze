@@ -103,6 +103,10 @@ public abstract class Entity {
         this.world.destroyBody(this.body);
     }
 
+    public void slow(final float slow) {
+        this.walkSpeed = walkSpeed/slow  ;
+    }
+
     public void destroyAttackBody() {
         if (attackBody != null) this.world.destroyBody(this.attackBody);
     }

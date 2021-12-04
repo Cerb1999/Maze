@@ -4,8 +4,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import exceptions.Exn;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.model.entities.Mob;
@@ -19,6 +17,7 @@ public final class MasterContactController implements ContactListener {
     private final EndLevelController endLevelController;
     private final MobAttackController mobAttackController;
     private final NoAttackController noAttackController;
+    private final SlowHeroController slowHeroController;
     private final AtomicReference<MasterState> state;
     private final MapScreen mapScreen;
     private final MasterScreen master;
@@ -27,6 +26,7 @@ public final class MasterContactController implements ContactListener {
         this.endLevelController = new EndLevelController();
         this.mobAttackController = new MobAttackController(masterScreen, state);
         this.noAttackController = new NoAttackController();
+        this.slowHeroController = new SlowHeroController();
         this.state = state;
         this.mapScreen = mapScreen;
         this.master = masterScreen;
@@ -49,6 +49,10 @@ public final class MasterContactController implements ContactListener {
                     break;
                 case NOATTACK:
                     noAttackController.disableWeapon(state);
+                    item.remove();
+                    break;
+                case SLOWHERO:
+                    slowHeroController.slowHero(state);
                     item.remove();
                     break;
             }
