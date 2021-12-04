@@ -25,6 +25,7 @@ public class AnimatedActor extends Actor {
     protected final Animation attackLeftAnimation;
     protected final Animation attackDownAnimation;
     protected final Animation dieAnimation;
+    protected final Animation damagedAnimation;
 
     protected AnimatedActor(AtomicReference<? extends Entity> model, String sprite, String walkRight, String walkUp, String walkLeft, String walkDown, String attackRight, String attackUp, String attackLeft, String attackDown, String die) {
         this.model = model;
@@ -44,7 +45,8 @@ public class AnimatedActor extends Actor {
         this.attackDownAnimation = new Animation(attackDown, 6, this.model.get().getAttackSpeed(), false);
 
         //Init dying animation
-        this.dieAnimation = new Animation(die, 6, 2, false);
+        this.dieAnimation = new Animation(die, 6, 1.5f, false);
+        this.damagedAnimation = new Animation(die, 6, 1.5f, false);
     }
 
     @Override
@@ -53,7 +55,12 @@ public class AnimatedActor extends Actor {
 
         boolean toBeRemoved = false;
 
-        switch (this.model.get().getActionState()) {
+        EntityActionState st = this.model.get().getActionState();
+        if (st != EntityActionState.DAMAGED) {
+            damagedAnimation.restart();
+        }
+
+        switch (st) {
             case IDLE:
                 switch (this.model.get().getMoveState()) {
                     case RIGHT:
@@ -141,10 +148,16 @@ public class AnimatedActor extends Actor {
                         break;
                 }
                 break;
+            case DAMAGED:
+                damagedAnimation.update(delta);
+                if (!damagedAnimation.isFinished()) sprite.set(new Sprite(damagedAnimation.getFrame()));
+                break;
             case DYING:
                 dieAnimation.update(delta);
                 if (!dieAnimation.isFinished()) sprite.set(new Sprite(dieAnimation.getFrame()));
-                else toBeRemoved = true;
+                else {
+                    toBeRemoved = true;
+                }
                 break;
         }
 

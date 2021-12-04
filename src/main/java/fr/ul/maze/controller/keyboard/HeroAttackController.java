@@ -25,8 +25,6 @@ public final class HeroAttackController implements InputProcessor {
     public void attack() {
         AtomicReference<Hero> hero = this.state.get().getHero();
 
-
-
         hero.updateAndGet(h -> {
             h.updateBody(body -> {
                 if(h.getActionState() == EntityActionState.IDLE) {
@@ -40,8 +38,6 @@ public final class HeroAttackController implements InputProcessor {
             });
             return h;
         });
-
-
     }
 
     @Override

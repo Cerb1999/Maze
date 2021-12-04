@@ -180,14 +180,14 @@ public class Maze implements IndexedGraph<GraphNode> {
         Optional<GraphNode> fromNodeOpt = this.getPosition(from);
         Optional<GraphNode> toNodeOpt = this.getPosition(to);
 
-        Gdx.app.debug(getClass().getCanonicalName(), "Is " + from + " found in the graph? " + fromNodeOpt.isPresent());
-        Gdx.app.debug(getClass().getCanonicalName(), "Is " + to + " found in the graph? " + toNodeOpt.isPresent());
+        //Gdx.app.debug(getClass().getCanonicalName(), "Is " + from + " found in the graph? " + fromNodeOpt.isPresent());
+        //Gdx.app.debug(getClass().getCanonicalName(), "Is " + to + " found in the graph? " + toNodeOpt.isPresent());
 
         if (fromNodeOpt.isPresent() && toNodeOpt.isPresent()) {
             GraphNode fromNode = fromNodeOpt.get(), toNode = toNodeOpt.get();
 
             boolean found = new IndexedAStarPathFinder<>(this).searchNodePath(fromNode, toNode, this.heuristic, path);
-            Gdx.app.debug(getClass().getCanonicalName(), "Any path found? " + found);
+            //Gdx.app.debug(getClass().getCanonicalName(), "Any path found? " + found);
         }
 
         return path;

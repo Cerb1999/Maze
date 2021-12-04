@@ -95,7 +95,10 @@ public final class Hero extends Entity {
 
         SoundAssetManager.getInstance().playHeroHurtSound();
 
-        if (this.getHp() == 0) this.die();
+        if (this.isDead())
+            this.die();
+        else
+            this.damaged();
     }
 
     /**
@@ -105,11 +108,15 @@ public final class Hero extends Entity {
         this.actionState = EntityActionState.DYING;
     }
 
+    private void damaged() {
+        this.actionState = EntityActionState.DAMAGED;
+    }
+
     public void destroyBody() {
         if (body != null) this.world.destroyBody(this.body);
     }
 
     public boolean isDead() {
-        return this.actionState == EntityActionState.DYING;
+        return super.getHp() == 0; // this.actionState == EntityActionState.DYING;
     }
 }

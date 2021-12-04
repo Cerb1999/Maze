@@ -29,6 +29,7 @@ public class Animation {
         }
         this.frameCount = frameCount;
         this.maxFrameTime = cycleTime / frameCount;
+        this.currentFrameTime = 0;
         this.frame = 0;
         this.loop = loop;
     }
@@ -77,5 +78,14 @@ public class Animation {
 
     public String getNomAnimation() {
         return nomAnimation;
+    }
+
+    /**
+     * Restart the whole animation from the beginning.
+     */
+    public void restart() {
+        this.frame = 0;
+        this.currentFrameTime = 0;
+        this.isFinished = false;
     }
 }
