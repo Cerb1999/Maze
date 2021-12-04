@@ -8,6 +8,7 @@ import fr.ul.maze.model.Direction;
 
 public final class Hero extends Entity {
     private final static int BASE_HP = 3;
+    private static int key = 0;
     private static final float BASE_MOVEMENT_SPEED = 100f;
     private final static float BASE_ATTACK_RANGE = 25f;
     private static final float BASE_ATTACK_SPEED = 0.5f;
@@ -153,6 +154,20 @@ public final class Hero extends Entity {
         this.walkSpeed = BASE_MOVEMENT_SPEED;
     }
 
+    /**
+     * When there is a contact with the key, the key value becomes 1
+     */
+    public void obtainKey(){
+        this.key = 1 ;
+    }
+
+    public void deleteKey(){
+        this.key = 0 ;
+    }
+
+    public static int getKey() {
+        return key;
+    }
 
     public void destroyBody() {
         if (body != null) this.world.destroyBody(this.body);

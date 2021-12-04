@@ -20,7 +20,9 @@ public final class MasterState {
     private int currentLevelNumber;
     private final AtomicReference<Hero> hero;
     private final AtomicReference<Item> ladder;
+    private final AtomicReference<Item> key;
     private List<AtomicReference<Mob>> mobs;
+
 
     private List<AtomicReference<Item>> lifeups;
     private List<AtomicReference<Item>> noattacks;
@@ -43,6 +45,7 @@ public final class MasterState {
         }
 
         this.ladder = new AtomicReference<>(new Item(world, randomMaze.thd, ItemType.LADDER));
+        this.key = new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.KEY));
         this.lifeups = new LinkedList<>();
         for (int i = 0; i < currentLevelNumber; ++i) {
             this.lifeups.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.LIFEUP)));
@@ -81,6 +84,10 @@ public final class MasterState {
 
     public AtomicReference<Item> getLadder() {
         return ladder;
+    }
+
+    public AtomicReference<Item> getKey() {
+        return key;
     }
 
     public List<AtomicReference<Item>> getNoattacks() {
@@ -125,7 +132,9 @@ public final class MasterState {
             this.mobs.add(new AtomicReference<>(new Random().nextFloat() <=0.33 ? new Zombie(world, level.get().randomPosition()) : (new Random().nextFloat() <=0.5 ? new Bat(world, level.get().randomPosition()) : new Rat(world, level.get().randomPosition()))));
         }
 
-        this.ladder.set(new Item(world, randomMaze.thd, ItemType.LADDER));
+        this.ladder.set(new Item(world, level.get().randomPosition(), ItemType.LADDER));
+        this.key.set(new Item(world, level.get().randomPosition(), ItemType.KEY));
+
         this.lifeups = new LinkedList<>();
         for (int i = 0; i < currentLevelNumber; ++i) {
             this.lifeups.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.LIFEUP)));

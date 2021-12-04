@@ -45,7 +45,10 @@ public final class MasterContactController implements ContactListener {
             else item = (Item) contact.getFixtureA().getUserData();
             switch (item.getItemType()) {
                 case LADDER:
-                    endLevelController.nextLevel(this.state, this.mapScreen, this.master);
+                    if(state.get().getHero().get().getKey() == 1){
+                        state.get().getHero().get().deleteKey();
+                        endLevelController.nextLevel(this.state, this.mapScreen, this.master);
+                    }
                     break;
                 case LIFEUP:
                     state.get().getHero().get().heal(1);
@@ -65,6 +68,10 @@ public final class MasterContactController implements ContactListener {
                     break;
                 case SPEEDMOB:
                     speedMobController.speedMob(state);
+                    item.remove();
+                    break;
+                case KEY:
+                    this.state.get().getHero().get().obtainKey();
                     item.remove();
                     break;
             }

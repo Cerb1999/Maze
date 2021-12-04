@@ -37,6 +37,7 @@ import utils.RefCell;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class MapScreen implements Screen {
@@ -51,6 +52,7 @@ public final class MapScreen implements Screen {
     private RefCell<HeroActor> hero;
 
     private RefCell<ItemActor> ladder;
+    private RefCell<ItemActor> key;
 
     private RefCell<List<AnimatedActor>> mobs;
     private RefCell<List<ItemActor>> lifeups;
@@ -58,6 +60,7 @@ public final class MapScreen implements Screen {
     private RefCell<List<ItemActor>> slowhero;
     private RefCell<List<ItemActor>> slowmob;
     private RefCell<List<ItemActor>> speedmob;
+
 
     private HeroMoveController heroMoveController;
     private HeroAttackController heroAttackController;
@@ -204,6 +207,7 @@ public final class MapScreen implements Screen {
         this.hero = new RefCell<>();
 
         this.ladder = new RefCell<>();
+        this.key = new RefCell<>();
 
         this.mobs = new RefCell<>();
         this.mobMoveControllers = new RefCell<>();
@@ -225,8 +229,10 @@ public final class MapScreen implements Screen {
             this.stage.addActor(this.hero.inner);
 
             this.ladder.inner = new ItemActor(st.getWorld(), st.getLadder());
+            this.key.inner = new ItemActor(st.getWorld(),st.getKey());
 
             this.stage.addActor(this.ladder.inner);
+            this.stage.addActor(this.key.inner);
 
             this.mobMoveControllers.inner = new LinkedList<>();
             this.mobs.inner = new LinkedList<>();
