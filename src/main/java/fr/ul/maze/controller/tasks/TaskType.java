@@ -4,5 +4,6 @@ public enum TaskType {
     NOATTACK,
     GAME,
     SLOWHERO,
-    SLOWMOB
+    SLOWMOB,
+    SPEEDMOB
 }

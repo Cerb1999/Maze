@@ -26,6 +26,7 @@ public final class MasterState {
     private List<AtomicReference<Item>> noattacks;
     private List<AtomicReference<Item>> slowhero;
     private List<AtomicReference<Item>> slowmob;
+    private List<AtomicReference<Item>> speedmob;
 
     private World world;
 
@@ -47,17 +48,22 @@ public final class MasterState {
             this.lifeups.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.LIFEUP)));
         }
         this.noattacks = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 10; ++i) {
+        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
             this.noattacks.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.NOATTACK)));
         }
         this.slowhero = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 10; ++i) {
+        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
             this.slowhero.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWHERO)));
         }
         this.slowmob = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 10; ++i) {
+        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
             this.slowmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWMOB)));
         }
+        this.speedmob = new LinkedList<>();
+        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
+            this.speedmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SPEEDMOB)));
+        }
+
 
     }
 
@@ -88,6 +94,8 @@ public final class MasterState {
     public List<AtomicReference<Item>> getSlowMob() {
         return slowmob;
     }
+
+    public List<AtomicReference<Item>> getSpeedmob() { return speedmob; }
 
     public List<AtomicReference<Item>> getLifeups() {
         return lifeups;
@@ -135,6 +143,11 @@ public final class MasterState {
         this.slowmob = new LinkedList<>();
         for (int i = 0; i < currentLevelNumber; ++i) {
             this.slowmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWMOB)));
+        }
+
+        this.speedmob = new LinkedList<>();
+        for (int i = 0; i < currentLevelNumber; ++i) {
+            this.speedmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SPEEDMOB)));
         }
     }
 

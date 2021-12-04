@@ -57,6 +57,7 @@ public final class MapScreen implements Screen {
     private RefCell<List<ItemActor>> noattacks;
     private RefCell<List<ItemActor>> slowhero;
     private RefCell<List<ItemActor>> slowmob;
+    private RefCell<List<ItemActor>> speedmob;
 
     private HeroMoveController heroMoveController;
     private HeroAttackController heroAttackController;
@@ -211,6 +212,7 @@ public final class MapScreen implements Screen {
         this.noattacks = new RefCell<>();
         this.slowhero = new RefCell<>();
         this.slowmob = new RefCell<>();
+        this.speedmob = new RefCell<>();
 
         this.squares = new LinkedList<>();
         this.state.updateAndGet(st -> {
@@ -268,6 +270,12 @@ public final class MapScreen implements Screen {
             }
             this.slowmob.inner.forEach(this.stage::addActor);
 
+            this.speedmob.inner = new LinkedList<>();
+            for (AtomicReference<Item> lifeup : st.getSpeedmob()) {
+                this.speedmob.inner.add(new ItemActor(st.getWorld(), lifeup));
+            }
+            this.speedmob.inner.forEach(this.stage::addActor);
+
             return st;
         });
 
@@ -294,6 +302,7 @@ public final class MapScreen implements Screen {
         this.noattacks.inner.forEach(Actor::toFront);
         this.slowhero.inner.forEach(Actor::toFront);
         this.slowmob.inner.forEach(Actor::toFront);
+        this.speedmob.inner.forEach(Actor::toFront);
         this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
 
         this.constructScreen();

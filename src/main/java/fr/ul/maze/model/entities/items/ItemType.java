@@ -6,6 +6,7 @@ public enum ItemType {
     LIFEUP,
     SLOWHERO,
     SLOWMOB,
+    SPEEDMOB,
     NOATTACK,
     ;
 

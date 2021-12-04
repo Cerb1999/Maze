@@ -65,7 +65,7 @@ public abstract class Mob extends Entity {
     }
 
     /**
-     * When the hero is slowed by a hourglass
+     * When the mob is slowed
      * @param slow
      */
     public void slow(final float slow) {
@@ -73,11 +73,16 @@ public abstract class Mob extends Entity {
     }
 
     /**
-     * When the hero gets his movement speed back
+     * When the mob gets his movement speed back
      */
-    public void speed() {
+    public void backToNormalSpeed() {
         if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
         this.walkSpeed = BASE_MOVEMENT_SPEED;
+    }
+
+    public void speedUp(final float speedup) {
+        if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
+        this.walkSpeed = walkSpeed * speedup;
     }
 
     public boolean isWandering() {
