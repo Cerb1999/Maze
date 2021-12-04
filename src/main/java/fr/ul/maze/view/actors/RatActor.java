@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class RatActor extends AnimatedActor {
     public RatActor(final World world, AtomicReference<Mob> mob) {
-        super(mob, mob.get().getSpriteName()+"WalkS1", mob.get().getSpriteName()+"WalkR", mob.get().getSpriteName()+"WalkN", mob.get().getSpriteName()+"WalkL", mob.get().getSpriteName()+"WalkS", 3, mob.get().getSpriteName()+"SmashR", mob.get().getSpriteName()+"SmashN", mob.get().getSpriteName()+"SmashL", mob.get().getSpriteName()+"SmashS", 3, mob.get().getSpriteName()+"Die", 1);
+        super(mob, mob.get().getSpriteName()+"WalkS1", mob.get().getSpriteName()+"WalkR", mob.get().getSpriteName()+"WalkN", mob.get().getSpriteName()+"WalkL", mob.get().getSpriteName()+"WalkS", 3, mob.get().getSpriteName()+"WalkR", mob.get().getSpriteName()+"WalkN", mob.get().getSpriteName()+"WalkL", mob.get().getSpriteName()+"WalkS", 3, mob.get().getSpriteName()+"WalkS", 1);
 
         sprite.setPosition(mob.get().getPosition().x - RigidSquare.WIDTH / 2, mob.get().getPosition().x - RigidSquare.HEIGHT / 2);
 
