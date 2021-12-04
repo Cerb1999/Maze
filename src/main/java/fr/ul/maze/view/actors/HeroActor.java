@@ -20,22 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class HeroActor extends AnimatedActor {
     public HeroActor(final World world, AtomicReference<Hero> hero) {
-        super(hero, "walkS1");
-
-        //Init walk animations
-        this.walkRightAnimation = new Animation("walkR", 9, 0.5f);
-        this.walkUpAnimation = new Animation("walkN", 9, 0.5f);
-        this.walkLeftAnimation = new Animation("walkL", 9, 0.5f);
-        this.walkDownAnimation = new Animation("walkS", 9, 0.5f);
-
-        //Init attack animations
-        this.attackRightAnimation = new Animation("slashR", 6, this.model.get().getAttackSpeed(), false);
-        this.attackUpAnimation = new Animation("slashN", 6, this.model.get().getAttackSpeed(), false);
-        this.attackLeftAnimation = new Animation("slashL", 6, this.model.get().getAttackSpeed(), false);
-        this.attackDownAnimation = new Animation("slashS", 6, this.model.get().getAttackSpeed(), false);
-
-        //Init dying animation
-        this.dieAnimation = new Animation("die", 6, 2, false);
+        super(hero, "walkS1", "walkR", "walkN", "walkL", "walkS", 9, "slashR", "slashN", "slashL", "slashS", 6, "die", 6);
 
         sprite.setPosition(hero.get().getPosition().x - RigidSquare.WIDTH / 2, hero.get().getPosition().x - RigidSquare.HEIGHT / 2);
 

@@ -20,22 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class ZombieActor extends AnimatedActor {
     public ZombieActor(final World world, AtomicReference<Mob> mob) {
-        super(mob, mob.get().getSpriteName()+"WalkS1");
-
-        //Init walk animations
-        this.walkRightAnimation = new Animation(mob.get().getSpriteName()+"WalkR", 9, 0.5f);
-        this.walkUpAnimation = new Animation(mob.get().getSpriteName()+"WalkN", 9, 0.5f);
-        this.walkLeftAnimation = new Animation(mob.get().getSpriteName()+"WalkL", 9, 0.5f);
-        this.walkDownAnimation = new Animation(mob.get().getSpriteName()+"WalkS", 9, 0.5f);
-
-        //Init attack animations
-        this.attackRightAnimation = new Animation(mob.get().getSpriteName()+"SmashR", 6, this.model.get().getAttackSpeed(), false);
-        this.attackUpAnimation = new Animation(mob.get().getSpriteName()+"SmashN", 6, this.model.get().getAttackSpeed(), false);
-        this.attackLeftAnimation = new Animation(mob.get().getSpriteName()+"SmashL", 6, this.model.get().getAttackSpeed(), false);
-        this.attackDownAnimation = new Animation(mob.get().getSpriteName()+"SmashS", 6, this.model.get().getAttackSpeed(), false);
-
-        //Init dying animation
-        this.dieAnimation = new Animation(mob.get().getSpriteName()+"Die", 6, 2, false);
+        super(mob, mob.get().getSpriteName()+"WalkS1", mob.get().getSpriteName()+"WalkR", mob.get().getSpriteName()+"WalkN", mob.get().getSpriteName()+"WalkL", mob.get().getSpriteName()+"WalkS", 9, mob.get().getSpriteName()+"SmashR", mob.get().getSpriteName()+"SmashN", mob.get().getSpriteName()+"SmashL", mob.get().getSpriteName()+"SmashS", 6, mob.get().getSpriteName()+"Die", 6);
 
         sprite.setPosition(mob.get().getPosition().x - RigidSquare.WIDTH / 2, mob.get().getPosition().x - RigidSquare.HEIGHT / 2);
 
