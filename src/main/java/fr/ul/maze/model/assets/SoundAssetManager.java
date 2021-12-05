@@ -10,6 +10,7 @@ public class SoundAssetManager {
     private static final String DRAW_SWORD_SOUND = "drawSword.ogg";
     private static final String FOOTSTEP_SOUND = "footstep.ogg";
     private static final String HEROHURT_SOUND = "heroHurt.ogg";
+    private static final String HERO_SLOW_SOUND = "heroslow.ogg";
     private static final String DRINK_SOUND = "drink.ogg";
     private static final String REDRAW_SOUND = "redraw.ogg";
     private static final String BREAK_SOUND = "break.ogg";
@@ -19,6 +20,7 @@ public class SoundAssetManager {
     private static Sound swordSlashSound;
     private static Sound footstepSound;
     private static Sound heroHurtSound;
+    private static Sound heroSlowSound;
     private static Sound drinkSound;
     private static Sound redrawSound;
     private static Sound breakSound;
@@ -30,6 +32,7 @@ public class SoundAssetManager {
         assetManager.load(SOUND_PATH + DRAW_SWORD_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + FOOTSTEP_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + HEROHURT_SOUND, Sound.class);
+        assetManager.load(SOUND_PATH + HERO_SLOW_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + DRINK_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + REDRAW_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + BREAK_SOUND, Sound.class);
@@ -39,6 +42,7 @@ public class SoundAssetManager {
         swordSlashSound = assetManager.get(SOUND_PATH + DRAW_SWORD_SOUND);
         footstepSound = assetManager.get(SOUND_PATH + FOOTSTEP_SOUND);
         heroHurtSound = assetManager.get(SOUND_PATH + HEROHURT_SOUND);
+        heroSlowSound = assetManager.get(SOUND_PATH + HERO_SLOW_SOUND);
         drinkSound = assetManager.get(SOUND_PATH + DRINK_SOUND);
         redrawSound = assetManager.get(SOUND_PATH + REDRAW_SOUND);
         breakSound = assetManager.get(SOUND_PATH + BREAK_SOUND);
@@ -61,6 +65,7 @@ public class SoundAssetManager {
         if(swordSlashSound!=null)swordSlashSound.dispose();
         if(footstepSound!=null)footstepSound.dispose();
         if(heroHurtSound!=null)heroHurtSound.dispose();
+        if(heroSlowSound != null) heroSlowSound.dispose();
         if(drinkSound !=null)drinkSound.dispose();
         if(redrawSound !=null)redrawSound.dispose();
         if(breakSound !=null)breakSound.dispose();
@@ -85,6 +90,11 @@ public class SoundAssetManager {
     public void playHeroHurtSound(){
         long id = heroHurtSound.play();
         heroHurtSound.setVolume(id, 0.2f);
+    }
+
+    public void playHeroSlowSound(){
+        long id = heroSlowSound.play();
+        heroSlowSound.setVolume(id, 0.2f);
     }
 
     public void playDrinkSound(){

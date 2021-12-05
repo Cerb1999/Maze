@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class SlowHeroTimerTask extends CustomTask {
 
-    private static final int BASE_HERO_SLOW_TIME = 5;
+    private static final int BASE_HERO_SLOW_TIME = 7;
 
     /**
      * create custom task

@@ -144,6 +144,7 @@ public final class Hero extends Entity {
      */
     public void slow(final float slow) {
         super.slow(slow);
+        SoundAssetManager.getInstance().playHeroSlowSound();
     }
 
     /**
