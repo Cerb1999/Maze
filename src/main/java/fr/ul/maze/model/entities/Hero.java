@@ -37,6 +37,10 @@ public final class Hero extends Entity {
         shape.dispose();//shape not needed after
     }
 
+    /**
+     * Créate a hitbox for the sword.
+     * Used to detect if the hero hit something when he attacks.
+     */
     public void createSwordBody() {
         float attackBodyPosX = 0;
         float attackBodyPosY = 0;
