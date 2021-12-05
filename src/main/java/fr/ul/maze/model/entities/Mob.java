@@ -3,6 +3,8 @@ package fr.ul.maze.model.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import fr.ul.maze.model.Direction;
+import fr.ul.maze.model.assets.SoundAssetManager;
+import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.Objects;
 import java.util.Random;
@@ -25,7 +27,7 @@ public abstract class Mob extends Entity {
     }
 
     public static void resetScore() {
-        score = 0;
+
     }
 
     public void destroyBody() {
@@ -42,6 +44,7 @@ public abstract class Mob extends Entity {
      */
     public void die() {
         this.actionState = EntityActionState.DYING;
+        SoundAssetManager.getInstance().playMobDeathSound();
     }
 
     public int getVisionRange() {
@@ -70,6 +73,7 @@ public abstract class Mob extends Entity {
      */
     public void slow(final float slow) {
         super.slow(slow);
+        SoundAssetManager.getInstance().playMobSlowSound();
     }
 
     /**
