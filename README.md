@@ -61,7 +61,7 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
  
 - Attaques
   - [x] Le héros perd une vie au contact d’un monstre
-    - [ ] replacé au début du niveau (sans réapparation des objets).
+    - [x] replacé au début du niveau (sans réapparation des objets).
   - [x] Le héros peut attaquer les monstres (corps à corps - case adjacente)
   - [ ] ((Attaque des monstres))
   
@@ -74,8 +74,8 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
    - [x] ((Musique))
 
 - Variété
-  - [ ] Variété murs et sol
-  - [ ] Variété mobs
+  - [x] Variété murs et sol
+  - [x] Variété mobs
   
 
 ## Sprint 1
