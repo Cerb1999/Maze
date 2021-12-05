@@ -159,6 +159,7 @@ public final class Hero extends Entity {
      */
     public void obtainKey(){
         this.key = 1 ;
+        SoundAssetManager.getInstance().playKey();
     }
 
     public void deleteKey(){

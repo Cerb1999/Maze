@@ -14,6 +14,7 @@ public class SoundAssetManager {
     private static final String REDRAW_SOUND = "redraw.ogg";
     private static final String BREAK_SOUND = "break.ogg";
     private static final String CLASH_SOUND = "clash.ogg";
+    private static final String KEY_SOUND = "key.ogg";
 
     private static Sound swordSlashSound;
     private static Sound footstepSound;
@@ -22,6 +23,7 @@ public class SoundAssetManager {
     private static Sound redrawSound;
     private static Sound breakSound;
     private static Sound clashSound;
+    private static Sound keySound;
 
     private SoundAssetManager(){
         assetManager = new AssetManager();
@@ -32,6 +34,7 @@ public class SoundAssetManager {
         assetManager.load(SOUND_PATH + REDRAW_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + BREAK_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + CLASH_SOUND, Sound.class);
+        assetManager.load(SOUND_PATH + KEY_SOUND, Sound.class);
         assetManager.finishLoading();
         swordSlashSound = assetManager.get(SOUND_PATH + DRAW_SWORD_SOUND);
         footstepSound = assetManager.get(SOUND_PATH + FOOTSTEP_SOUND);
@@ -40,6 +43,7 @@ public class SoundAssetManager {
         redrawSound = assetManager.get(SOUND_PATH + REDRAW_SOUND);
         breakSound = assetManager.get(SOUND_PATH + BREAK_SOUND);
         clashSound = assetManager.get(SOUND_PATH + CLASH_SOUND);
+        keySound = assetManager.get(SOUND_PATH + KEY_SOUND);
     }
 
 
@@ -61,6 +65,7 @@ public class SoundAssetManager {
         if(redrawSound !=null)redrawSound.dispose();
         if(breakSound !=null)breakSound.dispose();
         if(clashSound !=null)clashSound.dispose();
+        if(keySound !=null)keySound.dispose();
     }
 
     public void playDrawSwordSound(){
@@ -84,21 +89,26 @@ public class SoundAssetManager {
 
     public void playDrinkSound(){
         long id = drinkSound.play();
-        heroHurtSound.setVolume(id, 0.2f);
+        drinkSound.setVolume(id, 0.2f);
     }
 
     public void playRedrawSound(){
         long id = redrawSound.play();
-        heroHurtSound.setVolume(id, 0.2f);
+        redrawSound.setVolume(id, 0.2f);
     }
 
     public void playBreakSound(){
         long id = breakSound.play();
-        heroHurtSound.setVolume(id, 0.2f);
+        breakSound.setVolume(id, 0.2f);
     }
 
     public void playClash() {
         long id = clashSound.play();
-        heroHurtSound.setVolume(id, 0.2f);
+        clashSound.setVolume(id, 0.2f);
+    }
+
+    public void playKey() {
+        long id = keySound.play();
+        keySound.setVolume(id, 0.3f);
     }
 }
