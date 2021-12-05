@@ -62,6 +62,9 @@ public final class MasterState {
         return mobs;
     }
 
+    /**
+     * Regenerate a new level but keep hero stats
+     */
     public void nextLevel(){
         this.world =new World(new Vector2(0, 0), true);
         Tuple3<Maze, Vector2, Vector2> randomMaze = new RandomMazeGenerator().generateMaze(world);
