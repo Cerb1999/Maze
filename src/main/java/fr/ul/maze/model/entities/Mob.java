@@ -44,6 +44,11 @@ public abstract class Mob extends Entity {
         return visionRange;
     }
 
+    /**
+     * Get a random position arround the starting point of the mob (radius of wanderRange).
+     * Generate a new wanderPos only if it doesn't exist or rarely so the mob has time to move and don't change direction too frequently
+     * @return Vector2
+     */
     public Vector2 getWanderPos() {
         Random rnd = new Random();
         //10% chance of changing direction for wander
