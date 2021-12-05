@@ -14,7 +14,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class MasterState {
     private static int levelNumberFactory = 0;
-    private static final float DIFFICULTY_MODIFIER = 2.5f;
+    private static final float DIFFICULTY_MODIFIER = 2f;
+    private double ratio;
 
     private final AtomicReference<Maze> level;
     private int currentLevelNumber;
@@ -38,32 +39,33 @@ public final class MasterState {
         Tuple3<Maze, Vector2, Vector2> randomMaze = new RandomMazeGenerator().generateMaze(world);
         this.level = new AtomicReference<>(randomMaze.fst);
         this.currentLevelNumber = ++levelNumberFactory;
+        this.ratio = Math.sqrt(currentLevelNumber) * DIFFICULTY_MODIFIER ;
         this.hero = new AtomicReference<>(new Hero(world, randomMaze.snd));
         this.mobs = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER; ++i) {
+        for (int i = 0; i < ratio; ++i) {
             this.mobs.add(new AtomicReference<>(new Random().nextFloat() <=0.33 ? new Zombie(world, level.get().randomPosition()) : (new Random().nextFloat() <=0.5 ? new Bat(world, level.get().randomPosition()) : new Rat(world, level.get().randomPosition()))));
         }
 
         this.ladder = new AtomicReference<>(new Item(world, randomMaze.thd, ItemType.LADDER));
         this.key = new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.KEY));
         this.lifeups = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber; ++i) {
+        for (int i = 0; i < Math.min(ratio/4,2); ++i) {
             this.lifeups.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.LIFEUP)));
         }
         this.noattacks = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
+        for (int i = 0; i < ratio; ++i) {
             this.noattacks.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.NOATTACK)));
         }
         this.slowhero = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
+        for (int i = 0; i < ratio; ++i) {
             this.slowhero.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWHERO)));
         }
         this.slowmob = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
+        for (int i = 0; i < ratio ; ++i) {
             this.slowmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWMOB)));
         }
         this.speedmob = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER * 5; ++i) {
+        for (int i = 0; i < ratio ; ++i) {
             this.speedmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SPEEDMOB)));
         }
 
@@ -124,11 +126,12 @@ public final class MasterState {
         Tuple3<Maze, Vector2, Vector2> randomMaze = new RandomMazeGenerator().generateMaze(world);
         this.level.set(randomMaze.fst);
         this.currentLevelNumber = ++levelNumberFactory;
+        this.ratio = Math.sqrt(currentLevelNumber) * DIFFICULTY_MODIFIER ;
         int lasthp = this.hero.get().getHp();
         this.hero.set(new Hero(world, randomMaze.snd));
         this.hero.get().setHp(lasthp);
         this.mobs = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber * DIFFICULTY_MODIFIER; ++i) {
+        for (int i = 0; i < ratio * 2; ++i) {
             this.mobs.add(new AtomicReference<>(new Random().nextFloat() <=0.33 ? new Zombie(world, level.get().randomPosition()) : (new Random().nextFloat() <=0.5 ? new Bat(world, level.get().randomPosition()) : new Rat(world, level.get().randomPosition()))));
         }
 
@@ -136,26 +139,26 @@ public final class MasterState {
         this.key.set(new Item(world, level.get().randomPosition(), ItemType.KEY));
 
         this.lifeups = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber; ++i) {
+        for (int i = 0; i < Math.min(ratio/4,2); ++i) {
             this.lifeups.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.LIFEUP)));
         }
         this.noattacks = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber; ++i) {
+        for (int i = 0; i < ratio ; ++i) {
             this.noattacks.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.NOATTACK)));
         }
 
         this.slowhero = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber; ++i) {
+        for (int i = 0; i < ratio; ++i) {
             this.slowhero.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWHERO)));
         }
 
         this.slowmob = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber; ++i) {
+        for (int i = 0; i < ratio; ++i) {
             this.slowmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SLOWMOB)));
         }
 
         this.speedmob = new LinkedList<>();
-        for (int i = 0; i < currentLevelNumber; ++i) {
+        for (int i = 0; i < ratio; ++i) {
             this.speedmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SPEEDMOB)));
         }
     }

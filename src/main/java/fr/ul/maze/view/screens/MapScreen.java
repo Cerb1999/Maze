@@ -303,12 +303,12 @@ public final class MapScreen implements Screen {
         this.world.setContactListener(this.masterContactListener);
 
         this.hero.inner.toFront();
-        this.mobs.inner.forEach(Actor::toFront);
         this.lifeups.inner.forEach(Actor::toFront);
         this.noattacks.inner.forEach(Actor::toFront);
         this.slowhero.inner.forEach(Actor::toFront);
         this.slowmob.inner.forEach(Actor::toFront);
         this.speedmob.inner.forEach(Actor::toFront);
+        this.mobs.inner.forEach(Actor::toFront);
         this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
 
         this.constructScreen();
