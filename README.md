@@ -161,3 +161,7 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 #### Diagramme de classe au début du sprint
 
 ![diagramme de classe début sprint 3](./doc/sprint3/diag_classe_debut_sprint3.svg)
+
+#### Diagramme de sequence fonctionnement global du jeu au début du sprint
+
+![diagramme de sequanece fonctionnement_app début sprint 3](./doc/sprint3/sequence_diagram_global_game.svg)
