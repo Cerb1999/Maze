@@ -39,4 +39,10 @@ public class Rat extends Mob{
 
         shape.dispose();//shape not needed after
     }
+
+    @Override
+    public void backToNormalSpeed() {
+        if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
+        this.walkSpeed = BASE_MOVEMENT_SPEED;
+    }
 }

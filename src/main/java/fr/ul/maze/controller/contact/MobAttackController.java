@@ -39,7 +39,6 @@ public final class MobAttackController {
         if (hero.isDead()) {
             TimerSingleton instance = TimerSingleton.getInstance();
             instance.stopTasks();
-            TimerNoAttackSingleton.disableIfNeeded();
             todo = new Timer.Task() {
                 @Override
                 public void run() {

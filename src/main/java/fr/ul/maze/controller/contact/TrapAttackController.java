@@ -24,23 +24,33 @@ public class TrapAttackController {
     }
 
     public void attack(Trap trap, Hero hero) {
+        if (hero.getActionState() == EntityActionState.DAMAGED || hero.getActionState() == EntityActionState.DYING)
+            return; // prevent monster from multi kills
+        if (hero.isDead())
+            return; // should never happen
 
         hero.damage(1);
 
-        if(hero.isDead()) {
+        Timer.Task todo;
+        if (hero.isDead()) {
             TimerSingleton instance = TimerSingleton.getInstance();
             instance.stopTasks();
-            Timer timer = new Timer();
-            Timer.Task task = timer.scheduleTask(new Timer.Task() {
+            todo = new Timer.Task() {
                 @Override
-                public void run () {
+                public void run() {
                     instance.clearTasks();
                     master.switchScreen(master.GAME_OVER_SCREEN.get());
                 }
-            }, 2);
+            };
         } else {
-            // put the hero at its starting position
-            Box2DTaskQueue.getQueue().add(hero::respawn);
+            todo = new Timer.Task() {
+                @Override
+                public void run() {
+                    Box2DTaskQueue.getQueue().push(hero::respawn);
+                }
+            };
         }
+
+        new Timer().scheduleTask(todo, 1.5f);
     }
 }

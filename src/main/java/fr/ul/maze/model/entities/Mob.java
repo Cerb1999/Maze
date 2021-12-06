@@ -79,10 +79,7 @@ public abstract class Mob extends Entity {
     /**
      * When the mob gets his movement speed back
      */
-    public void backToNormalSpeed() {
-        if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
-        this.walkSpeed = BASE_MOVEMENT_SPEED;
-    }
+    public abstract void backToNormalSpeed();
 
     public void speedUp(final float speedup) {
         if(this.actionState != EntityActionState.DYING) this.actionState = EntityActionState.IDLE;
