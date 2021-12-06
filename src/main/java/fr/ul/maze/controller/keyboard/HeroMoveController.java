@@ -3,6 +3,8 @@ package fr.ul.maze.controller.keyboard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import fr.ul.maze.controller.TimerSingleton;
+import fr.ul.maze.controller.contact.SpikesTrapController;
 import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.SoundAssetManager;
@@ -30,6 +32,7 @@ public final class HeroMoveController implements InputProcessor {
 
         hero.updateAndGet(h -> {
             h.updateBody(body -> {
+
                 if(h.getActionState() == EntityActionState.IDLE || h.getActionState() == EntityActionState.NOATTACK){
                     if(d==Direction.UPRIGHT || d==Direction.UPLEFT){
                         switch (h.getLastMoveState()){

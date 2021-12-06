@@ -3,12 +3,21 @@ package fr.ul.maze.model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import fr.ul.maze.model.entities.*;
+import fr.ul.maze.controller.TimerSingleton;
+import fr.ul.maze.controller.contact.SpikesTrapController;
+import fr.ul.maze.controller.tasks.SpikesUpTimerTask;
+import fr.ul.maze.controller.tasks.TaskType;
+import fr.ul.maze.model.entities.Hero;
+import fr.ul.maze.model.entities.items.Item;
+import fr.ul.maze.model.entities.items.ItemType;
+import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.entities.traps.Trap;
 import fr.ul.maze.model.entities.traps.TrapType;
 import fr.ul.maze.model.generator.RandomMazeGenerator;
 import fr.ul.maze.model.maze.Maze;
 import utils.functional.Tuple3;
 
+import java.sql.Time;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +30,7 @@ public final class MasterState {
 
     private final AtomicReference<Maze> level;
     private int currentLevelNumber;
+    private int dangerous;
     private final AtomicReference<Hero> hero;
     private final AtomicReference<Item> ladder;
     private final AtomicReference<Item> key;
@@ -35,6 +45,8 @@ public final class MasterState {
 
     private List<AtomicReference<Trap>> wolftrap;
     private List<AtomicReference<Trap>> hole;
+    private List<AtomicReference<Trap>> spikes;
+
 
     private World world;
 
@@ -85,6 +97,12 @@ this.hole = new LinkedList<>();
         for (int i = 0; i < ratio ; ++i) {
             this.hole.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.HOLE)));
         }
+        this.spikes = new LinkedList<>();
+        for (int i = 0; i < ratio ; ++i) {
+            this.spikes.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.SPIKES)));
+        }
+
+        this.dangerous = 0;
     }
 
     public World getWorld() {
@@ -123,6 +141,10 @@ this.hole = new LinkedList<>();
         return speedmob;
     }
 
+    public List<AtomicReference<Trap>> getSpikes() {
+        return spikes;
+    }
+
     public List<AtomicReference<Item>> getLifeups() {
         return lifeups;
     }
@@ -133,6 +155,14 @@ this.hole = new LinkedList<>();
 
     public List<AtomicReference<Trap>> getHole() {
         return hole;
+    }
+
+    public int getDangerous() {
+        return dangerous;
+    }
+
+    public void setDangerous(int dangerous) {
+        this.dangerous = dangerous;
     }
 
     public int getCurrentLevelNumber() {
@@ -198,7 +228,10 @@ this.hole = new LinkedList<>();
         for (int i = 0; i < ratio; ++i) {
             this.hole.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.HOLE)));
         }
-
+        this.spikes = new LinkedList<>();
+        for (int i = 0; i < ratio; ++i) {
+            this.spikes.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.SPIKES)));
+        }
     }
 
     public void reset() {

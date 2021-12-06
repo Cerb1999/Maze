@@ -13,12 +13,15 @@ public class Trap {
     private World world;
     private boolean toBeRemoved;
 
+    private final Vector2 startingPosition;
+
 
     public Trap(World world, Vector2 pos, TrapType trapType) {
         //Create body (hitbox)
         this.trapType = trapType;
         this.world = world;
         this.toBeRemoved = false;
+        this.startingPosition = pos;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -53,6 +56,13 @@ public class Trap {
     }
     public void destroyBody() {
         if (body != null) this.world.destroyBody(this.body);
+    }
+
+    public void respawn() {
+        this.body.setTransform(this.startingPosition.x * RigidSquare.WIDTH + RigidSquare.WIDTH / 2, this.startingPosition.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT / 2, body.getAngle());
+    }
+    public Vector2 getStartingPosition() {
+        return startingPosition;
     }
 
 }

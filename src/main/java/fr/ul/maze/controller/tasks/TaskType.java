@@ -5,5 +5,6 @@ public enum TaskType {
     GAME,
     SLOWHERO,
     SLOWMOB,
-    SPEEDMOB
+    SPEEDMOB,
+    SPIKESUP
 }

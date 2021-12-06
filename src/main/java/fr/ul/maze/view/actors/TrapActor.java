@@ -11,7 +11,7 @@ import fr.ul.maze.view.map.RigidSquare;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class TrapActor extends Actor {
+public final class TrapActor extends Actor {
     private final AtomicReference<Trap> model;
 
     protected Sprite sprite;
@@ -54,5 +54,6 @@ public class TrapActor extends Actor {
             this.remove();
         }
     }
+
 }
 

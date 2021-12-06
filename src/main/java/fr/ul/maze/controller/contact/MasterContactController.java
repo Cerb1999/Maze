@@ -24,6 +24,7 @@ public final class MasterContactController implements ContactListener {
     private final SlowMobController slowMobController;
     private final SpeedMobController speedMobController;
     private final TrapAttackController trapAttackController;
+    //private final SpikesTrapController spikesTrapController;
     private final AtomicReference<MasterState> state;
     private final MapScreen mapScreen;
     private final MasterScreen master;
@@ -36,6 +37,7 @@ public final class MasterContactController implements ContactListener {
         this.slowMobController = new SlowMobController();
         this.trapAttackController = new TrapAttackController(masterScreen,state);
         this.speedMobController = new SpeedMobController();
+       // this.spikesTrapController = new SpikesTrapController();
         this.state = state;
         this.mapScreen = mapScreen;
         this.master = masterScreen;
@@ -116,6 +118,9 @@ public final class MasterContactController implements ContactListener {
                     trap.remove();
                     break;
                 case SPIKES:
+                    if(state.get().getDangerous() == 1){
+                        trapAttackController.attack(trap,hero);
+                    }
                     break;
                 case HOLE:
                     trapAttackController.attack(trap,hero);

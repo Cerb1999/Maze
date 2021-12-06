@@ -19,6 +19,7 @@ import fr.ul.maze.controller.Box2DTaskQueue;
 import fr.ul.maze.controller.MobMoveController;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.contact.MasterContactController;
+import fr.ul.maze.controller.contact.SpikesTrapController;
 import fr.ul.maze.controller.keyboard.HeroAttackController;
 import fr.ul.maze.controller.keyboard.HeroMoveController;
 import fr.ul.maze.controller.keyboard.PauseController;
@@ -65,13 +66,13 @@ public final class MapScreen implements Screen {
 
     private RefCell<List<TrapActor>> wolftrap;
     private RefCell<List<TrapActor>> hole;
+    private RefCell<List<TrapActor>> spikes;
 
-
+    private SpikesTrapController spikesTrapController;
     private HeroMoveController heroMoveController;
     private HeroAttackController heroAttackController;
     private MasterContactController masterContactListener;
     private RefCell<List<MobMoveController>> mobMoveControllers;
-
     private Box2DDebugRenderer debugRenderer;
 
     private World world;
@@ -95,7 +96,6 @@ public final class MapScreen implements Screen {
         this.stage.setViewport(new FitViewport(this.camera.viewportWidth, this.camera.viewportHeight, this.camera));
 
         this.pauseController = pauseController;
-
         this.constructLevel();
     }
 
@@ -110,7 +110,6 @@ public final class MapScreen implements Screen {
 
         Label.LabelStyle lHp = new Label.LabelStyle();
         lHp.font = master.getFontSMALL();
-
 
         int score = this.state.get().getCurrentLevelNumber();
         int hp = this.state.get().getHero().get().getHp();
@@ -225,6 +224,7 @@ public final class MapScreen implements Screen {
 
         this.wolftrap = new RefCell<>();
         this.hole = new RefCell<>();
+        this.spikes = new RefCell<>();
 
         this.squares = new LinkedList<>();
         this.state.updateAndGet(st -> {
@@ -302,14 +302,23 @@ public final class MapScreen implements Screen {
             }
             this.hole.inner.forEach(this.stage::addActor);
 
+            this.spikes.inner = new LinkedList<>();
+            for (AtomicReference<Trap> lifeup : st.getSpikes()) {
+                this.spikes.inner.add(new TrapActor(st.getWorld(), lifeup));
+            }
+            this.spikes.inner.forEach(this.stage::addActor);
+
 
             return st;
         });
+
+
 
         this.mux = new InputMultiplexer();
         this.mux.addProcessor(stage);
 
         this.heroMoveController = new HeroMoveController(this.state);
+        this.spikesTrapController = new SpikesTrapController(this.state);
         this.mux.addProcessor(this.heroMoveController);
 
         this.heroAttackController = new HeroAttackController(this.state);
@@ -331,10 +340,17 @@ public final class MapScreen implements Screen {
         this.slowmob.inner.forEach(Actor::toFront);
         this.speedmob.inner.forEach(Actor::toFront);
         this.hole.inner.forEach(Actor::toFront);
+        this.spikes.inner.forEach(Actor::toFront);
         this.mobs.inner.forEach(Actor::toFront);
         this.hero.inner.toFront();
         this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
 
+        spikesTrapController.spikeUp(state,this);
+
         this.constructScreen();
+    }
+
+    public RefCell<List<TrapActor>> getSpikes() {
+        return spikes;
     }
 }
