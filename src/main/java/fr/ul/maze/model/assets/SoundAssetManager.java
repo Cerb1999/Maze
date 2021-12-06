@@ -13,6 +13,7 @@ public class SoundAssetManager {
     private static final String HERO_SLOW_SOUND = "heroslow.ogg";
     private static final String MOB_DEATH_SOUND = "mobDeath.ogg";
     private static final String MOB_SLOW_SOUND = "mobSlow.ogg";
+    private static final String BEAR_TRAP_SOUND = "bearTrap.ogg";
     private static final String DRINK_SOUND = "drink.ogg";
     private static final String REDRAW_SOUND = "redraw.ogg";
     private static final String BREAK_SOUND = "break.ogg";
@@ -25,6 +26,7 @@ public class SoundAssetManager {
     private static Sound heroSlowSound;
     private static Sound mobDeathSound;
     private static Sound mobSlowSound;
+    private static Sound bearTrapSound;
     private static Sound drinkSound;
     private static Sound redrawSound;
     private static Sound breakSound;
@@ -44,6 +46,7 @@ public class SoundAssetManager {
         assetManager.load(SOUND_PATH + BREAK_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + CLASH_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + KEY_SOUND, Sound.class);
+        assetManager.load(SOUND_PATH + BEAR_TRAP_SOUND, Sound.class);
         assetManager.finishLoading();
         swordSlashSound = assetManager.get(SOUND_PATH + DRAW_SWORD_SOUND);
         footstepSound = assetManager.get(SOUND_PATH + FOOTSTEP_SOUND);
@@ -56,6 +59,7 @@ public class SoundAssetManager {
         breakSound = assetManager.get(SOUND_PATH + BREAK_SOUND);
         clashSound = assetManager.get(SOUND_PATH + CLASH_SOUND);
         keySound = assetManager.get(SOUND_PATH + KEY_SOUND);
+        bearTrapSound = assetManager.get(SOUND_PATH + BEAR_TRAP_SOUND);
     }
 
 
@@ -76,6 +80,7 @@ public class SoundAssetManager {
         if(mobDeathSound!=null)mobDeathSound.dispose();
         if(mobSlowSound!=null)mobSlowSound.dispose();
         if(heroSlowSound!= null) heroSlowSound.dispose();
+        if(bearTrapSound!= null) bearTrapSound.dispose();
         if(drinkSound!=null)drinkSound.dispose();
         if(redrawSound!=null)redrawSound.dispose();
         if(breakSound!=null)breakSound.dispose();
@@ -133,13 +138,18 @@ public class SoundAssetManager {
         breakSound.setVolume(id, 0.2f);
     }
 
-    public void playClash() {
+    public void playClashSound() {
         long id = clashSound.play();
         clashSound.setVolume(id, 0.2f);
     }
 
-    public void playKey() {
+    public void playKeySound() {
         long id = keySound.play();
         keySound.setVolume(id, 0.3f);
+    }
+
+    public void playBearTrapSound() {
+        long id = bearTrapSound.play();
+        bearTrapSound.setVolume(id, 0.3f);
     }
 }

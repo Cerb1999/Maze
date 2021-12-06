@@ -2,7 +2,6 @@ package fr.ul.maze.controller.keyboard;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import exceptions.Exn;
 import fr.ul.maze.model.Direction;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.SoundAssetManager;
@@ -34,7 +33,7 @@ public final class HeroAttackController implements InputProcessor {
                     body.setLinearVelocity(0,0);
                     SoundAssetManager.getInstance().stopFootstep();
                     h.createSwordBody();
-                } else if(h.getActionState() == EntityActionState.NOATTACK) SoundAssetManager.getInstance().playClash();
+                } else if(h.getActionState() == EntityActionState.NOATTACK) SoundAssetManager.getInstance().playClashSound();
             });
             return h;
         });
