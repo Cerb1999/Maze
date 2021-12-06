@@ -165,6 +165,13 @@ floor1
   orig: 64, 64
   offset: 0, 0
   index: -1
+hole1
+  rotate: false
+  xy: 1322, 719
+  size: 34, 37
+  orig: 34, 37
+  offset: 0, 0
+  index: -1
 key1
   rotate: false
   xy: 926, 296
@@ -447,7 +454,7 @@ slashS6
   index: -1
 slowhero1
   rotate: false
-  xy: 1322, 733
+  xy: 1388, 799
   size: 23, 23
   orig: 23, 23
   offset: 0, 0
