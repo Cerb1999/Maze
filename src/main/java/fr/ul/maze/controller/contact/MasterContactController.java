@@ -119,6 +119,7 @@ public final class MasterContactController implements ContactListener {
                     break;
                 case HOLE:
                     trapAttackController.attack(trap,hero);
+                    SoundAssetManager.getInstance().playHoleSound();
                     break;
             }
         }
