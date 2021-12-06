@@ -20,6 +20,7 @@ public class SoundAssetManager {
     private static final String CLASH_SOUND = "clash.ogg";
     private static final String KEY_SOUND = "key.ogg";
     private static final String HOLE_SOUND = "herofall.ogg";
+    private static final String SPIKE_SOUND = "spikeTrap.ogg";
 
     private static Sound swordSlashSound;
     private static Sound footstepSound;
@@ -34,6 +35,7 @@ public class SoundAssetManager {
     private static Sound clashSound;
     private static Sound keySound;
     private static Sound holeSound;
+    private static Sound spikeSound;
 
     private SoundAssetManager(){
         assetManager = new AssetManager();
@@ -50,6 +52,7 @@ public class SoundAssetManager {
         assetManager.load(SOUND_PATH + KEY_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + BEAR_TRAP_SOUND, Sound.class);
         assetManager.load(SOUND_PATH + HOLE_SOUND, Sound.class);
+        assetManager.load(SOUND_PATH + SPIKE_SOUND, Sound.class);
         assetManager.finishLoading();
         swordSlashSound = assetManager.get(SOUND_PATH + DRAW_SWORD_SOUND);
         footstepSound = assetManager.get(SOUND_PATH + FOOTSTEP_SOUND);
@@ -64,6 +67,7 @@ public class SoundAssetManager {
         keySound = assetManager.get(SOUND_PATH + KEY_SOUND);
         bearTrapSound = assetManager.get(SOUND_PATH + BEAR_TRAP_SOUND);
         holeSound =  assetManager.get(SOUND_PATH + HOLE_SOUND);
+        spikeSound =  assetManager.get(SOUND_PATH + SPIKE_SOUND);
     }
 
 
@@ -91,6 +95,8 @@ public class SoundAssetManager {
         if(clashSound!=null)clashSound.dispose();
         if(keySound!=null)keySound.dispose();
         if(holeSound!=null)holeSound.dispose();
+        if(spikeSound!=null)spikeSound.dispose();
+
     }
 
     public void playDrawSwordSound(){
@@ -161,5 +167,10 @@ public class SoundAssetManager {
     public void playHoleSound() {
         long id = holeSound.play();
         holeSound.setVolume(id, 0.6f);
+    }
+
+    public void playSpikeSound() {
+        long id = spikeSound.play();
+        spikeSound.setVolume(id, 1f);
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import fr.ul.maze.controller.TimerSingleton;
 import fr.ul.maze.controller.contact.SpikesTrapController;
 import fr.ul.maze.model.MasterState;
+import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.model.entities.traps.Trap;
 import fr.ul.maze.model.entities.traps.TrapType;
 import fr.ul.maze.view.screens.MapScreen;
@@ -28,14 +29,14 @@ public class SpikesUpTimerTask extends CustomTask{
                     for(int i = 0; i < mapScreen.getSpikes().inner.size(); i++){
                         mapScreen.getSpikes().inner.get(i).setVisible(true);
                     }
-                    System.out.println(" DANGER");
+                    SoundAssetManager.getInstance().playSpikeSound();
                     tic = 0;
                 }else{
                     state.get().setDangerous(0);
                     for(int i = 0; i < mapScreen.getSpikes().inner.size(); i++){
                         mapScreen.getSpikes().inner.get(i).setVisible(false);
                     }
-                    System.out.println(" SAFE");
+                    SoundAssetManager.getInstance().playSpikeSound();
                     tic = 0;
                 }
             }{
