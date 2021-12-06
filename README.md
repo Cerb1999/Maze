@@ -25,10 +25,10 @@ mvn package -P prod
 
 # Le .jar se trouve maintenant dans `target/` si aucune erreur n'est survenue
 # dans l'étape précédente
-java -jar target/maze-2.0-SNAPSHOT.jar
+java -jar target/maze-3.0-SNAPSHOT.jar
 ```
 
-Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en téléchargement direct [ici](https://github.com/Cerb1999/Maze/releases).
+Alternativement, le fichier `maze-3.0-SNAPSHOT.jar` est proposé en téléchargement direct [ici](https://github.com/Cerb1999/Maze/releases).
 
 ## Fonctionnalités envisagées
 
@@ -42,14 +42,14 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - [x] Le héros ne peut pas traverser les murs.
   - [x] les monstres ne peuvent pas traverser les murs
   - [x] Une partie commence au niveau 1.
-  - [ ] Certaines cases du labyrinthe sont spéciales :
-    - [ ] clé : requise pour accéder au prochain niveau
+  - [x] Certaines cases du labyrinthe sont spéciales :
+    - [x] clé : requise pour accéder au prochain niveau
     - [x] échelle : aller au prochain niveau
-    - [ ] pièges : piège classique sur une case, fait perdre une vie
-    - [ ] magiques : si un personnage arrive sur la case un effet est déclenché
-      - [ ] ralentissement
-      - [ ] perte d'attaque
-      - [ ] +1 vie
+    - [x] pièges : piège classique sur une case, fait perdre une vie
+    - [x] magiques : si un personnage arrive sur la case un effet est déclenché
+      - [x] ralentissement
+      - [x] perte d'attaque
+      - [x] +1 vie
   - [x] Afficher le labyrinthe dans la console
   - [x] Afficher le labyrinthe graphiquement
 
@@ -63,7 +63,7 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
   - [x] Le héros perd une vie au contact d’un monstre
     - [x] replacé au début du niveau (sans réapparation des objets).
   - [x] Le héros peut attaquer les monstres (corps à corps - case adjacente)
-  - [ ] ((Attaque des monstres))
+  - [x] ((Attaque des monstres))
   
  - Autre
    - [X] Pause
@@ -165,3 +165,7 @@ Alternativement, le fichier `maze-2.0-SNAPSHOT.jar` est proposé en télécharge
 #### Diagramme de sequence fonctionnement global du jeu au début du sprint
 
 ![diagramme de sequanece fonctionnement_app début sprint 3](./doc/sprint3/sequence_diagram_global_game.svg)
+
+#### Diagramme de classe à la fin du sprint
+
+![diagramme de classe fin sprint 3](./doc/sprint3/diag_classe_end_sprint3.svg)
