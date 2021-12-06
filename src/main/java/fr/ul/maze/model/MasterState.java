@@ -34,6 +34,7 @@ public final class MasterState {
     private List<AtomicReference<Item>> speedmob;
 
     private List<AtomicReference<Trap>> wolftrap;
+    private List<AtomicReference<Trap>> hole;
 
     private World world;
 
@@ -80,7 +81,10 @@ public final class MasterState {
         for (int i = 0; i < ratio ; ++i) {
             this.wolftrap.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.WOLFTRAP)));
         }
-
+this.hole = new LinkedList<>();
+        for (int i = 0; i < ratio ; ++i) {
+            this.hole.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.HOLE)));
+        }
     }
 
     public World getWorld() {
@@ -125,6 +129,10 @@ public final class MasterState {
 
     public List<AtomicReference<Trap>> getWolftrap() {
         return wolftrap;
+    }
+
+    public List<AtomicReference<Trap>> getHole() {
+        return hole;
     }
 
     public int getCurrentLevelNumber() {
@@ -185,6 +193,10 @@ public final class MasterState {
         this.wolftrap = new LinkedList<>();
         for (int i = 0; i < ratio; ++i) {
             this.wolftrap.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.WOLFTRAP)));
+        }
+        this.hole = new LinkedList<>();
+        for (int i = 0; i < ratio; ++i) {
+            this.hole.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.HOLE)));
         }
 
     }

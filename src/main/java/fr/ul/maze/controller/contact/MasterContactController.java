@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import fr.ul.maze.controller.Box2DTaskQueue;
 import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.SoundAssetManager;
 import fr.ul.maze.model.entities.Hero;
@@ -22,6 +23,7 @@ public final class MasterContactController implements ContactListener {
     private final SlowHeroController slowHeroController;
     private final SlowMobController slowMobController;
     private final SpeedMobController speedMobController;
+    private final TrapAttackController trapAttackController;
     private final AtomicReference<MasterState> state;
     private final MapScreen mapScreen;
     private final MasterScreen master;
@@ -32,6 +34,7 @@ public final class MasterContactController implements ContactListener {
         this.noAttackController = new NoAttackController();
         this.slowHeroController = new SlowHeroController();
         this.slowMobController = new SlowMobController();
+        this.trapAttackController = new TrapAttackController(masterScreen,state);
         this.speedMobController = new SpeedMobController();
         this.state = state;
         this.mapScreen = mapScreen;
@@ -102,15 +105,20 @@ public final class MasterContactController implements ContactListener {
         }
         else if ((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData() instanceof Trap || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData() instanceof Trap))) {
             Trap trap;
+            Hero hero = state.get().getHero().get();
             if((contact.getFixtureB().getUserData() instanceof Trap))
                 trap = (Trap) contact.getFixtureB().getUserData();
             else trap = (Trap) contact.getFixtureA().getUserData();
             switch (trap.getTrapType()) {
                 case WOLFTRAP:
-                    Hero hero = state.get().getHero().get();
-                    hero.damage(1);
+                    trapAttackController.attack(trap,hero);
                     SoundAssetManager.getInstance().playBearTrapSound();
                     trap.remove();
+                    break;
+                case SPIKES:
+                    break;
+                case HOLE:
+                    trapAttackController.attack(trap,hero);
                     break;
             }
         }

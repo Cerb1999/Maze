@@ -64,6 +64,7 @@ public final class MapScreen implements Screen {
     private RefCell<List<ItemActor>> speedmob;
 
     private RefCell<List<TrapActor>> wolftrap;
+    private RefCell<List<TrapActor>> hole;
 
 
     private HeroMoveController heroMoveController;
@@ -223,6 +224,7 @@ public final class MapScreen implements Screen {
         this.speedmob = new RefCell<>();
 
         this.wolftrap = new RefCell<>();
+        this.hole = new RefCell<>();
 
         this.squares = new LinkedList<>();
         this.state.updateAndGet(st -> {
@@ -294,6 +296,12 @@ public final class MapScreen implements Screen {
             }
             this.wolftrap.inner.forEach(this.stage::addActor);
 
+            this.hole.inner = new LinkedList<>();
+            for (AtomicReference<Trap> lifeup : st.getHole()) {
+                this.hole.inner.add(new TrapActor(st.getWorld(), lifeup));
+            }
+            this.hole.inner.forEach(this.stage::addActor);
+
 
             return st;
         });
@@ -315,14 +323,16 @@ public final class MapScreen implements Screen {
 
         this.world.setContactListener(this.masterContactListener);
 
-        this.hero.inner.toFront();
+
         this.lifeups.inner.forEach(Actor::toFront);
         this.wolftrap.inner.forEach(Actor::toFront);
         this.noattacks.inner.forEach(Actor::toFront);
         this.slowhero.inner.forEach(Actor::toFront);
         this.slowmob.inner.forEach(Actor::toFront);
         this.speedmob.inner.forEach(Actor::toFront);
+        this.hole.inner.forEach(Actor::toFront);
         this.mobs.inner.forEach(Actor::toFront);
+        this.hero.inner.toFront();
         this.squares.forEach(rigidSquare -> {if(rigidSquare.getSquareType()== Square.Type.WALL)rigidSquare.toFront();});
 
         this.constructScreen();

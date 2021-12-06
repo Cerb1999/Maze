@@ -22,11 +22,11 @@ public class Trap {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(pos.x * RigidSquare.WIDTH + RigidSquare.WIDTH/2, pos.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT/2);
+        bodyDef.position.set(pos.x * RigidSquare.WIDTH + RigidSquare.WIDTH/4, pos.y * RigidSquare.HEIGHT + RigidSquare.HEIGHT/4);
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();//shape of the body
-        shape.setAsBox(RigidSquare.WIDTH /4, RigidSquare.HEIGHT/4);
+        shape.setAsBox(RigidSquare.WIDTH /8, RigidSquare.HEIGHT/8);
 
         FixtureDef fixtureDef = new FixtureDef();//properties of the body
         fixtureDef.shape = shape;
@@ -50,10 +50,8 @@ public class Trap {
     }
     public void remove() {
         toBeRemoved = true;
-        System.out.println("\n Remove est lancée");
     }
     public void destroyBody() {
-        System.out.println("\n Destroy body est lancée");
         if (body != null) this.world.destroyBody(this.body);
     }
 
