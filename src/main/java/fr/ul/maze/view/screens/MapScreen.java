@@ -26,10 +26,12 @@ import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.assets.MusicAssetManager;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.entities.items.Item;
+import fr.ul.maze.model.entities.traps.Trap;
 import fr.ul.maze.model.map.Square;
 import fr.ul.maze.model.maze.Maze;
 import fr.ul.maze.view.actors.*;
 import fr.ul.maze.view.actors.animated.AnimatedActor;
+import fr.ul.maze.view.actors.TrapActor;
 import fr.ul.maze.view.actors.debug.MazePathsDebug;
 import fr.ul.maze.view.map.RigidSquare;
 import utils.RefCell;
@@ -60,6 +62,8 @@ public final class MapScreen implements Screen {
     private RefCell<List<ItemActor>> slowhero;
     private RefCell<List<ItemActor>> slowmob;
     private RefCell<List<ItemActor>> speedmob;
+
+    private RefCell<List<TrapActor>> wolftrap;
 
 
     private HeroMoveController heroMoveController;
@@ -218,6 +222,8 @@ public final class MapScreen implements Screen {
         this.slowmob = new RefCell<>();
         this.speedmob = new RefCell<>();
 
+        this.wolftrap = new RefCell<>();
+
         this.squares = new LinkedList<>();
         this.state.updateAndGet(st -> {
             st.getLevel().get().forEachCell( sq -> this.squares.push(new RigidSquare(st.getWorld(), sq, this.state.get().getCurrentLevelNumber())));
@@ -282,6 +288,13 @@ public final class MapScreen implements Screen {
             }
             this.speedmob.inner.forEach(this.stage::addActor);
 
+            this.wolftrap.inner = new LinkedList<>();
+            for (AtomicReference<Trap> lifeup : st.getWolftrap()) {
+                this.wolftrap.inner.add(new TrapActor(st.getWorld(), lifeup));
+            }
+            this.wolftrap.inner.forEach(this.stage::addActor);
+
+
             return st;
         });
 
@@ -304,6 +317,7 @@ public final class MapScreen implements Screen {
 
         this.hero.inner.toFront();
         this.lifeups.inner.forEach(Actor::toFront);
+        this.wolftrap.inner.forEach(Actor::toFront);
         this.noattacks.inner.forEach(Actor::toFront);
         this.slowhero.inner.forEach(Actor::toFront);
         this.slowmob.inner.forEach(Actor::toFront);

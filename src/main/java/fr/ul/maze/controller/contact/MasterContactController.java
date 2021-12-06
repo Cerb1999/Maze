@@ -8,6 +8,7 @@ import fr.ul.maze.model.MasterState;
 import fr.ul.maze.model.entities.Hero;
 import fr.ul.maze.model.entities.Mob;
 import fr.ul.maze.model.entities.items.Item;
+import fr.ul.maze.model.entities.traps.Trap;
 import fr.ul.maze.view.screens.MapScreen;
 import fr.ul.maze.view.screens.MasterScreen;
 
@@ -97,6 +98,19 @@ public final class MasterContactController implements ContactListener {
         } else if((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData() instanceof Mob) || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData() instanceof Mob)){
             Hero hero = state.get().getHero().get();;
             hero.damage(1);
+        }
+        if ((contact.getFixtureA().getUserData().equals("Hero") && contact.getFixtureB().getUserData() instanceof Trap || (contact.getFixtureB().getUserData().equals("Hero") && contact.getFixtureA().getUserData() instanceof Trap))) {
+            Trap trap;
+            if((contact.getFixtureB().getUserData() instanceof Trap))
+                trap = (Trap) contact.getFixtureB().getUserData();
+            else trap = (Trap) contact.getFixtureA().getUserData();
+            switch (trap.getTrapType()) {
+                case WOLFTRAP:
+                    Hero hero = state.get().getHero().get();
+                    hero.damage(1);
+                    trap.remove();
+                    break;
+            }
         }
     }
 

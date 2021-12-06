@@ -3,6 +3,8 @@ package fr.ul.maze.model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import fr.ul.maze.model.entities.*;
+import fr.ul.maze.model.entities.traps.Trap;
+import fr.ul.maze.model.entities.traps.TrapType;
 import fr.ul.maze.model.generator.RandomMazeGenerator;
 import fr.ul.maze.model.maze.Maze;
 import utils.functional.Tuple3;
@@ -30,6 +32,8 @@ public final class MasterState {
     private List<AtomicReference<Item>> slowhero;
     private List<AtomicReference<Item>> slowmob;
     private List<AtomicReference<Item>> speedmob;
+
+    private List<AtomicReference<Trap>> wolftrap;
 
     private World world;
 
@@ -69,6 +73,13 @@ public final class MasterState {
             this.speedmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SPEEDMOB)));
         }
 
+        /**
+         * Traps
+         */
+        this.wolftrap = new LinkedList<>();
+        for (int i = 0; i < ratio ; ++i) {
+            this.wolftrap.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.WOLFTRAP)));
+        }
 
     }
 
@@ -104,10 +115,16 @@ public final class MasterState {
         return slowmob;
     }
 
-    public List<AtomicReference<Item>> getSpeedmob() { return speedmob; }
+    public List<AtomicReference<Item>> getSpeedmob() {
+        return speedmob;
+    }
 
     public List<AtomicReference<Item>> getLifeups() {
         return lifeups;
+    }
+
+    public List<AtomicReference<Trap>> getWolftrap() {
+        return wolftrap;
     }
 
     public int getCurrentLevelNumber() {
@@ -161,6 +178,15 @@ public final class MasterState {
         for (int i = 0; i < ratio; ++i) {
             this.speedmob.add(new AtomicReference<>(new Item(world, level.get().randomPosition(), ItemType.SPEEDMOB)));
         }
+
+        /**
+         * Traps
+         */
+        this.wolftrap = new LinkedList<>();
+        for (int i = 0; i < ratio; ++i) {
+            this.wolftrap.add(new AtomicReference<>(new Trap(world, level.get().randomPosition(), TrapType.WOLFTRAP)));
+        }
+
     }
 
     public void reset() {
